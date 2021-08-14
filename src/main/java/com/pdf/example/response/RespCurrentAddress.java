@@ -1,8 +1,6 @@
 package com.pdf.example.response;
 
-import lombok.Data;
 
-@Data
 public class RespCurrentAddress {
 
     private String line1;

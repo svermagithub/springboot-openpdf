@@ -1,10 +1,10 @@
-/*
+
 package com.pdf.example.testdata;
 
-import com.pdf.example.response.IncomeAndEmploymentResponse;
-import com.pdf.example.response.IncomeReport;
+import com.pdf.example.response.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class TestData {
 
@@ -19,9 +19,9 @@ public class TestData {
 
     private static IncomeReport getIncomeReport() {
         IncomeReport incomeReport = new IncomeReport();
-        incomeReport.setReportId("a216e0ee-7709-11eb-9439-0242ac130002");
-        incomeReport.setReportType("ReportType");
-        incomeReport.setReportGeneratedDate("1111111111");
+        incomeReport.setReportId("5d7bab91-cd3b-48d8-8b7e-3c664ae4be77");
+        incomeReport.setReportType("ExpVerify-Employment");
+        incomeReport.setReportGeneratedDate("1628744569");
         incomeReport.setRequestor(getRequestor());
         incomeReport.setConsumerPii(getConsumerPii());
         return incomeReport;
@@ -39,9 +39,9 @@ public class TestData {
     }
 
     private  static ApplicantInformation getApplicantInformation() {
-        ApplicantInformation applicantInformation = new ApplicantInformation();
+        ApplicantInformationEnhanced applicantInformation = new ApplicantInformationEnhanced();
         applicantInformation.setDob(getDob());
-        applicantInformation.setName(getName());
+       applicantInformation.setName(getName());
         applicantInformation.setPhone(getPhone());
         applicantInformation.setSsn(getSsn());
         applicantInformation.setCurrentAddress(getCurrentAddress());
@@ -50,24 +50,24 @@ public class TestData {
         return applicantInformation;
     }
 
-    private  static Ssn getSsn() {
-        Ssn ssn = new Ssn();
-        ssn.setSsnumber("xxx-xx-xxxx");
+    private  static RespSsn getSsn() {
+        RespSsn ssn = new RespSsn();
+        ssn.setSsn("xxx-xx-xxxx");
         return ssn;
     }
 
-    private  static List<RespPhone.java> getPhone() {
-        List<RespPhone.java> respPhones = new ArrayList<>();
-        RespPhone.java respPhone = new RespPhone.java();
+    private  static List<RespPhone> getPhone() {
+        List<RespPhone> respPhones = new ArrayList<>();
+        RespPhone respPhone = new RespPhone();
         respPhone.setNumber("12345567672");
         respPhone.setType("Home");
         respPhones.add(respPhone);
         return respPhones;
     }
 
-    private static Name getName() {
+    private static RespName getName() {
 
-        Name name  = new Name();
+        RespName name  = new RespName();
         name.setFirstName("TEST");
         name.setLastName("TEST");
         name.setMiddleName("A");
@@ -78,7 +78,7 @@ public class TestData {
 
     private static Dob getDob() {
         Dob dob = new Dob();
-        dob.setBirthDate("01011984");
+        dob.setDob("01011984");
         return dob;
     }
 
@@ -97,49 +97,66 @@ public class TestData {
 
     private static List<EmploymentHistory> getEmploymentHistory() {
         List<EmploymentHistory> employmentHistory = new ArrayList<>();
-        EmploymentHistory employmentHistory1 = new EmploymentHistory();
+        EmploymentHistoryEmploymentScreening employmentHistory1 = new EmploymentHistoryEmploymentScreening();
         employmentHistory1.setOriginReportId("7c538bb6-770c-11eb-9439-0242ac130002");
         employmentHistory1.setOriginSourceId("OriginSource");
         employmentHistory1.setEmployerIdentificationNumber("111111111");
         employmentHistory1.setEmployerName("Test1 Employer");
-        employmentHistory1.setOriginalHireDate("01012020");
-        employmentHistory1.setMostRecentHireDate("01012020");
-        employmentHistory1.setEmploymentStatus(getEmploymentStatus());
-        employmentHistory1.setWorkStatus(getWorkStatus());
+     //   employmentHistory1.setOriginalHireDate("01012020");
+      //  employmentHistory1.setMostRecentHireDate("01012020");
+     //   employmentHistory1.setEmploymentStatus(getEmploymentStatus());
+     //   employmentHistory1.setWorkStatus(getWorkStatus());
         employmentHistory1.setEmployerAddress(getEmployeeAddress());
-        employmentHistory1.setPaymentHistory(getPaymentHistory());
-        employmentHistory1.setTotalAnnualRenumeration(getTotalRenumeration());
+     //  employmentHistory1.setPaymentHistory(getPaymentHistory());
+      //  employmentHistory1.setTotalAnnualRenumeration(getTotalRenumeration());
+
+        employmentHistory1.setEmploymentInformation(getEmploymentInformation());
+
         employmentHistory.add(employmentHistory1);
 
-        EmploymentHistory employmentHistory2 = new EmploymentHistory();
+        EmploymentHistoryEmploymentScreening employmentHistory2 = new EmploymentHistoryEmploymentScreening();
         employmentHistory2.setOriginReportId("cc4ccad6-770e-11eb-9439-0242ac130002");
         employmentHistory2.setOriginSourceId("OriginSource");
         employmentHistory2.setEmployerIdentificationNumber("222222222");
         employmentHistory2.setEmployerName("Test2 Employer");
-        employmentHistory2.setOriginalHireDate("01012021");
-        employmentHistory2.setMostRecentHireDate("01012021");
-        employmentHistory2.setEmploymentStatus(getEmploymentStatus());
-        employmentHistory2.setWorkStatus(getWorkStatus());
+       // employmentHistory2.setOriginalHireDate("01012021");
+    //    employmentHistory2.setMostRecentHireDate("01012021");
+      //  employmentHistory2.setEmploymentStatus(getEmploymentStatus());
+      //  employmentHistory2.setWorkStatus(getWorkStatus());
         employmentHistory2.setEmployerAddress(getEmployeeAddress());
-        employmentHistory2.setPaymentHistory(getPaymentHistory());
-        employmentHistory2.setTotalAnnualRenumeration(getTotalRenumeration());
+      //  employmentHistory2.setPaymentHistory(getPaymentHistory());
+     //   employmentHistory2.setTotalAnnualRenumeration(getTotalRenumeration());
         employmentHistory.add(employmentHistory2);
 
-        EmploymentHistory employmentHistory3 = new EmploymentHistory();
+        EmploymentHistoryEmploymentScreening employmentHistory3 = new EmploymentHistoryEmploymentScreening();
         employmentHistory3.setOriginReportId("d745f9da-770e-11eb-9439-0242ac130002");
         employmentHistory3.setOriginSourceId("OriginSource");
         employmentHistory3.setEmployerIdentificationNumber("333333333");
         employmentHistory3.setEmployerName("Test3 Employer");
-        employmentHistory3.setOriginalHireDate("01012019");
-        employmentHistory3.setMostRecentHireDate("01012020");
-        employmentHistory3.setEmploymentStatus(getEmploymentStatus());
-        employmentHistory3.setWorkStatus(getWorkStatus());
+    //    employmentHistory3.setOriginalHireDate("01012019");
+   //     employmentHistory3.setMostRecentHireDate("01012020");
+    //    employmentHistory3.setEmploymentStatus(getEmploymentStatus());
+    //    employmentHistory3.setWorkStatus(getWorkStatus());
         employmentHistory3.setEmployerAddress(getEmployeeAddress());
-        employmentHistory3.setPaymentHistory(getPaymentHistory());
-        employmentHistory3.setTotalAnnualRenumeration(getTotalRenumeration());
+    //    employmentHistory3.setPaymentHistory(getPaymentHistory());
+    //    employmentHistory3.setTotalAnnualRenumeration(getTotalRenumeration());
         employmentHistory.add(employmentHistory3);
 
         return employmentHistory;
+    }
+
+    private static List<EmploymentInformation> getEmploymentInformation() {
+        List<EmploymentInformation> lst =  new ArrayList<>();
+        EmploymentInformation employmentInformation = new EmploymentInformation();
+        employmentInformation.setEmploymentStatus(getEmploymentStatus());
+        employmentInformation.setMostRecentHireDate("10282009");
+        employmentInformation.setOriginalHireDate("10282009");
+        employmentInformation.setPositionTenure("Advisor");
+        employmentInformation.setWorkStatus(getWorkStatus());
+        employmentInformation.setMostRecentSeparationDate(null);
+
+        return lst;
+
     }
 
     private static List<TotalAnnualRenumeration> getTotalRenumeration() {
@@ -164,16 +181,16 @@ public class TestData {
         PaymentHistory paymentHistory1 = new PaymentHistory();
         paymentHistory1.setPayDate(null);
         paymentHistory1.setPayCycle("BIWEEKLY");
-        paymentHistory1.setPayPeriod(getPayPeriod());
-        paymentHistory1.setGrossPayAmount(getGrossPayAmount());
+   //     paymentHistory1.setPayPeriod(getPayPeriod());
+    //    paymentHistory1.setGrossPayAmount(getGrossPayAmount());
 
         paymentHistory.add(paymentHistory1);
 
         PaymentHistory paymentHistory2 = new PaymentHistory();
         paymentHistory2.setPayDate(null);
         paymentHistory2.setPayCycle("MONTHLY");
-        paymentHistory2.setPayPeriod(getPayPeriod());
-        paymentHistory2.setGrossPayAmount(getGrossPayAmount());
+     //   paymentHistory2.setPayPeriod(getPayPeriod());
+    //    paymentHistory2.setGrossPayAmount(getGrossPayAmount());
         paymentHistory.add(paymentHistory2);
 
         return paymentHistory;
@@ -214,13 +231,13 @@ public class TestData {
 
     private static EmployerAddress getEmployeeAddress() {
         EmployerAddress employerAddress = new EmployerAddress();
-        employerAddress.setLineOne("123 Test Address");
-        employerAddress.setLineTwo(null);
-        employerAddress.setLineThree(null);
-        employerAddress.setCityName("City");
-        employerAddress.setState("State");
+        employerAddress.setLineOne("217 EVANS ST");
+        employerAddress.setLineTwo("123 abcd");
+        employerAddress.setLineThree("53543 pqr..");
+        employerAddress.setCityName("EAST TAWAS");
+        employerAddress.setState("MI");
         employerAddress.setCountryCode(null);
-        employerAddress.setPostalCode("12324-2054");
+        employerAddress.setPostalCode("48730-1512");
 
         return employerAddress;
     }
@@ -234,8 +251,8 @@ public class TestData {
 
     private static EmploymentStatus getEmploymentStatus() {
         EmploymentStatus employmentStatus = new EmploymentStatus();
-        employmentStatus.setCode(null);
-        employmentStatus.setName("ACTIVE");
+        employmentStatus.setCode("F");
+        employmentStatus.setName("Full Time");
         return employmentStatus;
     }
 
@@ -247,4 +264,4 @@ public class TestData {
     }
 }
 
-*/
+

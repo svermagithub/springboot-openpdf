@@ -1,26 +1,19 @@
 package com.pdf.example;
 
-import java.net.URL;
-import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
-import java.util.*;
-
-import com.pdf.example.response.*;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.util.CollectionUtils;
-
-import com.itextpdf.text.BaseColor;
-import com.itextpdf.text.Document;
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.Element;
-import com.itextpdf.text.Font;
-import com.itextpdf.text.FontFactory;
-import com.itextpdf.text.Image;
-import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.ColumnText;
 import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfTemplate;
+import com.pdf.example.response.*;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.util.CollectionUtils;
+
+import java.net.URL;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.List;
+import java.util.*;
 
 public class ItextPdfCreator {
     public static final String NOT_AVAILABLE = "N/A";
@@ -1013,7 +1006,11 @@ public class ItextPdfCreator {
                 // First line
                 y = y + h - 25;
                 String dob = null;
-                ApplicantInformationEnhanced applicantInformation = (ApplicantInformationEnhanced)expVerifyReport.getConsumerPii().getApplicantInformation();
+               // ApplicantInformation applicantInformation1 =  expVerifyReport.getConsumerPii().getApplicantInformation();
+              //  ApplicantInformationEnhanced applicantInformation = new ApplicantInformationEnhanced();
+             //   new ApplicantInformationEnhancedMapper().mapper(applicantInformation, applicantInformation1);
+
+                ApplicantInformationEnhanced applicantInformation = (ApplicantInformationEnhanced) expVerifyReport.getConsumerPii().getApplicantInformation();
 
                 if (applicantInformation != null) {
 
