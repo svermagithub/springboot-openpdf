@@ -54,11 +54,41 @@
           },
           "employmentInformation": [
             {
-              "originalHireDate": "10282009",
-              "mostRecentHireDate": "10282009",
+              "originalHireDate": "01012015",
+              "mostRecentHireDate": "01012015",
               "mostRecentSeparationDate": null,
               "positionTenure": "P11Y9M14D",
-              "positionTitle": "Advisor",
+              "positionTitle": "Software Engineer",
+              "employmentStatus": {
+                "code": "F",
+                "name": "Full Time"
+              },
+              "workStatus": {
+                "code": "A",
+                "name": "Active"
+              }
+            },
+            {
+              "originalHireDate": "01012015",
+              "mostRecentHireDate": "01012015",
+              "mostRecentSeparationDate": "01012016",
+              "positionTenure": "P11Y9M14D",
+              "positionTitle": "Sr Software Engineer",
+              "employmentStatus": {
+                "code": "F",
+                "name": "Full Time"
+              },
+              "workStatus": {
+                "code": "A",
+                "name": "Active"
+              }
+            },
+            {
+              "originalHireDate": "01012015",
+              "mostRecentHireDate": "01012018",
+              "mostRecentSeparationDate": null,
+              "positionTenure": "P01Y9M14D",
+              "positionTitle": "Lead Engineer",
               "employmentStatus": {
                 "code": "F",
                 "name": "Full Time"

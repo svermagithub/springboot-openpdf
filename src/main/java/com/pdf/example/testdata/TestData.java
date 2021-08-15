@@ -181,13 +181,23 @@ public class TestData {
         List<EmploymentInformation> lst =  new ArrayList<>();
         EmploymentInformation employmentInformation = new EmploymentInformation();
         employmentInformation.setEmploymentStatus(getEmploymentStatus());
-        employmentInformation.setMostRecentHireDate("10282009");
-        employmentInformation.setOriginalHireDate("10282009");
+        employmentInformation.setMostRecentHireDate("01012015");
+        employmentInformation.setOriginalHireDate("01012015");
         employmentInformation.setPositionTenure("P11Y9M14D");
-        employmentInformation.setPositionTitle("Advisor");
+        employmentInformation.setPositionTitle("Software Engineer");
         employmentInformation.setWorkStatus(getWorkStatus());
         employmentInformation.setMostRecentSeparationDate(null);
         lst.add(employmentInformation);
+
+        EmploymentInformation employmentInformation1 = new EmploymentInformation();
+        employmentInformation1.setEmploymentStatus(getEmploymentStatus());
+        employmentInformation1.setMostRecentHireDate("01012015");
+        employmentInformation1.setOriginalHireDate("01012015");
+        employmentInformation1.setPositionTenure("P11Y9M14D");
+        employmentInformation1.setPositionTitle("Sr Software Engineer");
+        employmentInformation1.setWorkStatus(getWorkStatus());
+        employmentInformation1.setMostRecentSeparationDate(null);
+        lst.add(employmentInformation1);
 
         return lst;
 

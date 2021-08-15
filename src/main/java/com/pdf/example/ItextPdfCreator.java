@@ -619,8 +619,11 @@ public class ItextPdfCreator {
     private void writePremiumEmployerTable1(EmploymentHistory eh) throws DocumentException, NotFitException {
 
         String[] header = null;
+        String[] header1 = null;
         List<String[]> values = new ArrayList<>();
+        List<String[]> values1 = new ArrayList<>();
         String[] row1 = null;
+        String[] row2 = null;
         float[] weight = null;
         if (isVOE || isCORE) {
             EmploymentHistoryVOE employmentHistoryVOE = (EmploymentHistoryVOE) eh;
@@ -647,26 +650,39 @@ public class ItextPdfCreator {
                     employmentHistoryEnhanced.getEmploymentStatus() != null ? Optional.ofNullable(employmentHistoryEnhanced.getEmploymentStatus().getName()).orElse(NOT_AVAILABLE) : NOT_AVAILABLE,
                     employmentHistoryEnhanced.getWorkStatus() != null ? Optional.ofNullable(employmentHistoryEnhanced.getWorkStatus().getName()).orElse(NOT_AVAILABLE) : NOT_AVAILABLE,
                     Optional.ofNullable(CommonUtils.formatTenure(employmentHistoryEnhanced.getPositionTenure())).orElse(NOT_AVAILABLE)};
-        } else if(isHR){
+        } else if(isHR) {
             EmploymentHistoryEmploymentScreening employmentHistoryEmploymentScreening = (EmploymentHistoryEmploymentScreening) eh;
             List<EmploymentInformation> employmentInformationList = employmentHistoryEmploymentScreening.getEmploymentInformation();
             //employmentInformationList.sort(Comparator.comparing(EmploymentInformation::getMostRecentHireDate));
             header = new String[]{"As Of Date", "Original Hire Date", "Most Recent Hire Date",
                     "Position End Date", "Tenure"};
-                row1 = new String[]{Optional.ofNullable(CommonUtils.getFormattedDate(employmentHistoryEmploymentScreening.getAsOfDate())).orElse(NOT_AVAILABLE),
-                        Optional.ofNullable(CommonUtils.getFormattedDate(employmentInformationList.get(0).getOriginalHireDate())).orElse(NOT_AVAILABLE),
-                        employmentInformationList.get(0).getMostRecentHireDate() != null ? Optional.ofNullable(employmentInformationList.get(0).getMostRecentHireDate()).orElse(NOT_AVAILABLE) : NOT_AVAILABLE,
-                        Optional.ofNullable(CommonUtils.formatTenure(employmentInformationList.get(0).getMostRecentSeparationDate())).orElse(NOT_AVAILABLE),
-                        Optional.ofNullable(CommonUtils.formatTenure(employmentInformationList.get(0).getPositionTenure())).orElse(NOT_AVAILABLE)
-                };
-            header = new String[]{"Employment Status", "Work Status", "Title"};
-            row1 = new String[]{
-                    Optional.ofNullable(CommonUtils.getFormattedDate(employmentInformationList.get(0).getEmploymentStatus().getName())).orElse(NOT_AVAILABLE),
-                    employmentInformationList.get(0).getMostRecentHireDate() != null ? Optional.ofNullable(employmentInformationList.get(0).getWorkStatus().getName()).orElse(NOT_AVAILABLE) : NOT_AVAILABLE,
-                    Optional.ofNullable(CommonUtils.formatTenure(employmentInformationList.get(0).getPositionTitle())).orElse(NOT_AVAILABLE)
+            row1 = new String[]{Optional.ofNullable(CommonUtils.getFormattedDate(employmentHistoryEmploymentScreening.getAsOfDate())).orElse(NOT_AVAILABLE),
+                    Optional.ofNullable(CommonUtils.getFormattedDate(employmentInformationList.get(0).getOriginalHireDate())).orElse(NOT_AVAILABLE),
+                    employmentInformationList.get(0).getMostRecentHireDate() != null ? Optional.ofNullable(employmentInformationList.get(0).getMostRecentHireDate()).orElse(NOT_AVAILABLE) : NOT_AVAILABLE,
+                    Optional.ofNullable(CommonUtils.formatTenure(employmentInformationList.get(0).getMostRecentSeparationDate())).orElse(NOT_AVAILABLE),
+                    Optional.ofNullable(CommonUtils.formatTenure(employmentInformationList.get(0).getPositionTenure())).orElse(NOT_AVAILABLE)
             };
 
+            header1 = new String[]{"Employment Status", "Work Status", "Title"};
 
+            String employmentStatus = "";
+            String workStatus = "";
+            StringBuffer title = new StringBuffer();
+            int count = 1;
+            for (EmploymentInformation employmentInformation : employmentInformationList) {
+                employmentStatus = employmentInformation.getEmploymentStatus().getName();
+                workStatus = employmentInformation.getWorkStatus().getName();
+
+                title.append(employmentInformation.getPositionTitle());
+                count ++;
+                if(count <= employmentInformationList.size())
+                    title.append(" | ");
+            }
+            row2 = new String[]{
+                    Optional.ofNullable(employmentStatus).orElse(NOT_AVAILABLE),
+                    employmentInformationList.get(0).getMostRecentHireDate() != null ? Optional.ofNullable(workStatus).orElse(NOT_AVAILABLE) : NOT_AVAILABLE,
+                    Optional.ofNullable(title.toString()).orElse(NOT_AVAILABLE)
+            };
 
         } else if(isPlus){
         	EmploymentHistoryPlus employmentHistoryPlus = (EmploymentHistoryPlus) eh;
@@ -685,7 +701,7 @@ public class ItextPdfCreator {
             row1 = new String[]{Optional.ofNullable(CommonUtils.getFormattedDate(employmentHistoryPlus.getOriginalHireDate())).orElse(NOT_AVAILABLE),
                     Optional.ofNullable(CommonUtils.getFormattedDate(employmentHistoryPlus.getMostRecentHireDate())).orElse(NOT_AVAILABLE),
                     employmentHistoryPlus.getEmploymentStatus() != null ? Optional.ofNullable(employmentHistoryPlus.getEmploymentStatus().getName()).orElse(NOT_AVAILABLE) : NOT_AVAILABLE,
-                    	employmentHistoryPlus.getWorkStatus() != null ? Optional.ofNullable(employmentHistoryPlus.getWorkStatus().getName()).orElse(NOT_AVAILABLE) : NOT_AVAILABLE, 
+                    	employmentHistoryPlus.getWorkStatus() != null ? Optional.ofNullable(employmentHistoryPlus.getWorkStatus().getName()).orElse(NOT_AVAILABLE) : NOT_AVAILABLE,
                     	paymentHistoryStandard.getGrossPayAmount() != null ? Optional.ofNullable("$" + getRoundOffValue(paymentHistoryStandard.getGrossPayAmount().getAmount())).orElse(NOT_AVAILABLE) : NOT_AVAILABLE,
                     			totalAnnualRenumerationStandard != null ? Optional.ofNullable("$" + getRoundOffValue(totalAnnualRenumerationStandard.getAmount())).orElse(NOT_AVAILABLE) : NOT_AVAILABLE};
         }
@@ -693,6 +709,12 @@ public class ItextPdfCreator {
         float x = MARGIN_OUTSIDE_L_R + MARGIN_INSIDE_L_R + FIELD_SEPARATOR;
         float w = document.getPageSize().getWidth() - 2 * x;
         writeTable(x, w, header, weight, values);
+
+        if(header1 != null && isHR){
+            values1.add(row2);
+            weight = new float[]{0.20f, 0.20f, 0.17f};
+            writeTable(x, w, header1, weight, values1);
+        }
     }
 
     /**
@@ -1256,7 +1278,11 @@ public class ItextPdfCreator {
         // background
             float bx = MARGIN_OUTSIDE_L_R;
         float bw = document.getPageSize().getWidth() - 2 * MARGIN_OUTSIDE_L_R;
-        float h = 20 + 15 * (values.size() + 1);
+        float h = 0 ;
+        if(isHR)
+            h = 20 + 30 * (values.size() + 1);
+        else
+            h = 20 + 15 * (values.size() + 1);
         if ((y - h) < PAGE_CUT) {
             if(!CollectionUtils.isEmpty(executedYear)) {
                 int i = executedYear.size() - 1;
