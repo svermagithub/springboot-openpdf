@@ -45,7 +45,7 @@ public class TestPdf {
 
         Rectangle pageSize = new Rectangle(PageSize.LETTER);
         Document document = new Document(pageSize);
-        String FILE = "F:/Test/PdfReport_"+new Date().getTime() +".pdf";
+        String FILE = "C:/workspace/springboot-openpdf/PdfReport_"+new Date().getTime() +".pdf";
         PdfContentByte cb = null;
         try {
             FileOutputStream fos = new FileOutputStream(FILE);

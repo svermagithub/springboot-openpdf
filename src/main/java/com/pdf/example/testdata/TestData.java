@@ -109,7 +109,6 @@ public class TestData {
         employmentHistory1.setOriginSourceId("00A");
         employmentHistory1.setEmployerIdentificationNumber("510349408");
         employmentHistory1.setEmployerName("Hara Inc");
-        employmentHistory1.setStepDone(2);
         employmentHistory1.setEmployerDisclaimers(null);
         employmentHistory1.setEmploymentInformation(getEmploymentInformation1());
         employmentHistory1.setEmployerAddress(getEmployeeAddress());
@@ -121,7 +120,6 @@ public class TestData {
         employmentHistory2.setOriginSourceId("00A");
         employmentHistory2.setEmployerIdentificationNumber("510349408");
         employmentHistory2.setEmployerName("MMBS Inc");
-        employmentHistory2.setStepDone(2);
         employmentHistory2.setEmployerAddress(getEmployeeAddress());
         employmentHistory2.setEmploymentInformation(getEmploymentInformation2());
         employmentHistory.add(employmentHistory2);

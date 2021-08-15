@@ -6,6 +6,7 @@ import com.itextpdf.text.pdf.ColumnText;
 import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfTemplate;
 import com.pdf.example.response.*;
+import com.sun.org.apache.bcel.internal.generic.ISHR;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.util.CollectionUtils;
 
@@ -94,7 +95,7 @@ public class ItextPdfCreator {
 
                 }
                 if (hasData) {
-                    if (isVOE || isCORE) {
+                    if (isVOE || isCORE || isHR) {
                         writeEmployerTitle("Employment Details");
                     } else if (isPremium || isPlus){
                         writeEmployerTitle("Employment and Income Details");
@@ -698,7 +699,7 @@ public class ItextPdfCreator {
      * @throws NotFitException   If table does not fit in the current page
      */
     private void writePremiumEmployerTable2(EmploymentHistory eh, int index) throws DocumentException, NotFitException {
-        if (isVOE == true || isCORE == true || isPlus == true) {
+        if (isVOE == true || isCORE == true || isPlus == true || isHR==true) {
             return;
         }
         EmploymentHistoryEnhanced employmentHistoryEnhanced = (EmploymentHistoryEnhanced) eh;
