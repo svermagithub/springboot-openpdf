@@ -650,19 +650,24 @@ public class ItextPdfCreator {
         } else if(isHR){
             EmploymentHistoryEmploymentScreening employmentHistoryEmploymentScreening = (EmploymentHistoryEmploymentScreening) eh;
             List<EmploymentInformation> employmentInformationList = employmentHistoryEmploymentScreening.getEmploymentInformation();
-            employmentInformationList.sort(Comparator.comparing(EmploymentInformation::getMostRecentHireDate));
+            //employmentInformationList.sort(Comparator.comparing(EmploymentInformation::getMostRecentHireDate));
             header = new String[]{"As Of Date", "Original Hire Date", "Most Recent Hire Date",
                     "Position End Date", "Tenure"};
-            for(EmploymentInformation employmentInformation : employmentInformationList) {
-
                 row1 = new String[]{Optional.ofNullable(CommonUtils.getFormattedDate(employmentHistoryEmploymentScreening.getAsOfDate())).orElse(NOT_AVAILABLE),
-                        Optional.ofNullable(CommonUtils.getFormattedDate(employmentInformation.getOriginalHireDate())).orElse(NOT_AVAILABLE),
-                        employmentInformation.getMostRecentHireDate() != null ? Optional.ofNullable(employmentInformation.getMostRecentHireDate()).orElse(NOT_AVAILABLE) : NOT_AVAILABLE,
-                        Optional.ofNullable(CommonUtils.formatTenure(employmentInformation.getMostRecentSeparationDate())).orElse(NOT_AVAILABLE),
-                        Optional.ofNullable(CommonUtils.formatTenure(employmentInformation.getPositionTenure())).orElse(NOT_AVAILABLE)
+                        Optional.ofNullable(CommonUtils.getFormattedDate(employmentInformationList.get(0).getOriginalHireDate())).orElse(NOT_AVAILABLE),
+                        employmentInformationList.get(0).getMostRecentHireDate() != null ? Optional.ofNullable(employmentInformationList.get(0).getMostRecentHireDate()).orElse(NOT_AVAILABLE) : NOT_AVAILABLE,
+                        Optional.ofNullable(CommonUtils.formatTenure(employmentInformationList.get(0).getMostRecentSeparationDate())).orElse(NOT_AVAILABLE),
+                        Optional.ofNullable(CommonUtils.formatTenure(employmentInformationList.get(0).getPositionTenure())).orElse(NOT_AVAILABLE)
                 };
+            header = new String[]{"Employment Status", "Work Status", "Title"};
+            row1 = new String[]{
+                    Optional.ofNullable(CommonUtils.getFormattedDate(employmentInformationList.get(0).getEmploymentStatus().getName())).orElse(NOT_AVAILABLE),
+                    employmentInformationList.get(0).getMostRecentHireDate() != null ? Optional.ofNullable(employmentInformationList.get(0).getWorkStatus().getName()).orElse(NOT_AVAILABLE) : NOT_AVAILABLE,
+                    Optional.ofNullable(CommonUtils.formatTenure(employmentInformationList.get(0).getPositionTitle())).orElse(NOT_AVAILABLE)
+            };
 
-            }
+
+
         } else if(isPlus){
         	EmploymentHistoryPlus employmentHistoryPlus = (EmploymentHistoryPlus) eh;
         	PaymentHistoryStandard paymentHistoryStandard = null;
