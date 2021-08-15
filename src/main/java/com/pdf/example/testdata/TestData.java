@@ -24,16 +24,22 @@ public class TestData {
         incomeReport.setReportGeneratedDate("1628744569");
         incomeReport.setRequestor(getRequestor());
         incomeReport.setConsumerPii(getConsumerPii());
+        incomeReport.setResellerInfo(getResellerInfo());
         return incomeReport;
 
 
+    }
+
+    private static ResellerInfo getResellerInfo() {
+        ResellerInfo resellerInfo = new ResellerInfo();
+        resellerInfo.setEndUserName("endUserName");
+        return resellerInfo;
     }
 
     private static RespConsumerPii getConsumerPii() {
         RespConsumerPii respConsumerPii = new RespConsumerPii();
         respConsumerPii.setApplicantInformation(getApplicantInformation());
         respConsumerPii.setEmploymentHistory(getEmploymentHistory());
-
         return respConsumerPii;
 
     }
@@ -52,15 +58,15 @@ public class TestData {
 
     private  static RespSsn getSsn() {
         RespSsn ssn = new RespSsn();
-        ssn.setSsn("xxx-xx-xxxx");
+        ssn.setSsn("XXX-XX-7420");
         return ssn;
     }
 
     private  static List<RespPhone> getPhone() {
         List<RespPhone> respPhones = new ArrayList<>();
         RespPhone respPhone = new RespPhone();
-        respPhone.setNumber("12345567672");
-        respPhone.setType("Home");
+        respPhone.setNumber("9893628344");
+        respPhone.setType(null);
         respPhones.add(respPhone);
         return respPhones;
     }
@@ -68,9 +74,9 @@ public class TestData {
     private static RespName getName() {
 
         RespName name  = new RespName();
-        name.setFirstName("TEST");
-        name.setLastName("TEST");
-        name.setMiddleName("A");
+        name.setFirstName("ROSS");
+        name.setLastName("GEORGE");
+        name.setMiddleName("G");
         name.setGenerationCode(null);
 
         return name;
@@ -98,62 +104,90 @@ public class TestData {
     private static List<EmploymentHistory> getEmploymentHistory() {
         List<EmploymentHistory> employmentHistory = new ArrayList<>();
         EmploymentHistoryEmploymentScreening employmentHistory1 = new EmploymentHistoryEmploymentScreening();
-        employmentHistory1.setOriginReportId("7c538bb6-770c-11eb-9439-0242ac130002");
-        employmentHistory1.setOriginSourceId("OriginSource");
-        employmentHistory1.setEmployerIdentificationNumber("111111111");
-        employmentHistory1.setEmployerName("Test1 Employer");
-     //   employmentHistory1.setOriginalHireDate("01012020");
-      //  employmentHistory1.setMostRecentHireDate("01012020");
-     //   employmentHistory1.setEmploymentStatus(getEmploymentStatus());
-     //   employmentHistory1.setWorkStatus(getWorkStatus());
+        employmentHistory1.setAsOfDate("2021-08-11");
+        employmentHistory1.setOriginReportId("07110355-a957-47e5-96c4-efb8a138bda3");
+        employmentHistory1.setOriginSourceId("00A");
+        employmentHistory1.setEmployerIdentificationNumber("510349408");
+        employmentHistory1.setEmployerName("Hara Inc");
+        employmentHistory1.setStepDone(2);
+        employmentHistory1.setEmployerDisclaimers(null);
+        employmentHistory1.setEmploymentInformation(getEmploymentInformation1());
         employmentHistory1.setEmployerAddress(getEmployeeAddress());
-     //  employmentHistory1.setPaymentHistory(getPaymentHistory());
-      //  employmentHistory1.setTotalAnnualRenumeration(getTotalRenumeration());
-
-        employmentHistory1.setEmploymentInformation(getEmploymentInformation());
-
         employmentHistory.add(employmentHistory1);
 
         EmploymentHistoryEmploymentScreening employmentHistory2 = new EmploymentHistoryEmploymentScreening();
-        employmentHistory2.setOriginReportId("cc4ccad6-770e-11eb-9439-0242ac130002");
-        employmentHistory2.setOriginSourceId("OriginSource");
-        employmentHistory2.setEmployerIdentificationNumber("222222222");
-        employmentHistory2.setEmployerName("Test2 Employer");
-       // employmentHistory2.setOriginalHireDate("01012021");
-    //    employmentHistory2.setMostRecentHireDate("01012021");
-      //  employmentHistory2.setEmploymentStatus(getEmploymentStatus());
-      //  employmentHistory2.setWorkStatus(getWorkStatus());
+        employmentHistory2.setAsOfDate("2021-08-11");
+        employmentHistory2.setOriginReportId("07110355-a957-47e5-96c4-efb8a138bda3");
+        employmentHistory2.setOriginSourceId("00A");
+        employmentHistory2.setEmployerIdentificationNumber("510349408");
+        employmentHistory2.setEmployerName("MMBS Inc");
+        employmentHistory2.setStepDone(2);
         employmentHistory2.setEmployerAddress(getEmployeeAddress());
-      //  employmentHistory2.setPaymentHistory(getPaymentHistory());
-     //   employmentHistory2.setTotalAnnualRenumeration(getTotalRenumeration());
+        employmentHistory2.setEmploymentInformation(getEmploymentInformation2());
         employmentHistory.add(employmentHistory2);
 
-        EmploymentHistoryEmploymentScreening employmentHistory3 = new EmploymentHistoryEmploymentScreening();
+       /* EmploymentHistoryEmploymentScreening employmentHistory3 = new EmploymentHistoryEmploymentScreening();
         employmentHistory3.setOriginReportId("d745f9da-770e-11eb-9439-0242ac130002");
         employmentHistory3.setOriginSourceId("OriginSource");
         employmentHistory3.setEmployerIdentificationNumber("333333333");
         employmentHistory3.setEmployerName("Test3 Employer");
-    //    employmentHistory3.setOriginalHireDate("01012019");
-   //     employmentHistory3.setMostRecentHireDate("01012020");
-    //    employmentHistory3.setEmploymentStatus(getEmploymentStatus());
-    //    employmentHistory3.setWorkStatus(getWorkStatus());
+        employmentHistory3.setStepDone(2);
         employmentHistory3.setEmployerAddress(getEmployeeAddress());
-    //    employmentHistory3.setPaymentHistory(getPaymentHistory());
-    //    employmentHistory3.setTotalAnnualRenumeration(getTotalRenumeration());
-        employmentHistory.add(employmentHistory3);
+        //employmentHistory3.setEmploymentInformation(getEmploymentInformation());
+        employmentHistory.add(employmentHistory3);*/
 
         return employmentHistory;
     }
 
-    private static List<EmploymentInformation> getEmploymentInformation() {
+    private static List<EmploymentInformation> getEmploymentInformation2() {
+        List<EmploymentInformation> lst =  new ArrayList<>();
+        EmploymentInformation employmentInformation = new EmploymentInformation();
+        employmentInformation.setMostRecentHireDate("10282009");
+        employmentInformation.setOriginalHireDate("06282016");
+        employmentInformation.setPositionTitle("Vice President");
+        employmentInformation.setPositionTenure("P5Y1M14D");
+        employmentInformation.setWorkStatus(getWorkStatus());
+        employmentInformation.setEmploymentStatus(getEmploymentStatus());
+        employmentInformation.setMostRecentSeparationDate(null);
+        lst.add(employmentInformation);
+
+        EmploymentInformation employmentInformation1 = new EmploymentInformation();
+        employmentInformation1.setMostRecentHireDate("10282009");
+        employmentInformation1.setOriginalHireDate("10282009");
+        employmentInformation1.setMostRecentSeparationDate("02282015");
+        employmentInformation1.setPositionTitle("App. Architect");
+        employmentInformation1.setPositionTenure("P5Y4M0D");
+        employmentInformation1.setWorkStatus(getWorkStatus());
+        employmentInformation1.setEmploymentStatus(getEmploymentStatus());
+        employmentInformation1.setMostRecentSeparationDate(null);
+        lst.add(employmentInformation1);
+
+        EmploymentInformation employmentInformation2 = new EmploymentInformation();
+        employmentInformation2.setMostRecentHireDate("10282009");
+        employmentInformation2.setOriginalHireDate("10282009");
+        employmentInformation2.setMostRecentSeparationDate(null);
+        employmentInformation2.setPositionTitle("Asoc App. Architect");
+        employmentInformation2.setPositionTenure("P11Y9M14D");
+        employmentInformation2.setWorkStatus(getWorkStatus());
+        employmentInformation2.setEmploymentStatus(getEmploymentStatus());
+        employmentInformation2.setMostRecentSeparationDate(null);
+        lst.add(employmentInformation2);
+
+
+        return lst;
+    }
+
+    private static List<EmploymentInformation> getEmploymentInformation1() {
         List<EmploymentInformation> lst =  new ArrayList<>();
         EmploymentInformation employmentInformation = new EmploymentInformation();
         employmentInformation.setEmploymentStatus(getEmploymentStatus());
         employmentInformation.setMostRecentHireDate("10282009");
         employmentInformation.setOriginalHireDate("10282009");
-        employmentInformation.setPositionTenure("Advisor");
+        employmentInformation.setPositionTenure("P11Y9M14D");
+        employmentInformation.setPositionTitle("Advisor");
         employmentInformation.setWorkStatus(getWorkStatus());
         employmentInformation.setMostRecentSeparationDate(null);
+        lst.add(employmentInformation);
 
         return lst;
 
@@ -258,7 +292,7 @@ public class TestData {
 
     private static IncomeRequestor getRequestor() {
         IncomeRequestor incomeRequestor = new IncomeRequestor();
-        incomeRequestor.setVerifierName("1111111");
+        incomeRequestor.setVerifierName("4999100");
         incomeRequestor.setVerifierName("Example Lender");
         return incomeRequestor;
     }

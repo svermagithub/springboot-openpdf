@@ -9,6 +9,7 @@ import com.pdf.example.response.*;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.util.CollectionUtils;
 
+import java.io.IOException;
 import java.net.URL;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -135,7 +136,13 @@ public class ItextPdfCreator {
         page = 1;
         Font font = FontFactory.getFont("Roboto-Regular.ttf", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED, 8f,
                 Font.NORMAL, COLOR_test_COOL_GREY_11);
-        BaseFont bf = font.getBaseFont();
+       // BaseFont bf = font.getBaseFont();
+        BaseFont bf = null;
+        try {
+            bf = BaseFont.createFont(BaseFont.HELVETICA_BOLD, BaseFont.WINANSI, BaseFont.EMBEDDED);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         for (PdfTemplate t : pageNumber) {
             t.beginText();
             t.setFontAndSize(bf, 8f);
@@ -1299,6 +1306,10 @@ public class ItextPdfCreator {
             y -= 15;
             bx = x;
             i = 0;
+
+            if(row == null)
+                continue;
+
             for (String s : row) {
                 if ("Title".equals(header[i])) {
                     float m = x + width;
