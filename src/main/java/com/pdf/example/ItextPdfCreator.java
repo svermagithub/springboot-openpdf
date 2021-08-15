@@ -18,33 +18,33 @@ import java.util.List;
 import java.util.*;
 
 public class ItextPdfCreator {
-    public static final String NOT_AVAILABLE = "N/A";
+    public static final String NOT_AVAILABLE = JsonUtil.NULL_VALUE;
     // Colors
-    protected static final BaseColor COLOR_test_COOL_GREY_11 = new BaseColor(83, 86, 90, 255);
-    protected static final BaseColor COLOR_test_GREY_10 = new BaseColor(239, 240, 240, 255);
-    protected static final BaseColor COLOR_test_GREY_40 = new BaseColor(193, 194, 195, 255);
-    protected static final BaseColor COLOR_test_PRIMARY_BLUE_2 = new BaseColor(66, 109, 169, 255);
-    protected static final BaseColor COLOR_test_WHITE = new BaseColor(255, 255, 255, 255);
+    protected static final BaseColor COLOR_EXPERIAN_COOL_GREY_11 = new BaseColor(83, 86, 90, 255);
+    protected static final BaseColor COLOR_EXPERIAN_GREY_10 = new BaseColor(239, 240, 240, 255);
+    protected static final BaseColor COLOR_EXPERIAN_GREY_40 = new BaseColor(193, 194, 195, 255);
+    protected static final BaseColor COLOR_EXPERIAN_PRIMARY_BLUE_2 = new BaseColor(66, 109, 169, 255);
+    protected static final BaseColor COLOR_EXPERIAN_WHITE = new BaseColor(255, 255, 255, 255);
 
     protected static final int FIELD_SEPARATOR = 10;
     protected static final int FIELD_SPACE = 3;
 
     // Fonts
     protected static final Font FONT_10_BOLD = FontFactory.getFont("Roboto", 10, Font.BOLD,
-            COLOR_test_COOL_GREY_11);
+            COLOR_EXPERIAN_COOL_GREY_11);
     protected static final Font FONT_10_NORMAL = FontFactory.getFont("Roboto", 10, Font.NORMAL,
-            COLOR_test_COOL_GREY_11);
+            COLOR_EXPERIAN_COOL_GREY_11);
     protected static final Font FONT_15_NORMAL = FontFactory.getFont("Roboto", 15, Font.NORMAL,
-            COLOR_test_COOL_GREY_11);
+            COLOR_EXPERIAN_COOL_GREY_11);
     protected static final Font FONT_8_BLUE = FontFactory.getFont("Roboto", 8, Font.NORMAL,
-            COLOR_test_PRIMARY_BLUE_2);
+            COLOR_EXPERIAN_PRIMARY_BLUE_2);
     protected static final Font FONT_8_BLUE_BOLD = FontFactory.getFont("Roboto", 8, Font.BOLD,
-            COLOR_test_PRIMARY_BLUE_2);
-    protected static final Font FONT_8_BOLD = FontFactory.getFont("Roboto", 8, Font.BOLD, COLOR_test_COOL_GREY_11);
+            COLOR_EXPERIAN_PRIMARY_BLUE_2);
+    protected static final Font FONT_8_BOLD = FontFactory.getFont("Roboto", 8, Font.BOLD, COLOR_EXPERIAN_COOL_GREY_11);
     protected static final Font FONT_8_NORMAL = FontFactory.getFont("Roboto", 8, Font.NORMAL,
-            COLOR_test_COOL_GREY_11);
+            COLOR_EXPERIAN_COOL_GREY_11);
     protected static final Font FONT_8_UNDERLINE = FontFactory.getFont("Roboto", 8, Font.UNDERLINE,
-            COLOR_test_COOL_GREY_11);
+            COLOR_EXPERIAN_COOL_GREY_11);
     protected static final int MARGIN_INSIDE_L_R = 10;
     protected static final int MARGIN_OUTSIDE_L_R = 20;
     protected static final int MARGIN_OUTSIDE_U_D = 15;
@@ -56,15 +56,15 @@ public class ItextPdfCreator {
     protected List<PdfTemplate> pageNumber = new ArrayList<>();
     protected float y = 0f;
     protected boolean isVOE = false;
-	protected boolean isCORE = false;
-	protected boolean isPlus = false;
+    protected boolean isCORE = false;
+    protected boolean isPlus = false;
     protected boolean isHR = false;
-	protected boolean isPremium = false;
+    protected boolean isPremium = false;
     private List<String> executedYear = new ArrayList<>();
 
 
     /**
-     * Creates the test Verify Premium report.
+     * Creates the Experian Verify Premium report.
      *
      * @param expVerifyReport
      * @throws DocumentException
@@ -136,18 +136,12 @@ public class ItextPdfCreator {
         total = pageNumber.size();
         page = 1;
         Font font = FontFactory.getFont("Roboto-Regular.ttf", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED, 8f,
-                Font.NORMAL, COLOR_test_COOL_GREY_11);
-       // BaseFont bf = font.getBaseFont();
-        BaseFont bf = null;
-        try {
-            bf = BaseFont.createFont(BaseFont.HELVETICA_BOLD, BaseFont.WINANSI, BaseFont.EMBEDDED);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+                Font.NORMAL, COLOR_EXPERIAN_COOL_GREY_11);
+        BaseFont bf = font.getBaseFont();
         for (PdfTemplate t : pageNumber) {
             t.beginText();
             t.setFontAndSize(bf, 8f);
-            t.setColorFill(COLOR_test_COOL_GREY_11);
+            t.setColorFill(COLOR_EXPERIAN_COOL_GREY_11);
             t.setTextMatrix(0, 5);
             t.showText(String.format("Page %d of %d", page, total));
             t.endText();
@@ -212,7 +206,7 @@ public class ItextPdfCreator {
             if (background) {
                 float pw = document.getPageSize().getWidth() - 2 * MARGIN_OUTSIDE_L_R;
                 cb.saveState();
-                cb.setColorFill(COLOR_test_GREY_10);
+                cb.setColorFill(COLOR_EXPERIAN_GREY_10);
                 cb.rectangle(MARGIN_OUTSIDE_L_R, y - 5, pw, lineHeight);
                 cb.fill();
                 cb.restoreState();
@@ -253,13 +247,13 @@ public class ItextPdfCreator {
         y -= h;
         // Gray
         cb.saveState();
-        cb.setColorFill(COLOR_test_GREY_10);
+        cb.setColorFill(COLOR_EXPERIAN_GREY_10);
         cb.rectangle(x, y, w, h);
         cb.fill();
         // White
         w -= 2 * MARGIN_INSIDE_L_R;
         x += MARGIN_INSIDE_L_R;
-        cb.setColorFill(COLOR_test_WHITE);
+        cb.setColorFill(COLOR_EXPERIAN_WHITE);
         cb.rectangle(x, y, w, h);
         cb.fill();
         cb.restoreState();
@@ -285,13 +279,13 @@ public class ItextPdfCreator {
         y -= h;
         // Gray
         cb.saveState();
-        cb.setColorFill(COLOR_test_GREY_10);
+        cb.setColorFill(COLOR_EXPERIAN_GREY_10);
         cb.rectangle(x, y, w, h);
         cb.fill();
         // White
         w -= 2 * MARGIN_INSIDE_L_R;
         x += MARGIN_INSIDE_L_R;
-        cb.setColorFill(COLOR_test_WHITE);
+        cb.setColorFill(COLOR_EXPERIAN_WHITE);
         cb.rectangle(x, y, w, h);
         cb.fill();
         cb.restoreState();
@@ -317,13 +311,13 @@ public class ItextPdfCreator {
         y = y - h;
         // Gray background
         cb.saveState();
-        cb.setColorFill(COLOR_test_GREY_10);
+        cb.setColorFill(COLOR_EXPERIAN_GREY_10);
         cb.rectangle(x, y, w, h + 10);
         cb.fill();
         // White rounded inside
         w -= 2 * MARGIN_INSIDE_L_R;
         x += MARGIN_INSIDE_L_R;
-        cb.setColorFill(COLOR_test_WHITE);
+        cb.setColorFill(COLOR_EXPERIAN_WHITE);
         cb.roundRectangle(x, y - 10, w, h + 10, 10);
         cb.fill();
         cb.restoreState();
@@ -369,7 +363,7 @@ public class ItextPdfCreator {
         float w = document.getPageSize().getWidth() - 2 * MARGIN_OUTSIDE_L_R;
         // Gray background
         cb.saveState();
-        cb.setColorFill(COLOR_test_GREY_10);
+        cb.setColorFill(COLOR_EXPERIAN_GREY_10);
         if (footerOnly) {
             cb.rectangle(x, y - 10, w, 20); // Upper side
         } else {
@@ -383,7 +377,7 @@ public class ItextPdfCreator {
             w -= 2 * MARGIN_INSIDE_L_R;
             x = MARGIN_OUTSIDE_L_R + MARGIN_INSIDE_L_R;
             y -= h;
-            cb.setColorFill(COLOR_test_WHITE);
+            cb.setColorFill(COLOR_EXPERIAN_WHITE);
             cb.rectangle(x, y + 10, w, h - 10);
             cb.roundRectangle(x, y, w, h, 10);
             cb.fill();
@@ -411,7 +405,7 @@ public class ItextPdfCreator {
         float y = document.getPageSize().getHeight() - MARGIN_OUTSIDE_U_D - h;
         // Gray background
         cb.saveState();
-        cb.setColorFill(COLOR_test_GREY_10);
+        cb.setColorFill(COLOR_EXPERIAN_GREY_10);
         cb.roundRectangle(x, y, w, h, 10);
         cb.fill();
         cb.restoreState();
@@ -444,19 +438,19 @@ public class ItextPdfCreator {
         String reportType = incomeAndEmploymentResponse.getExpVerifyReport().getReportType();
         this.cb = cb;
 
-        isVOE = IncomeandEmploymentConstants.REPORT_TYPE_REVERIFY_VOE.equalsIgnoreCase(reportType) 
-        		|| IncomeandEmploymentConstants.REPORT_TYPE_PREMIUM_REVERIFICATION_VOE.equalsIgnoreCase(reportType);
-		isCORE = IncomeandEmploymentConstants.REPORT_TYPE_ENHANCED_CORE.equalsIgnoreCase(reportType);
-		isPlus = IncomeandEmploymentConstants.REPORT_TYPE_PLUS.equalsIgnoreCase(reportType);
-		isPremium = IncomeUtil.isPremiumOrVOIE(reportType);
+        isVOE = IncomeandEmploymentConstants.REPORT_TYPE_REVERIFY_VOE.equalsIgnoreCase(reportType)
+                || IncomeandEmploymentConstants.REPORT_TYPE_PREMIUM_REVERIFICATION_VOE.equalsIgnoreCase(reportType);
+        isCORE = IncomeandEmploymentConstants.REPORT_TYPE_ENHANCED_CORE.equalsIgnoreCase(reportType);
+        isPlus = IncomeandEmploymentConstants.REPORT_TYPE_PLUS.equalsIgnoreCase(reportType);
+        isPremium = IncomeUtil.isPremiumOrVOIE(reportType);
         isHR = IncomeandEmploymentConstants.REPORT_TYPE_VERIFY_EMPLOYMENT.equalsIgnoreCase(reportType);
-        
-		if (IncomeUtil.isEnhancedReportType(reportType) || isPlus || isHR) {
+
+        if (IncomeUtil.isEnhancedReportType(reportType) || isPlus || isHR) {
             createPremiumReport(incomeAndEmploymentResponse.getExpVerifyReport());
         }
 
     }
-    
+
     private void writePlusEmployerDetails(EmploymentHistoryPlus eh, PaymentHistoryStandard ph)
             throws NotFitException, DocumentException {
         float h = 42;
@@ -467,13 +461,13 @@ public class ItextPdfCreator {
         float w = document.getPageSize().getWidth() - 2 * MARGIN_OUTSIDE_L_R;
         // Gray
         cb.saveState();
-        cb.setColorFill(COLOR_test_GREY_10);
+        cb.setColorFill(COLOR_EXPERIAN_GREY_10);
         cb.rectangle(x, y - h, w, h);
         cb.fill();
         // White
         w -= 2 * MARGIN_INSIDE_L_R;
         x += MARGIN_INSIDE_L_R;
-        cb.setColorFill(COLOR_test_WHITE);
+        cb.setColorFill(COLOR_EXPERIAN_WHITE);
         cb.rectangle(x, y - h, w, h);
         cb.fill();
         cb.restoreState();
@@ -482,11 +476,11 @@ public class ItextPdfCreator {
         x = MARGIN_OUTSIDE_L_R + MARGIN_INSIDE_L_R + FIELD_SEPARATOR;
         w = writeText(FONT_8_BLUE_BOLD, "As Of Date:", x, y, x + 50, y + 12);
         x += w + FIELD_SPACE;
-        w = writeText(FONT_8_NORMAL, eh.getAsOfDate() != null ? CommonUtils.getFormattedDate(eh.getAsOfDate()) : NOT_AVAILABLE, x, y, x + 100, y + 12);
+        w = writeText(FONT_8_NORMAL, eh.getAsOfDate() != null ? CommonUtils.getFormattedDate(eh.getAsOfDate()) : JsonUtil.NULL_VALUE, x, y, x + 100, y + 12);
         x += w + FIELD_SEPARATOR;
         w = writeText(FONT_8_BLUE_BOLD, "Pay Frequency:", x, y, x + 100, y + 12);
         x += w + FIELD_SPACE;
-        w = writeText(FONT_8_NORMAL, ph.getPayCycle() != null ? ph.getPayCycle() : NOT_AVAILABLE, x, y, x + 100, y + 12);
+        w = writeText(FONT_8_NORMAL, ph.getPayCycle() != null ? ph.getPayCycle() : JsonUtil.NULL_VALUE, x, y, x + 100, y + 12);
         x += w + FIELD_SEPARATOR;
         w = writeText(FONT_8_BLUE_BOLD, "Reporting Period:", x, y, x + 100, y + 12);
         x += w + FIELD_SPACE;
@@ -513,13 +507,13 @@ public class ItextPdfCreator {
         float w = document.getPageSize().getWidth() - 2 * MARGIN_OUTSIDE_L_R;
         // Gray
         cb.saveState();
-        cb.setColorFill(COLOR_test_GREY_10);
+        cb.setColorFill(COLOR_EXPERIAN_GREY_10);
         cb.rectangle(x, y - h, w, h);
         cb.fill();
         // White
         w -= 2 * MARGIN_INSIDE_L_R;
         x += MARGIN_INSIDE_L_R;
-        cb.setColorFill(COLOR_test_WHITE);
+        cb.setColorFill(COLOR_EXPERIAN_WHITE);
         cb.rectangle(x, y - h, w, h);
         cb.fill();
         cb.restoreState();
@@ -528,15 +522,15 @@ public class ItextPdfCreator {
         x = MARGIN_OUTSIDE_L_R + MARGIN_INSIDE_L_R + FIELD_SEPARATOR;
         w = writeText(FONT_8_BLUE_BOLD, "As Of Date:", x, y, x + 50, y + 12);
         x += w + FIELD_SPACE;
-        w = writeText(FONT_8_NORMAL, eh.getAsOfDate() != null ? CommonUtils.getFormattedDate(eh.getAsOfDate()) : NOT_AVAILABLE, x, y, x + 100, y + 12);
+        w = writeText(FONT_8_NORMAL, eh.getAsOfDate() != null ? CommonUtils.getFormattedDate(eh.getAsOfDate()) : JsonUtil.NULL_VALUE, x, y, x + 100, y + 12);
         x += w + FIELD_SEPARATOR;
         w = writeText(FONT_8_BLUE_BOLD, "Pay Date:", x, y, x + 50, y + 12);
         x += w + FIELD_SPACE;
-        w = writeText(FONT_8_NORMAL, ph.getPayDate() != null ? CommonUtils.getFormattedDate(ph.getPayDate()) : NOT_AVAILABLE, x, y, x + 100, y + 12);
+        w = writeText(FONT_8_NORMAL, ph.getPayDate() != null ? CommonUtils.getFormattedDate(ph.getPayDate()) : JsonUtil.NULL_VALUE, x, y, x + 100, y + 12);
         x += w + FIELD_SEPARATOR;
         w = writeText(FONT_8_BLUE_BOLD, "Pay Frequency:", x, y, x + 100, y + 12);
         x += w + FIELD_SPACE;
-        w = writeText(FONT_8_NORMAL, ph.getPayCycle() != null ? ph.getPayCycle() : NOT_AVAILABLE, x, y, x + 100, y + 12);
+        w = writeText(FONT_8_NORMAL, ph.getPayCycle() != null ? ph.getPayCycle() : JsonUtil.NULL_VALUE, x, y, x + 100, y + 12);
         x += w + FIELD_SEPARATOR;
         w = writeText(FONT_8_BLUE_BOLD, "Reporting Period:", x, y, x + 100, y + 12);
         x += w + FIELD_SPACE;
@@ -576,13 +570,13 @@ public class ItextPdfCreator {
         y -= h;
         // Gray
         cb.saveState();
-        cb.setColorFill(COLOR_test_GREY_10);
+        cb.setColorFill(COLOR_EXPERIAN_GREY_10);
         cb.rectangle(x, y, w, h);
         cb.fill();
         // White
         w -= 2 * MARGIN_INSIDE_L_R;
         x += MARGIN_INSIDE_L_R;
-        cb.setColorFill(COLOR_test_WHITE);
+        cb.setColorFill(COLOR_EXPERIAN_WHITE);
         cb.rectangle(x, y, w, h);
         cb.fill();
         cb.restoreState();
@@ -605,7 +599,7 @@ public class ItextPdfCreator {
         x = MARGIN_OUTSIDE_L_R + MARGIN_INSIDE_L_R + FIELD_SEPARATOR;
         w = writeText(FONT_8_BLUE_BOLD, "FEIN:", x, y, x + 50, y + 15);
         x += w + FIELD_SPACE;
-        w = writeText(FONT_8_NORMAL, eh.getEmployerIdentificationNumber() != null ? eh.getEmployerIdentificationNumber() : NOT_AVAILABLE, x, y, x + 100, y + 15);
+        w = writeText(FONT_8_NORMAL, eh.getEmployerIdentificationNumber() != null ? eh.getEmployerIdentificationNumber() : JsonUtil.NULL_VALUE, x, y, x + 100, y + 15);
         x += w + FIELD_SEPARATOR;
     }
 
@@ -618,17 +612,17 @@ public class ItextPdfCreator {
      */
     private void writePremiumEmployerTable1(EmploymentHistory eh) throws DocumentException, NotFitException {
 
-        String[] header = null;
         String[] header1 = null;
+        String[] header2 = null;
         List<String[]> values = new ArrayList<>();
         List<String[]> values1 = new ArrayList<>();
         String[] row1 = null;
-        String[] row2 = null;
+
         float[] weight = null;
         if (isVOE || isCORE) {
             EmploymentHistoryVOE employmentHistoryVOE = (EmploymentHistoryVOE) eh;
 
-            header = new String[]{"Title", "As Of Date", "Original Hire Date", "Most Recent Hire Date",
+            header1 = new String[]{"Title", "As Of Date", "Original Hire Date", "Most Recent Hire Date",
                     "Employment Status", "Work Status", "Tenure"};
             weight = new float[]{0.13f, 0.13f, 0.17f, 0.2f, 0.15f, 0.1f, 0.15f};
             row1 = new String[]{returnValueOrNA(employmentHistoryVOE.getPositionTitle())
@@ -642,7 +636,7 @@ public class ItextPdfCreator {
         } else if(isPremium) {
             EmploymentHistoryEnhanced employmentHistoryEnhanced = (EmploymentHistoryEnhanced) eh;
 
-            header = new String[]{"Title", "Original Hire Date", "Most Recent Hire Date", "Employment Status",
+            header1 = new String[]{"Title", "Original Hire Date", "Most Recent Hire Date", "Employment Status",
                     "Work Status", "Tenure"};
             row1 = new String[]{employmentHistoryEnhanced.getPositionTitle() != null ? employmentHistoryEnhanced.getPositionTitle() : NOT_AVAILABLE,
                     Optional.ofNullable(CommonUtils.getFormattedDate(employmentHistoryEnhanced.getOriginalHireDate())).orElse(NOT_AVAILABLE),
@@ -650,71 +644,73 @@ public class ItextPdfCreator {
                     employmentHistoryEnhanced.getEmploymentStatus() != null ? Optional.ofNullable(employmentHistoryEnhanced.getEmploymentStatus().getName()).orElse(NOT_AVAILABLE) : NOT_AVAILABLE,
                     employmentHistoryEnhanced.getWorkStatus() != null ? Optional.ofNullable(employmentHistoryEnhanced.getWorkStatus().getName()).orElse(NOT_AVAILABLE) : NOT_AVAILABLE,
                     Optional.ofNullable(CommonUtils.formatTenure(employmentHistoryEnhanced.getPositionTenure())).orElse(NOT_AVAILABLE)};
-        } else if(isHR) {
+        } else if(isHR){
             EmploymentHistoryEmploymentScreening employmentHistoryEmploymentScreening = (EmploymentHistoryEmploymentScreening) eh;
             List<EmploymentInformation> employmentInformationList = employmentHistoryEmploymentScreening.getEmploymentInformation();
-            //employmentInformationList.sort(Comparator.comparing(EmploymentInformation::getMostRecentHireDate));
-            header = new String[]{"As Of Date", "Original Hire Date", "Most Recent Hire Date",
+            EmploymentInformation employmentInformation = getEmploymentInformation(employmentInformationList, values1);
+            header1 = new String[]{"As Of Date", "Original Hire Date", "Most Recent Hire Date",
                     "Position End Date", "Tenure"};
             row1 = new String[]{Optional.ofNullable(CommonUtils.getFormattedDate(employmentHistoryEmploymentScreening.getAsOfDate())).orElse(NOT_AVAILABLE),
-                    Optional.ofNullable(CommonUtils.getFormattedDate(employmentInformationList.get(0).getOriginalHireDate())).orElse(NOT_AVAILABLE),
-                    employmentInformationList.get(0).getMostRecentHireDate() != null ? Optional.ofNullable(employmentInformationList.get(0).getMostRecentHireDate()).orElse(NOT_AVAILABLE) : NOT_AVAILABLE,
-                    Optional.ofNullable(CommonUtils.formatTenure(employmentInformationList.get(0).getMostRecentSeparationDate())).orElse(NOT_AVAILABLE),
-                    Optional.ofNullable(CommonUtils.formatTenure(employmentInformationList.get(0).getPositionTenure())).orElse(NOT_AVAILABLE)
+                    Optional.ofNullable(CommonUtils.getFormattedDate(employmentInformation.getOriginalHireDate())).orElse(NOT_AVAILABLE),
+                    employmentInformation.getMostRecentHireDate() != null ? Optional.ofNullable(employmentInformation.getMostRecentHireDate()).orElse(NOT_AVAILABLE) : NOT_AVAILABLE,
+                    Optional.ofNullable(CommonUtils.formatTenure(employmentInformation.getMostRecentSeparationDate())).orElse(NOT_AVAILABLE),
+                    Optional.ofNullable(CommonUtils.formatTenure(employmentInformation.getPositionTenure())).orElse(NOT_AVAILABLE)
             };
 
-            header1 = new String[]{"Employment Status", "Work Status", "Title"};
+            header2 = new String[]{"Employment Status", "Work Status", "Title"};
 
-            String employmentStatus = "";
-            String workStatus = "";
-            StringBuffer title = new StringBuffer();
-            int count = 1;
-            for (EmploymentInformation employmentInformation : employmentInformationList) {
-                employmentStatus = employmentInformation.getEmploymentStatus().getName();
-                workStatus = employmentInformation.getWorkStatus().getName();
-
-                title.append(employmentInformation.getPositionTitle());
-                count ++;
-                if(count <= employmentInformationList.size())
-                    title.append(" | ");
-            }
-            row2 = new String[]{
-                    Optional.ofNullable(employmentStatus).orElse(NOT_AVAILABLE),
-                    employmentInformationList.get(0).getMostRecentHireDate() != null ? Optional.ofNullable(workStatus).orElse(NOT_AVAILABLE) : NOT_AVAILABLE,
-                    Optional.ofNullable(title.toString()).orElse(NOT_AVAILABLE)
-            };
 
         } else if(isPlus){
-        	EmploymentHistoryPlus employmentHistoryPlus = (EmploymentHistoryPlus) eh;
-        	PaymentHistoryStandard paymentHistoryStandard = null;
-        	TotalAnnualRenumerationStandard totalAnnualRenumerationStandard = null;
-        	List<PaymentHistory> PaymentHistoryList = employmentHistoryPlus.getPaymentHistory();
-        	List<TotalAnnualRenumeration> totalAnnualRenumerationList = employmentHistoryPlus.getTotalAnnualRemuneration();
-        	if(!CollectionUtils.isEmpty(PaymentHistoryList)) {
-        		paymentHistoryStandard = (PaymentHistoryStandard)PaymentHistoryList.get(0);
-        	}
-        	if(!CollectionUtils.isEmpty(totalAnnualRenumerationList)) {
-        		totalAnnualRenumerationStandard = (TotalAnnualRenumerationStandard)totalAnnualRenumerationList.get(0);
-        	}
-        	writePlusEmployerDetails(employmentHistoryPlus,paymentHistoryStandard);
-            header = new String[]{"Original Hire Date", "Most Recent Hire Date", "Employment Status", "Work Status", "Gross Pay", "YTD Gross Pay"};
+            EmploymentHistoryPlus employmentHistoryPlus = (EmploymentHistoryPlus) eh;
+            PaymentHistoryStandard paymentHistoryStandard = null;
+            TotalAnnualRenumerationStandard totalAnnualRenumerationStandard = null;
+            List<PaymentHistory> PaymentHistoryList = employmentHistoryPlus.getPaymentHistory();
+            List<TotalAnnualRenumeration> totalAnnualRenumerationList = employmentHistoryPlus.getTotalAnnualRemuneration();
+            if(!CollectionUtils.isEmpty(PaymentHistoryList)) {
+                paymentHistoryStandard = (PaymentHistoryStandard)PaymentHistoryList.get(0);
+            }
+            if(!CollectionUtils.isEmpty(totalAnnualRenumerationList)) {
+                totalAnnualRenumerationStandard = (TotalAnnualRenumerationStandard)totalAnnualRenumerationList.get(0);
+            }
+            writePlusEmployerDetails(employmentHistoryPlus,paymentHistoryStandard);
+            header1 = new String[]{"Original Hire Date", "Most Recent Hire Date", "Employment Status", "Work Status", "Gross Pay", "YTD Gross Pay"};
             row1 = new String[]{Optional.ofNullable(CommonUtils.getFormattedDate(employmentHistoryPlus.getOriginalHireDate())).orElse(NOT_AVAILABLE),
                     Optional.ofNullable(CommonUtils.getFormattedDate(employmentHistoryPlus.getMostRecentHireDate())).orElse(NOT_AVAILABLE),
                     employmentHistoryPlus.getEmploymentStatus() != null ? Optional.ofNullable(employmentHistoryPlus.getEmploymentStatus().getName()).orElse(NOT_AVAILABLE) : NOT_AVAILABLE,
-                    	employmentHistoryPlus.getWorkStatus() != null ? Optional.ofNullable(employmentHistoryPlus.getWorkStatus().getName()).orElse(NOT_AVAILABLE) : NOT_AVAILABLE,
-                    	paymentHistoryStandard.getGrossPayAmount() != null ? Optional.ofNullable("$" + getRoundOffValue(paymentHistoryStandard.getGrossPayAmount().getAmount())).orElse(NOT_AVAILABLE) : NOT_AVAILABLE,
-                    			totalAnnualRenumerationStandard != null ? Optional.ofNullable("$" + getRoundOffValue(totalAnnualRenumerationStandard.getAmount())).orElse(NOT_AVAILABLE) : NOT_AVAILABLE};
+                    employmentHistoryPlus.getWorkStatus() != null ? Optional.ofNullable(employmentHistoryPlus.getWorkStatus().getName()).orElse(NOT_AVAILABLE) : NOT_AVAILABLE,
+                    paymentHistoryStandard.getGrossPayAmount() != null ? Optional.ofNullable("$" + getRoundOffValue(paymentHistoryStandard.getGrossPayAmount().getAmount())).orElse(NOT_AVAILABLE) : NOT_AVAILABLE,
+                    totalAnnualRenumerationStandard != null ? Optional.ofNullable("$" + getRoundOffValue(totalAnnualRenumerationStandard.getAmount())).orElse(NOT_AVAILABLE) : NOT_AVAILABLE};
         }
         values.add(row1);
         float x = MARGIN_OUTSIDE_L_R + MARGIN_INSIDE_L_R + FIELD_SEPARATOR;
         float w = document.getPageSize().getWidth() - 2 * x;
-        writeTable(x, w, header, weight, values);
+        writeTable(x, w, header1, weight, values);
 
-        if(header1 != null && isHR){
-            values1.add(row2);
-            weight = new float[]{0.20f, 0.20f, 0.17f};
-            writeTable(x, w, header1, weight, values1);
+        if(header2 !=null && isHR) {
+
+            weight= new float[]{0.20f,0.20f,0.17f};
+            writeTable(x,w,header2,weight,values1);
         }
+    }
+
+    private EmploymentInformation getEmploymentInformation(List<EmploymentInformation> employmentInformationList, List<String[]> values1) {
+        EmploymentInformation distinctEmploymentInformation = new EmploymentInformation();
+
+        String[] row2 = null;
+        int count = 0;
+        for (EmploymentInformation employmentInformation : employmentInformationList) {
+            distinctEmploymentInformation=employmentInformation;
+            if (employmentInformation.getOriginalHireDate().equalsIgnoreCase(employmentInformation.getMostRecentHireDate())) {
+                row2 = new String[]{
+                        Optional.ofNullable(count ==0 ? employmentInformation.getEmploymentStatus().getName() : "").orElse(NOT_AVAILABLE),
+                        Optional.ofNullable(count ==0 ? employmentInformation.getWorkStatus().getName() : "").orElse(NOT_AVAILABLE),
+                        Optional.ofNullable(employmentInformation.getPositionTitle()).orElse(NOT_AVAILABLE)
+                };
+                values1.add(row2);
+                count++;
+            }
+        }
+        return distinctEmploymentInformation;
     }
 
     /**
@@ -726,7 +722,7 @@ public class ItextPdfCreator {
      * @throws NotFitException   If table does not fit in the current page
      */
     private void writePremiumEmployerTable2(EmploymentHistory eh, int index) throws DocumentException, NotFitException {
-        if (isVOE == true || isCORE == true || isPlus == true || isHR==true) {
+        if (isVOE == true || isCORE == true || isPlus == true || isHR == true) {
             return;
         }
         EmploymentHistoryEnhanced employmentHistoryEnhanced = (EmploymentHistoryEnhanced) eh;
@@ -756,13 +752,13 @@ public class ItextPdfCreator {
                 RespPayAmount payAmount = paymentHistoryEnhanced.getPayAmount();
 
                 if (payAmount == null) {
-                    values.add(new String[]{NOT_AVAILABLE, NOT_AVAILABLE, NOT_AVAILABLE, NOT_AVAILABLE,
-                            NOT_AVAILABLE});
+                    values.add(new String[]{JsonUtil.NULL_VALUE, JsonUtil.NULL_VALUE, JsonUtil.NULL_VALUE, JsonUtil.NULL_VALUE,
+                            JsonUtil.NULL_VALUE});
                 } else {
-                    values.add(new String[]{payAmount.getGrossPay() != null ? Optional.ofNullable("$" + getRoundOffValue(payAmount.getGrossPay().getAmount())).orElse(NOT_AVAILABLE) : NOT_AVAILABLE, 
-                    		payAmount.getBasePay() != null ? Optional.ofNullable("$" + getRoundOffValue(payAmount.getBasePay().getAmount())).orElse(NOT_AVAILABLE) : NOT_AVAILABLE,
-                    				payAmount.getOverTimePay() != null ? Optional.ofNullable("$" + getRoundOffValue(payAmount.getOverTimePay().getAmount())).orElse(NOT_AVAILABLE) : NOT_AVAILABLE, 
-                    						payAmount.getBonusPay() != null ? Optional.ofNullable("$" + getRoundOffValue(payAmount.getBonusPay().getAmount())).orElse(NOT_AVAILABLE) : NOT_AVAILABLE,
+                    values.add(new String[]{payAmount.getGrossPay() != null ? Optional.ofNullable("$" + getRoundOffValue(payAmount.getGrossPay().getAmount())).orElse(NOT_AVAILABLE) : NOT_AVAILABLE,
+                            payAmount.getBasePay() != null ? Optional.ofNullable("$" + getRoundOffValue(payAmount.getBasePay().getAmount())).orElse(NOT_AVAILABLE) : NOT_AVAILABLE,
+                            payAmount.getOverTimePay() != null ? Optional.ofNullable("$" + getRoundOffValue(payAmount.getOverTimePay().getAmount())).orElse(NOT_AVAILABLE) : NOT_AVAILABLE,
+                            payAmount.getBonusPay() != null ? Optional.ofNullable("$" + getRoundOffValue(payAmount.getBonusPay().getAmount())).orElse(NOT_AVAILABLE) : NOT_AVAILABLE,
                             payAmount.getOtherPay() != null ? Optional.ofNullable("$" + getRoundOffValue(payAmount.getOtherPay().getAmount())).orElse(NOT_AVAILABLE) : NOT_AVAILABLE});
 
                 }
@@ -778,10 +774,10 @@ public class ItextPdfCreator {
                     values = new ArrayList<>();
                     if (!CollectionUtils.isEmpty(paymentHistoryEnhanced.getDeductions())) {
                         for (RespDeduction respDeduction : paymentHistoryEnhanced.getDeductions()) {
-                            values.add(new String[]{respDeduction.getDeductionCode() != null ? Optional.ofNullable(respDeduction.getDeductionCode().getName()).orElse(NOT_AVAILABLE) : NOT_AVAILABLE, "$" + getRoundOffValue(respDeduction.getDeductionAmount().getAmount())});
+                            values.add(new String[]{respDeduction.getDeductionCode() != null ? Optional.ofNullable(respDeduction.getDeductionCode().getName()).orElse(NOT_AVAILABLE) : JsonUtil.NULL_VALUE, "$" + getRoundOffValue(respDeduction.getDeductionAmount().getAmount())});
                         }
                     } else {
-                        values.add(new String[]{NOT_AVAILABLE, NOT_AVAILABLE});
+                        values.add(new String[]{JsonUtil.NULL_VALUE, JsonUtil.NULL_VALUE});
 
                     }
                     writeTable(x + gap, w - gap, header, values);
@@ -806,11 +802,11 @@ public class ItextPdfCreator {
                 List<RespPayDistributions> payDistributions = paymentHistoryEnhanced.getPayDistributions();
                 if (!CollectionUtils.isEmpty(payDistributions)) {
                     for (RespPayDistributions payDistribution : payDistributions) {
-                        values.add(new String[]{payDistribution.getDepositAccount() != null ? Optional.ofNullable(payDistribution.getDepositAccount().getAccountTypeCode()).orElse(NOT_AVAILABLE) : NOT_AVAILABLE, payDistribution.getDepositAccount() != null ? Optional.ofNullable(payDistribution.getDepositAccount().getAccountNumber().toUpperCase(Locale.ROOT)).orElse(NOT_AVAILABLE) : NOT_AVAILABLE, payDistribution.getDepositAccount() != null ? Optional.ofNullable(payDistribution.getDepositAccount().getRoutingTransitID()).orElse(NOT_AVAILABLE) : NOT_AVAILABLE,
-                                payDistribution.getDepositAmount() != null ? "$" + getRoundOffValue(payDistribution.getDepositAmount().getAmount()) : NOT_AVAILABLE});
+                        values.add(new String[]{payDistribution.getDepositAccount() != null ? Optional.ofNullable(payDistribution.getDepositAccount().getAccountTypeCode()).orElse(NOT_AVAILABLE) : JsonUtil.NULL_VALUE, payDistribution.getDepositAccount() != null ? Optional.ofNullable(payDistribution.getDepositAccount().getAccountNumber().toUpperCase(Locale.ROOT)).orElse(NOT_AVAILABLE) : JsonUtil.NULL_VALUE, payDistribution.getDepositAccount() != null ? Optional.ofNullable(payDistribution.getDepositAccount().getRoutingTransitID()).orElse(NOT_AVAILABLE) : JsonUtil.NULL_VALUE,
+                                payDistribution.getDepositAmount() != null ? "$" + getRoundOffValue(payDistribution.getDepositAmount().getAmount()) : JsonUtil.NULL_VALUE});
                     }
                 } else {
-                    values.add(new String[]{NOT_AVAILABLE, NOT_AVAILABLE, NOT_AVAILABLE, NOT_AVAILABLE});
+                    values.add(new String[]{JsonUtil.NULL_VALUE, JsonUtil.NULL_VALUE, JsonUtil.NULL_VALUE, JsonUtil.NULL_VALUE});
 
                 }
 
@@ -828,8 +824,8 @@ public class ItextPdfCreator {
         if (CollectionUtils.isEmpty(employmentHistoryEnhanced.getTotalAnnualRemuneration())) {
             header = new String[]{"YTD Gross Pay", "YTD Base Pay", "YTD Overtime", "YTD Bonus", "YTD Other",
                     ""};
-            values.add(new String[]{NOT_AVAILABLE, NOT_AVAILABLE, NOT_AVAILABLE,
-                    NOT_AVAILABLE, NOT_AVAILABLE});
+            values.add(new String[]{JsonUtil.NULL_VALUE, JsonUtil.NULL_VALUE, JsonUtil.NULL_VALUE,
+                    JsonUtil.NULL_VALUE, JsonUtil.NULL_VALUE});
             writeTable(x, w, header, values);
         } else {
             String year = null;
@@ -837,7 +833,7 @@ public class ItextPdfCreator {
             if(payDate !=null){
                 year = StringUtils.right(payDate, 4);
             } else {
-                 year = StringUtils.right( ph.getPayPeriod().getEndDate(), 4);
+                year = StringUtils.right( ph.getPayPeriod().getEndDate(), 4);
             }
 
             if (!executedYear.contains(year)) {
@@ -856,7 +852,7 @@ public class ItextPdfCreator {
                         writeTable(x, w, header, values);
                     }
                 }
-               }
+            }
         }
 
 
@@ -1031,7 +1027,7 @@ public class ItextPdfCreator {
             h = 40;
             // Gray background
             cb.saveState();
-            cb.setColorFill(COLOR_test_GREY_10);
+            cb.setColorFill(COLOR_EXPERIAN_GREY_10);
             cb.rectangle(MARGIN_OUTSIDE_L_R, y - h, document.getPageSize().getWidth() - 2 * MARGIN_OUTSIDE_L_R, h + 10);
             cb.fill();
             cb.restoreState();
@@ -1041,11 +1037,9 @@ public class ItextPdfCreator {
                 // First line
                 y = y + h - 25;
                 String dob = null;
-               // ApplicantInformation applicantInformation1 =  expVerifyReport.getConsumerPii().getApplicantInformation();
-              //  ApplicantInformationEnhanced applicantInformation = new ApplicantInformationEnhanced();
-             //   new ApplicantInformationEnhancedMapper().mapper(applicantInformation, applicantInformation1);
+                ApplicantInformation applicantInformation1 = expVerifyReport.getConsumerPii().getApplicantInformation();
 
-                ApplicantInformationEnhanced applicantInformation = (ApplicantInformationEnhanced) expVerifyReport.getConsumerPii().getApplicantInformation();
+                ApplicantInformationEnhanced applicantInformation = mapToApplicationInformationEnhanced(applicantInformation1);
 
                 if (applicantInformation != null) {
 
@@ -1060,14 +1054,14 @@ public class ItextPdfCreator {
                     if (applicantInformation.getDob() != null) {
                         dob = applicantInformation.getDob().getDob();
                     } else {
-                        dob = NOT_AVAILABLE;
+                        dob = JsonUtil.NULL_VALUE;
                     }
                 }
                 x += w + FIELD_SEPARATOR;
                 w = writeText(FONT_8_BOLD, "Address:", x, y, x + 50, y + 12);
                 x += w + FIELD_SPACE;
                 if (expVerifyReport.getConsumerPii().getApplicantInformation().getCurrentAddress() == null) {
-                    w = writeText(FONT_8_NORMAL, NOT_AVAILABLE, x, y, x + 200, y + 12);
+                    w = writeText(FONT_8_NORMAL, JsonUtil.NULL_VALUE, x, y, x + 200, y + 12);
                 } else {
                     w = writeText(FONT_8_NORMAL, getFullAddress(expVerifyReport.getConsumerPii().getApplicantInformation().getCurrentAddress()), x, y, x + 250,
                             y + 12);
@@ -1078,15 +1072,15 @@ public class ItextPdfCreator {
                 w = writeText(FONT_8_BOLD, "Phone:", x, y, x + 50, y + 12);
                 x += w + FIELD_SPACE;
                 if (expVerifyReport.getConsumerPii().getApplicantInformation().getPhone() == null) {
-                    w = writeText(FONT_8_NORMAL, NOT_AVAILABLE, x, y, x + 100, y + 12);
+                    w = writeText(FONT_8_NORMAL, JsonUtil.NULL_VALUE, x, y, x + 100, y + 12);
                 } else {
                     if (!CollectionUtils.isEmpty(expVerifyReport.getConsumerPii().getApplicantInformation().getPhone())) {
                         String phoneNumber = expVerifyReport.getConsumerPii().getApplicantInformation().getPhone().get(0).getNumber();
-                        String phoneFormattedString = !StringUtils.isEmpty(phoneNumber) ? phoneNumber.substring(0, 3) + '-' + phoneNumber.substring(3, 6) + '-' + phoneNumber.substring(6, 10) : NOT_AVAILABLE;
+                        String phoneFormattedString = !StringUtils.isEmpty(phoneNumber) ? phoneNumber.substring(0, 3) + '-' + phoneNumber.substring(3, 6) + '-' + phoneNumber.substring(6, 10) : JsonUtil.NULL_VALUE;
                         w = writeText(FONT_8_NORMAL, phoneFormattedString, x,
                                 y, x + 100, y + 12);
                     } else {
-                        w = writeText(FONT_8_NORMAL, NOT_AVAILABLE, x,
+                        w = writeText(FONT_8_NORMAL, JsonUtil.NULL_VALUE, x,
                                 y, x + 100, y + 12);
                     }
                 }
@@ -1094,7 +1088,7 @@ public class ItextPdfCreator {
                 w = writeText(FONT_8_BOLD, "Social Security Number:", x, y, x + 100, y + 12);
                 x += w + FIELD_SPACE;
                 if (expVerifyReport.getConsumerPii().getApplicantInformation().getSsn() == null) {
-                    w = writeText(FONT_8_NORMAL, NOT_AVAILABLE, x, y, x + 100, y + 12);
+                    w = writeText(FONT_8_NORMAL, JsonUtil.NULL_VALUE, x, y, x + 100, y + 12);
                 } else {
                     RespSsn ssn = expVerifyReport.getConsumerPii().getApplicantInformation().getSsn();
                     String ssnFormatted = expVerifyReport.getConsumerPii().getApplicantInformation().getSsn().getSsn();
@@ -1105,21 +1099,21 @@ public class ItextPdfCreator {
                 w = writeText(FONT_8_BOLD, "Date of Birth:", x, y, x + 100, y + 12);
                 x += w + FIELD_SPACE;
                 if (dob == null) {
-                    w = writeText(FONT_8_NORMAL, NOT_AVAILABLE, x, y, x + 100, y + 12);
+                    w = writeText(FONT_8_NORMAL, JsonUtil.NULL_VALUE, x, y, x + 100, y + 12);
                 } else {
                     w = writeText(FONT_8_NORMAL, CommonUtils.getFormattedDate(dob), x, y, x + 100, y + 12);
                 }
             }
             h = 15;
             cb.saveState();
-            cb.setColorFill(COLOR_test_GREY_10);
+            cb.setColorFill(COLOR_EXPERIAN_GREY_10);
             cb.rectangle(MARGIN_OUTSIDE_L_R, y - h, document.getPageSize().getWidth() - 2 * MARGIN_OUTSIDE_L_R, h - 5);
             cb.fill();
             cb.restoreState();
             x = MARGIN_OUTSIDE_L_R + FIELD_SEPARATOR;
             y -= 10;
             cb.saveState();
-            cb.setColorStroke(COLOR_test_GREY_40);
+            cb.setColorStroke(COLOR_EXPERIAN_GREY_40);
             cb.moveTo(x, y);
             cb.lineTo(document.getPageSize().getWidth() - x, y);
             cb.stroke();
@@ -1129,7 +1123,7 @@ public class ItextPdfCreator {
                 // First line
                 h = 30;
                 cb.saveState();
-                cb.setColorFill(COLOR_test_GREY_10);
+                cb.setColorFill(COLOR_EXPERIAN_GREY_10);
                 cb.rectangle(MARGIN_OUTSIDE_L_R, y - h - 5, document.getPageSize().getWidth() - 2 * MARGIN_OUTSIDE_L_R, h);
                 cb.fill();
                 cb.restoreState();
@@ -1138,11 +1132,11 @@ public class ItextPdfCreator {
                 y -= 15;
                 w = writeText(FONT_8_BOLD, "Requestor:", x, y, x + 100, y + 12);
                 x += w + FIELD_SPACE;
-                w = writeText(FONT_8_NORMAL, expVerifyReport.getRequestor() != null ? returnValueOrNA(expVerifyReport.getRequestor().getVerifierName()) : NOT_AVAILABLE, x, y, x + 200, y + 12);
+                w = writeText(FONT_8_NORMAL, expVerifyReport.getRequestor() != null ? returnValueOrNA(expVerifyReport.getRequestor().getVerifierName()) : JsonUtil.NULL_VALUE, x, y, x + 200, y + 12);
                 x += w + FIELD_SEPARATOR;
                 w = writeText(FONT_8_BOLD, "Requestor ID:", x, y, x + 100, y + 12);
                 x += w + FIELD_SPACE;
-                w = writeText(FONT_8_NORMAL, expVerifyReport.getRequestor() != null ? returnValueOrNA(expVerifyReport.getRequestor().getSubscriberCode()) : NOT_AVAILABLE, x, y, x + 100, y + 12);
+                w = writeText(FONT_8_NORMAL, expVerifyReport.getRequestor() != null ? returnValueOrNA(expVerifyReport.getRequestor().getSubscriberCode()) : JsonUtil.NULL_VALUE, x, y, x + 100, y + 12);
                 x += w + FIELD_SEPARATOR;
                 w = writeText(FONT_8_BOLD, "Report ID:", x, y, x + 100, y + 12);
                 x += w + FIELD_SPACE;
@@ -1159,7 +1153,7 @@ public class ItextPdfCreator {
                 x += w + FIELD_SPACE;
 
                 if (expVerifyReport.getReportGeneratedDate() == null) {
-                    w = writeText(FONT_8_NORMAL, NOT_AVAILABLE, x, y, x + 200, y + 12);
+                    w = writeText(FONT_8_NORMAL, JsonUtil.NULL_VALUE, x, y, x + 200, y + 12);
 
                 } else {
                     String reportGenerationDate = expVerifyReport.getReportGeneratedDate();
@@ -1168,7 +1162,7 @@ public class ItextPdfCreator {
                         SimpleDateFormat df2 = new SimpleDateFormat("MM/dd/YYYY");
                         reportGenerationDate = df2.format(date);
                     } else {
-                        reportGenerationDate = NOT_AVAILABLE;
+                        reportGenerationDate = JsonUtil.NULL_VALUE;
                     }
 
                     w = writeText(FONT_8_NORMAL, reportGenerationDate, x, y, x + 200, y + 12);
@@ -1178,7 +1172,7 @@ public class ItextPdfCreator {
                 x += w + FIELD_SEPARATOR;
                 w = writeText(FONT_8_BOLD, "At The Request Of:", x, y, x + 100, y + 12);
                 x += w + FIELD_SPACE;
-                w = writeText(FONT_8_NORMAL, expVerifyReport.getResellerInfo() != null ? returnValueOrNA(expVerifyReport.getResellerInfo().getEndUserName()) : NOT_AVAILABLE, x, y, x + 200, y + 12);
+                w = writeText(FONT_8_NORMAL, expVerifyReport.getResellerInfo() != null ? returnValueOrNA(expVerifyReport.getResellerInfo().getEndUserName()) : JsonUtil.NULL_VALUE, x, y, x + 200, y + 12);
                 ReportCustomLabels reportCustomLabels = null;
                 if (isVOE || isCORE) {
                     IncomeReportVOE expVerifyReport1 = (IncomeReportVOE) expVerifyReport;
@@ -1190,13 +1184,13 @@ public class ItextPdfCreator {
 
                 }
                 if (reportCustomLabels == null) {
-                	y -= 15;
+                    y -= 15;
                 }
                 else {
                     // line
                     h = 15;
                     cb.saveState();
-                    cb.setColorFill(COLOR_test_GREY_10);
+                    cb.setColorFill(COLOR_EXPERIAN_GREY_10);
                     cb.rectangle(MARGIN_OUTSIDE_L_R, y - h - 5, document.getPageSize().getWidth() - 2 * MARGIN_OUTSIDE_L_R,
                             h);
                     cb.fill();
@@ -1204,7 +1198,7 @@ public class ItextPdfCreator {
                     x = MARGIN_OUTSIDE_L_R + FIELD_SEPARATOR;
                     y -= 10;
                     cb.saveState();
-                    cb.setColorStroke(COLOR_test_GREY_40);
+                    cb.setColorStroke(COLOR_EXPERIAN_GREY_40);
                     cb.moveTo(x, y);
                     cb.lineTo(document.getPageSize().getWidth() - x, y);
                     cb.stroke();
@@ -1216,11 +1210,11 @@ public class ItextPdfCreator {
                     float[] uv;
                     // Gray background
                     cb.saveState();
-                    cb.setColorFill(COLOR_test_GREY_10);
+                    cb.setColorFill(COLOR_EXPERIAN_GREY_10);
                     cb.rectangle(MARGIN_OUTSIDE_L_R, y - 5, pw, 15);
                     cb.fill();
                     cb.restoreState();
-                   
+
                     if (reportCustomLabels !=null && !CollectionUtils.isEmpty(reportCustomLabels.getLabelMapper())) {
                         Map<String, String> labelMapper = reportCustomLabels.getLabelMapper();
                         TreeMap<String, String> sorted_map = new TreeMap<>(labelMapper);
@@ -1243,8 +1237,20 @@ public class ItextPdfCreator {
         }
     }
 
+    private ApplicantInformationEnhanced mapToApplicationInformationEnhanced(ApplicantInformation applicantInformation1) {
+        ApplicantInformationEnhanced applicantInformationEnhanced = new ApplicantInformationEnhanced();
+        applicantInformationEnhanced.setDob(null);
+        applicantInformationEnhanced.setName(applicantInformation1.getName());
+        applicantInformationEnhanced.setCurrentAddress(applicantInformation1.getCurrentAddress());
+        applicantInformationEnhanced.setCurrentAddress(applicantInformation1.getCurrentAddress());
+        applicantInformationEnhanced.setPhone(applicantInformation1.getPhone());
+        applicantInformationEnhanced.setSsn(applicantInformation1.getSsn());
+
+        return applicantInformationEnhanced;
+    }
+
     private String returnValueOrNA(String value) {
-        return value != null ? value : NOT_AVAILABLE;
+        return value != null ? value : JsonUtil.NULL_VALUE;
     }
 
 
@@ -1276,13 +1282,9 @@ public class ItextPdfCreator {
     private void writeTable(float x, float width, String[] header, float[] weight, List<String[]> values)
             throws DocumentException, NotFitException {
         // background
-            float bx = MARGIN_OUTSIDE_L_R;
+        float bx = MARGIN_OUTSIDE_L_R;
         float bw = document.getPageSize().getWidth() - 2 * MARGIN_OUTSIDE_L_R;
-        float h = 0 ;
-        if(isHR)
-            h = 20 + 30 * (values.size() + 1);
-        else
-            h = 20 + 15 * (values.size() + 1);
+        float h = 20 + 15 * (values.size() + 1);
         if ((y - h) < PAGE_CUT) {
             if(!CollectionUtils.isEmpty(executedYear)) {
                 int i = executedYear.size() - 1;
@@ -1292,19 +1294,19 @@ public class ItextPdfCreator {
         }
         // Gray
         cb.saveState();
-        cb.setColorFill(COLOR_test_GREY_10);
+        cb.setColorFill(COLOR_EXPERIAN_GREY_10);
         cb.rectangle(bx, y - h, bw, h);
         cb.fill();
         // White
         bw -= 2 * MARGIN_INSIDE_L_R;
         bx += MARGIN_INSIDE_L_R;
-        cb.setColorFill(COLOR_test_WHITE);
+        cb.setColorFill(COLOR_EXPERIAN_WHITE);
         cb.rectangle(bx, y - h, bw, h);
         cb.fill();
         cb.restoreState();
         // lines
         cb.saveState();
-        cb.setColorStroke(COLOR_test_GREY_10);
+        cb.setColorStroke(COLOR_EXPERIAN_GREY_10);
         cb.moveTo(x, y);
         cb.lineTo(x + width, y);
         cb.stroke();
@@ -1338,10 +1340,6 @@ public class ItextPdfCreator {
             y -= 15;
             bx = x;
             i = 0;
-
-            if(row == null)
-                continue;
-
             for (String s : row) {
                 if ("Title".equals(header[i])) {
                     float m = x + width;
