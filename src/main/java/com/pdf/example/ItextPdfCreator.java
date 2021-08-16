@@ -161,6 +161,11 @@ public class ItextPdfCreator {
 
     private void mapToEmploymentHistoryHR(List<EmploymentHistory> employmentHistory) {
 
+        /* Requirement :
+        1. Check if original hire date is different than most create another employment history . Set all parent data and add the employment information as child list
+        2. Sort the parent list based on most recent hire date.
+
+         */
         employmentHistoryHR=
 
 
