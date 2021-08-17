@@ -142,8 +142,8 @@ public class TestData {
     private static List<EmploymentInformation> getEmploymentInformation2() {
         List<EmploymentInformation> lst =  new ArrayList<>();
         EmploymentInformation employmentInformation = new EmploymentInformation();
-        employmentInformation.setMostRecentHireDate("10282009");
-        employmentInformation.setOriginalHireDate("06282016");
+        employmentInformation.setMostRecentHireDate("10282016");
+        employmentInformation.setOriginalHireDate("06282009");
         employmentInformation.setPositionTitle("Vice President");
         employmentInformation.setPositionTenure("P5Y1M14D");
         employmentInformation.setWorkStatus(getWorkStatus());
@@ -198,6 +198,26 @@ public class TestData {
         employmentInformation1.setWorkStatus(getWorkStatus());
         employmentInformation1.setMostRecentSeparationDate(null);
         lst.add(employmentInformation1);
+
+        EmploymentInformation employmentInformation2 = new EmploymentInformation();
+        employmentInformation2.setEmploymentStatus(getEmploymentStatus());
+        employmentInformation2.setMostRecentHireDate("01012019");
+        employmentInformation2.setOriginalHireDate("01012015");
+        employmentInformation2.setPositionTenure("P11Y9M14D");
+        employmentInformation2.setPositionTitle("Lead Engineer");
+        employmentInformation2.setWorkStatus(getWorkStatus());
+        employmentInformation2.setMostRecentSeparationDate("01012017");
+        lst.add(employmentInformation2);
+
+        EmploymentInformation employmentInformation3 = new EmploymentInformation();
+        employmentInformation3.setEmploymentStatus(getEmploymentStatus());
+        employmentInformation3.setMostRecentHireDate("01012021");
+        employmentInformation3.setOriginalHireDate("01012015");
+        employmentInformation3.setPositionTenure("P11Y9M14D");
+        employmentInformation3.setPositionTitle("Manager");
+        employmentInformation3.setWorkStatus(getWorkStatus());
+        employmentInformation3.setMostRecentSeparationDate("01012017");
+        lst.add(employmentInformation3);
 
         return lst;
 
