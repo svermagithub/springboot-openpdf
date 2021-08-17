@@ -77,6 +77,7 @@ public class ItextPdfCreator {
         int current = 0;
         if (expVerifyReport.getConsumerPii() != null && expVerifyReport.getConsumerPii().getEmploymentHistory() != null) {
             List<EmploymentHistory> employmentHistory = expVerifyReport.getConsumerPii().getEmploymentHistory();
+            if(isHR)
             mapToEmploymentHistoryHR(employmentHistory);
 
             total = employmentHistory.size();
@@ -104,10 +105,20 @@ public class ItextPdfCreator {
                         writeEmployerTitle("Employment and Income Details");
                     }
                 }
-                for (int i = current; i < total; i++) {
-                    EmploymentHistory eh = expVerifyReport.getConsumerPii().getEmploymentHistory().get(i);
-                    writePremuimEmployer(eh, (i + 1), total);
-                    executedYear = new ArrayList<>();
+
+                if(isHR){
+                    total = employmentHistoryHR.size();
+                    for (int i = current; i <  total; i++) {
+                        EmploymentHistory eh = employmentHistoryHR.get(i);
+                        writePremuimEmployer(eh, (i + 1), total);
+                        executedYear = new ArrayList<>();
+                    }
+                }else {
+                    for (int i = current; i < total; i++) {
+                        EmploymentHistory eh = expVerifyReport.getConsumerPii().getEmploymentHistory().get(i);
+                        writePremuimEmployer(eh, (i + 1), total);
+                        executedYear = new ArrayList<>();
+                    }
                 }
                 hasData = false;
 
@@ -154,31 +165,57 @@ public class ItextPdfCreator {
 
     private void mapToEmploymentHistoryHR(List<EmploymentHistory> employmentHistory) {
 
-        /* Requirement :
-        1. Check if original hire date is different than most create another employment history . Set all parent data and add the employment information as child list
-        2. Sort the parent list based on most recent hire date.
-         */
-
+        employmentHistoryHR = new ArrayList<>();
         EmploymentHistoryEmploymentScreening tmpEmploymentHistory = null;
 
-        for ( EmploymentHistory employmentHistory1 : employmentHistory){
+        for ( EmploymentHistory employmentHistory1 : new ArrayList<>(employmentHistory)){
+
             if(employmentHistory1 instanceof EmploymentHistoryEmploymentScreening) {
                 EmploymentHistoryEmploymentScreening ehs = (EmploymentHistoryEmploymentScreening) employmentHistory1;
-                for (EmploymentInformation employmentInformation : ehs.getEmploymentInformation()){
+                for (EmploymentInformation employmentInformation : new ArrayList<>(ehs.getEmploymentInformation())){
                     if(employmentInformation.getOriginalHireDate() != null &&  !employmentInformation.getOriginalHireDate().equalsIgnoreCase(employmentInformation.getMostRecentHireDate())){
                         tmpEmploymentHistory = new EmploymentHistoryEmploymentScreening();
                         new EmploymentHistoryEmploymentScreeningMapper().mapper(tmpEmploymentHistory, employmentHistory1);
-                       // ehs.getEmploymentInformation().remove(employmentInformation);
+                        ehs.getEmploymentInformation().remove(employmentInformation);
                         List<EmploymentInformation> tmpEmploymentInformationList = new ArrayList<>();
                         tmpEmploymentInformationList.add(employmentInformation);
                         tmpEmploymentHistory.setEmploymentInformation(tmpEmploymentInformationList);
-                        employmentHistoryHR.add(tmpEmploymentHistory);
+
+                        sortAndAddEmploymentHistory(tmpEmploymentHistory);
+
                     }
                 }
+                //sortAndAddEmploymentHistory(ehs);
+                employmentHistoryHR.add(ehs);
             }
         }
 
         employmentHistory.addAll(employmentHistoryHR);
+
+    }
+
+    private void sortAndAddEmploymentHistory(EmploymentHistoryEmploymentScreening employmentHistory){
+
+       // employmentHistoryHR.add(employmentHistory);
+        int index = 0;
+        boolean isAdded = false;
+        if(employmentHistoryHR.size() >0) {
+            for (EmploymentHistory employmentHistory1 : new ArrayList<>(employmentHistoryHR)) {
+                if (employmentHistory1 instanceof EmploymentHistoryEmploymentScreening) {
+                    EmploymentHistoryEmploymentScreening ehs = (EmploymentHistoryEmploymentScreening) employmentHistory1;
+                    if (CommonUtils.getFormattedDateObject(ehs.getEmploymentInformation().get(0).getMostRecentHireDate()).compareTo(CommonUtils.getFormattedDateObject(employmentHistory.getEmploymentInformation().get(0).getMostRecentHireDate())) < 0) {
+                        employmentHistoryHR.add(index,employmentHistory);
+                        isAdded = true;
+                    }
+                }
+                index++;
+            }
+            if (!isAdded)
+                employmentHistoryHR.add(employmentHistory);
+
+        }else{
+            employmentHistoryHR.add(employmentHistory);
+        }
 
     }
 
