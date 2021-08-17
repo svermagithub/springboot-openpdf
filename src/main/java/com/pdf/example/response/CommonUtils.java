@@ -2,6 +2,9 @@ package com.pdf.example.response;
 
 import org.apache.commons.lang3.StringUtils;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Optional;
 
 public class CommonUtils {
@@ -13,6 +16,17 @@ public class CommonUtils {
         if (date != null && date.length() == 8)
             return date.substring(0, 2) + "/" + date.substring(2, 4) + "/" + date.substring(4, 8);
         return "N/A";
+    }
+
+    public static Date getFormattedDateObject(String date) {
+        date = getFormattedDate(date);
+        Date dateObj = null;
+        try {
+            dateObj = new SimpleDateFormat("dd/mm/yyyy").parse(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return dateObj;
     }
 
     public static String formatTenure(String positionTenure) {
