@@ -23,8 +23,8 @@ public class TestPdf {
     public static void main(String[] args) {
 
 
-           // testPDFWrite();
-      System.out.println("Sum "+ CommonUtils.formatTenure(CommonUtils.sumOfTenure("P11Y9M14D", "P11Y9M25D")));
+            testPDFWrite();
+     // System.out.println("Sum "+ CommonUtils.formatTenure(CommonUtils.sumOfTenure("P11Y9M14D", "P11Y9M25D")));
 
     }
 

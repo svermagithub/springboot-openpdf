@@ -167,9 +167,10 @@ public class ItextPdfCreator {
 
        List<EmploymentHistory> employmentHistoryHR = new ArrayList<>();
         EmploymentHistoryEmploymentScreening tmpEmploymentHistory = null;
+        String totalTenure = "P0Y0M0D";
 
         for ( EmploymentHistory employmentHistory1 : new ArrayList<>(employmentHistory)){
-
+            totalTenure = "P0Y0M0D"; //..1
             if(employmentHistory1 instanceof EmploymentHistoryEmploymentScreening) {
                 EmploymentHistoryEmploymentScreening ehs = (EmploymentHistoryEmploymentScreening) employmentHistory1;
                 for (EmploymentInformation employmentInformation : new ArrayList<>(ehs.getEmploymentInformation())){
@@ -184,9 +185,19 @@ public class ItextPdfCreator {
                         sortAndAddEmploymentHistory(tmpEmploymentHistory,employmentHistoryHR);
 
                     }
+
+                    if(employmentInformation.getOriginalHireDate() != null &&  employmentInformation.getOriginalHireDate().equalsIgnoreCase(employmentInformation.getMostRecentHireDate())){
+
+                        totalTenure = CommonUtils.sumOfTenure(totalTenure, employmentInformation.getPositionTenure() );
+                        employmentInformation.setPositionTenure(totalTenure);
+                    }
+
+
                 }
                 //sortAndAddEmploymentHistory(ehs);
+
                 employmentHistoryHR.add(ehs);
+
             }
         }
 
@@ -773,7 +784,7 @@ public class ItextPdfCreator {
             distinctEmploymentInformation=employmentInformation;
             row2 = new String[]{
                     Optional.ofNullable(count ==0 ? employmentInformation.getEmploymentStatus().getName() : "").orElse(NOT_AVAILABLE),
-                    Optional.ofNullable(count ==0 ? employmentInformation.getWorkStatus().getName() : "").orElse(NOT_AVAILABLE),
+                    Optional.ofNullable(count ==0 ? employmentInformationList.get(0).getWorkStatus().getName() : "").orElse(NOT_AVAILABLE),
                     Optional.ofNullable(employmentInformation.getPositionTitle()).orElse(NOT_AVAILABLE)
             };
             values1.add(row2);
