@@ -61,7 +61,7 @@ public class ItextPdfCreator {
     protected boolean isHR = false;
     protected boolean isPremium = false;
     private List<String> executedYear = new ArrayList<>();
-    List<EmploymentHistory> employmentHistoryHR = new ArrayList<>();
+    List<EmploymentHistory> employmentHistoryHRList = new ArrayList<>();
 
     /**
      * Creates the Experian Verify Premium report.
@@ -107,9 +107,9 @@ public class ItextPdfCreator {
                 }
 
                 if(isHR){
-                    total = employmentHistoryHR.size();
+                    total = employmentHistoryHRList.size();
                     for (int i = current; i <  total; i++) {
-                        EmploymentHistory eh = employmentHistoryHR.get(i);
+                        EmploymentHistory eh = employmentHistoryHRList.get(i);
                         writePremuimEmployer(eh, (i + 1), total);
                         executedYear = new ArrayList<>();
                     }
@@ -165,7 +165,7 @@ public class ItextPdfCreator {
 
     private void mapToEmploymentHistoryHR(List<EmploymentHistory> employmentHistory) {
 
-        employmentHistoryHR = new ArrayList<>();
+       List<EmploymentHistory> employmentHistoryHR = new ArrayList<>();
         EmploymentHistoryEmploymentScreening tmpEmploymentHistory = null;
 
         for ( EmploymentHistory employmentHistory1 : new ArrayList<>(employmentHistory)){
@@ -181,7 +181,7 @@ public class ItextPdfCreator {
                         tmpEmploymentInformationList.add(employmentInformation);
                         tmpEmploymentHistory.setEmploymentInformation(tmpEmploymentInformationList);
 
-                        sortAndAddEmploymentHistory(tmpEmploymentHistory);
+                        sortAndAddEmploymentHistory(tmpEmploymentHistory,employmentHistoryHR);
 
                     }
                 }
@@ -190,11 +190,11 @@ public class ItextPdfCreator {
             }
         }
 
-        employmentHistory.addAll(employmentHistoryHR);
+        employmentHistoryHRList.addAll(employmentHistoryHR);
 
     }
 
-    private void sortAndAddEmploymentHistory(EmploymentHistoryEmploymentScreening employmentHistory){
+    private void sortAndAddEmploymentHistory(EmploymentHistoryEmploymentScreening employmentHistory, List<EmploymentHistory> employmentHistoryHR){
 
        // employmentHistoryHR.add(employmentHistory);
         int index = 0;

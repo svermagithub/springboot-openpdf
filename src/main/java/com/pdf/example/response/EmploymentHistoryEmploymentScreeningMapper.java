@@ -9,8 +9,6 @@ public class EmploymentHistoryEmploymentScreeningMapper {
         ehs.setStepDone(eh.getStepDone());
         ehs.setOriginReportId(eh.getOriginReportId());
         ehs.setOriginSourceId(eh.getOriginSourceId());
-        ehs.setOriginSourceId(eh.getEmployerIdentificationNumber());
-
 
     }
 }
