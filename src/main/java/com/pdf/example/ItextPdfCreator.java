@@ -196,6 +196,7 @@ public class ItextPdfCreator {
                 }
                 //sortAndAddEmploymentHistory(ehs);
 
+                if(ehs.getEmploymentInformation() != null && ehs.getEmploymentInformation().size()>0)
                 employmentHistoryHR.add(ehs);
 
             }

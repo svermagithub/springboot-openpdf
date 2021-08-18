@@ -56,7 +56,7 @@ public class TestPdf {
             document.open();
             cb = writer.getDirectContent();
             //IncomeAndEmploymentResponse incomeAndEmploymentResponse = createSampleTestData(); //TestData.getIncomeAndEmploymentResponse();
-            IncomeAndEmploymentResponse incomeAndEmploymentResponse = TestData.getIncomeAndEmploymentResponse();
+            IncomeAndEmploymentResponse incomeAndEmploymentResponse = TestData2.getIncomeAndEmploymentResponse();
 
             new ItextPdfCreator().writePDF(incomeAndEmploymentResponse, document, cb);
             document.close();
