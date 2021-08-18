@@ -8,6 +8,7 @@ import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.pdf.example.ItextPdfCreator;
+import com.pdf.example.response.CommonUtils;
 import com.pdf.example.response.IncomeAndEmploymentResponse;
 
 import java.io.BufferedReader;
@@ -22,7 +23,8 @@ public class TestPdf {
     public static void main(String[] args) {
 
 
-            testPDFWrite();
+           // testPDFWrite();
+      System.out.println("Sum "+ CommonUtils.formatTenure(CommonUtils.sumOfTenure("P11Y9M14D", "P11Y9M25D")));
 
     }
 
@@ -68,5 +70,6 @@ public class TestPdf {
             e.printStackTrace();
         }
     }
+
 
 }

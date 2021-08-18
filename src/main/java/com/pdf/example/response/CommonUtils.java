@@ -41,4 +41,32 @@ public class CommonUtils {
         }).orElse(positionTenure);
 
     }
+
+    public static String sumOfTenure(String positionTenure1, String positionTenure2) {
+
+        int years1 = Optional.ofNullable(positionTenure1).map(pt -> Integer.parseInt(StringUtils.substringBetween(pt, "P", "Y"))).orElse(0);
+        int months1 = Optional.ofNullable(positionTenure1).map(pt -> Integer.parseInt(StringUtils.substringBetween(pt, "Y", "M"))).orElse(0);
+        int days1 = Optional.ofNullable(positionTenure1).map(pt -> Integer.parseInt(StringUtils.substringBetween(pt, "M", "D"))).orElse(0);
+
+        int years2 = Optional.ofNullable(positionTenure2).map(pt -> Integer.parseInt(StringUtils.substringBetween(pt, "P", "Y"))).orElse(0);
+        int months2 = Optional.ofNullable(positionTenure2).map(pt -> Integer.parseInt(StringUtils.substringBetween(pt, "Y", "M"))).orElse(0);
+        int days2 = Optional.ofNullable(positionTenure2).map(pt -> Integer.parseInt(StringUtils.substringBetween(pt, "M", "D"))).orElse(0);
+
+        int days = days1 + days2;
+        int months = months1 + months2;
+        int years = years1 + years2;
+
+        if(days > 30){
+            months = months + (days / 30) ;
+            days = days % 30;
+        }
+
+        if(months > 12) {
+            years = years + (months / 12);
+            months = months % 12;
+        }
+
+        return "P"+years+"Y"+months+"M"+days+"D";
+    }
+
 }

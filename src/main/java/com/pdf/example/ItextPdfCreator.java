@@ -203,7 +203,7 @@ public class ItextPdfCreator {
             for (EmploymentHistory employmentHistory1 : new ArrayList<>(employmentHistoryHR)) {
                 if (employmentHistory1 instanceof EmploymentHistoryEmploymentScreening) {
                     EmploymentHistoryEmploymentScreening ehs = (EmploymentHistoryEmploymentScreening) employmentHistory1;
-                    if (CommonUtils.getFormattedDateObject(ehs.getEmploymentInformation().get(0).getMostRecentHireDate()).compareTo(CommonUtils.getFormattedDateObject(employmentHistory.getEmploymentInformation().get(0).getMostRecentHireDate())) < 0) {
+                    if (ehs.getEmploymentInformation().size() > 0 && CommonUtils.getFormattedDateObject(ehs.getEmploymentInformation().get(0).getMostRecentHireDate()).compareTo(CommonUtils.getFormattedDateObject(employmentHistory.getEmploymentInformation().get(0).getMostRecentHireDate())) < 0) {
                         employmentHistoryHR.add(index,employmentHistory);
                         isAdded = true;
                     }
