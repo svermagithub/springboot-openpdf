@@ -1,5 +1,6 @@
 package com.pdf.example;
 
+import com.google.gson.Gson;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.ColumnText;
@@ -77,8 +78,10 @@ public class ItextPdfCreator {
         int current = 0;
         if (expVerifyReport.getConsumerPii() != null && expVerifyReport.getConsumerPii().getEmploymentHistory() != null) {
             List<EmploymentHistory> employmentHistory = expVerifyReport.getConsumerPii().getEmploymentHistory();
+
+            List<EmploymentHistory> employmentHistory1 = new ArrayList<>(employmentHistory);
             if (isHR)
-                mapToEmploymentHistoryHR(employmentHistory);
+                mapToEmploymentHistoryHR(employmentHistory1);
 
             total = employmentHistory.size();
         }
@@ -185,8 +188,10 @@ public class ItextPdfCreator {
                 esh1 = (EmploymentHistoryEmploymentScreening) employmentHistoryHR.get(index);
 
             EmploymentInformation employmentInformation = null;
-            if (esh1 != null && esh1.getEmploymentInformation().size() > 0)
+            if (esh1 != null && esh1.getEmploymentInformation().size() > 0) {
                 employmentInformation = esh1.getEmploymentInformation().get(0);
+                employmentInformation.setCopied(true);
+            }
 
             for (EmploymentHistory employmentHistory1 : employmentHistoryLst1) {
                 totalTenure = "P0Y0M0D"; //..1
@@ -196,15 +201,16 @@ public class ItextPdfCreator {
                             && esh.getEmploymentInformation().size() > 0
                             && esh1.getEmployerName().equalsIgnoreCase(esh.getEmployerName())) {
 
-                        esh.getEmploymentInformation().remove(esh1.getEmploymentInformation().get(0));
+                        //   esh.getEmploymentInformation().remove(esh1.getEmploymentInformation().get(0));
+
 
                         for (EmploymentInformation employmentInformation1 : new ArrayList<>(esh.getEmploymentInformation())) {
-                            if (employmentInformation.getMostRecentHireDate().equalsIgnoreCase(employmentInformation1.getMostRecentHireDate()) &&
+                            if (!employmentInformation1.isCopied() && employmentInformation.getMostRecentHireDate().equalsIgnoreCase(employmentInformation1.getMostRecentHireDate()) &&
                                     employmentInformation.getOriginalHireDate().equalsIgnoreCase(employmentInformation1.getOriginalHireDate())) {
                                 esh1.getEmploymentInformation().add(employmentInformation1);
-                                esh.getEmploymentInformation().remove(employmentInformation1);
-
-                                totalTenure = CommonUtils.sumOfTenure(employmentInformation.getPositionTenure(), employmentInformation1.getPositionTenure() );
+                                employmentInformation1.setCopied(true);
+                                // esh.getEmploymentInformation().remove(employmentInformation1);
+                                totalTenure = CommonUtils.sumOfTenure(employmentInformation.getPositionTenure(), employmentInformation1.getPositionTenure());
                                 employmentInformation.setPositionTenure(totalTenure);
                                 employmentInformation1.setPositionTenure(totalTenure);
 
@@ -232,47 +238,23 @@ public class ItextPdfCreator {
                 EmploymentHistoryEmploymentScreening esh = (EmploymentHistoryEmploymentScreening) employmentHistory1;
 
                 for (EmploymentInformation employmentInformation : esh.getEmploymentInformation()) {
-                    Date mrhd = CommonUtils.getFormattedDateObject(employmentInformation.getMostRecentHireDate());
-                    if (mrhd.compareTo(maxhireDate) > 0) {
-                        maxhireDate = mrhd;
-                        new EmploymentHistoryEmploymentScreeningMapper().mapper(newEmploymentHistory, esh);
-                        newEmploymentInformationsLst = new ArrayList<>();
-                        newEmploymentInformationsLst.add(employmentInformation);
-                        newEmploymentHistory.setEmploymentInformation(newEmploymentInformationsLst);
-                        isAdded = true;
+                    if (!employmentInformation.isCopied()) {
+                        Date mrhd = CommonUtils.getFormattedDateObject(employmentInformation.getMostRecentHireDate());
+                        if (mrhd.compareTo(maxhireDate) > 0) {
+                            maxhireDate = mrhd;
+                            new EmploymentHistoryEmploymentScreeningMapper().mapper(newEmploymentHistory, esh);
+                            newEmploymentInformationsLst = new ArrayList<>();
+                            newEmploymentInformationsLst.add(employmentInformation);
+                            newEmploymentHistory.setEmploymentInformation(newEmploymentInformationsLst);
+                            isAdded = true;
+                        }
                     }
                 }
-
             }
         }
+
         return isAdded ? newEmploymentHistory : null;
     }
-
-    private void sortAndAddEmploymentHistory(EmploymentHistoryEmploymentScreening employmentHistory, List<EmploymentHistory> employmentHistoryHR) {
-
-        // employmentHistoryHR.add(employmentHistory);
-        int index = 0;
-        boolean isAdded = false;
-        if (employmentHistoryHR.size() > 0) {
-            for (EmploymentHistory employmentHistory1 : new ArrayList<>(employmentHistoryHR)) {
-                if (employmentHistory1 instanceof EmploymentHistoryEmploymentScreening) {
-                    EmploymentHistoryEmploymentScreening ehs = (EmploymentHistoryEmploymentScreening) employmentHistory1;
-                    if (ehs.getEmploymentInformation().size() > 0 && CommonUtils.getFormattedDateObject(ehs.getEmploymentInformation().get(0).getMostRecentHireDate()).compareTo(CommonUtils.getFormattedDateObject(employmentHistory.getEmploymentInformation().get(0).getMostRecentHireDate())) < 0) {
-                        employmentHistoryHR.add(index, employmentHistory);
-                        isAdded = true;
-                    }
-                }
-                index++;
-            }
-            if (!isAdded)
-                employmentHistoryHR.add(employmentHistory);
-
-        } else {
-            employmentHistoryHR.add(employmentHistory);
-        }
-
-    }
-
 
     /**
      * Compound all 4 address lines into a single string
@@ -778,7 +760,7 @@ public class ItextPdfCreator {
             row1 = new String[]{Optional.ofNullable(CommonUtils.getFormattedDate(employmentHistoryEmploymentScreening.getAsOfDate())).orElse(NOT_AVAILABLE),
                     Optional.ofNullable(CommonUtils.getFormattedDate(employmentInformation.getOriginalHireDate())).orElse(NOT_AVAILABLE),
                     Optional.ofNullable(CommonUtils.getFormattedDate(employmentInformation.getMostRecentHireDate())).orElse(NOT_AVAILABLE),
-                    Optional.ofNullable(CommonUtils.getFormattedDate(employmentInformation.getMostRecentSeparationDate())).orElse(NOT_AVAILABLE),
+                    Optional.ofNullable(CommonUtils.getFormattedDate(employmentInformation.getPositionEndDate())).orElse(NOT_AVAILABLE),
                     Optional.ofNullable(CommonUtils.formatTenure(employmentInformation.getPositionTenure())).orElse(NOT_AVAILABLE)
             };
 

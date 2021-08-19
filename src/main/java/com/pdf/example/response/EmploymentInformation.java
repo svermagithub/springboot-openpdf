@@ -7,12 +7,15 @@ public class EmploymentInformation {
 
 	private String originalHireDate;
 	private String mostRecentHireDate;
-	private String mostRecentSeparationDate;
+	private String positionEndDate;
 	private String positionTenure;
 	private String positionTitle;
 	private EmploymentStatus employmentStatus;
 	private WorkStatus workStatus;
-	
+	private boolean isCopied;
+
+	public boolean isCopied() {  return isCopied; }
+	public void setCopied(boolean copied) {	isCopied = copied;	}
 	public String getOriginalHireDate() {
 		return originalHireDate;
 	}
@@ -25,11 +28,11 @@ public class EmploymentInformation {
 	public void setMostRecentHireDate(String mostRecentHireDate) {
 		this.mostRecentHireDate = mostRecentHireDate;
 	}
-	public String getMostRecentSeparationDate() {
-		return mostRecentSeparationDate;
+	public String getPositionEndDate() {
+		return positionEndDate;
 	}
-	public void setMostRecentSeparationDate(String mostRecentSeparationDate) {
-		this.mostRecentSeparationDate = mostRecentSeparationDate;
+	public void setPositionEndDate(String mostRecentSeparationDate) {
+		this.positionEndDate = mostRecentSeparationDate;
 	}
 	public String getPositionTenure() {
 		return positionTenure;

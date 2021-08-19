@@ -148,29 +148,29 @@ public class TestData {
         employmentInformation.setPositionTenure("P5Y1M14D");
         employmentInformation.setWorkStatus(getWorkStatus());
         employmentInformation.setEmploymentStatus(getEmploymentStatus());
-        employmentInformation.setMostRecentSeparationDate(null);
+        employmentInformation.setPositionEndDate(null);
         lst.add(employmentInformation);
 
         EmploymentInformation employmentInformation1 = new EmploymentInformation();
         employmentInformation1.setMostRecentHireDate("10282009");
         employmentInformation1.setOriginalHireDate("10282009");
-        employmentInformation1.setMostRecentSeparationDate("02282015");
+        employmentInformation1.setPositionEndDate("02282015");
         employmentInformation1.setPositionTitle("App. Architect");
         employmentInformation1.setPositionTenure("P5Y4M0D");
         employmentInformation1.setWorkStatus(getWorkStatus());
         employmentInformation1.setEmploymentStatus(getEmploymentStatus());
-        employmentInformation1.setMostRecentSeparationDate(null);
+        employmentInformation1.setPositionEndDate(null);
         lst.add(employmentInformation1);
 
         EmploymentInformation employmentInformation2 = new EmploymentInformation();
         employmentInformation2.setMostRecentHireDate("10282009");
         employmentInformation2.setOriginalHireDate("10282009");
-        employmentInformation2.setMostRecentSeparationDate(null);
+        employmentInformation2.setPositionEndDate(null);
         employmentInformation2.setPositionTitle("Asoc App. Architect");
         employmentInformation2.setPositionTenure("P11Y9M14D");
         employmentInformation2.setWorkStatus(getWorkStatus());
         employmentInformation2.setEmploymentStatus(getEmploymentStatus());
-        employmentInformation2.setMostRecentSeparationDate(null);
+        employmentInformation2.setPositionEndDate(null);
         lst.add(employmentInformation2);
 
 
@@ -186,7 +186,7 @@ public class TestData {
         employmentInformation.setPositionTenure("P11Y9M14D");
         employmentInformation.setPositionTitle("Software Engineer");
         employmentInformation.setWorkStatus(getWorkStatus());
-        employmentInformation.setMostRecentSeparationDate(null);
+        employmentInformation.setPositionEndDate(null);
         lst.add(employmentInformation);
 
         EmploymentInformation employmentInformation1 = new EmploymentInformation();
@@ -196,7 +196,7 @@ public class TestData {
         employmentInformation1.setPositionTenure("P11Y9M14D");
         employmentInformation1.setPositionTitle("Sr Software Engineer");
         employmentInformation1.setWorkStatus(getWorkStatus());
-        employmentInformation1.setMostRecentSeparationDate(null);
+        employmentInformation1.setPositionEndDate(null);
         lst.add(employmentInformation1);
 
         EmploymentInformation employmentInformation2 = new EmploymentInformation();
@@ -206,7 +206,7 @@ public class TestData {
         employmentInformation2.setPositionTenure("P11Y9M14D");
         employmentInformation2.setPositionTitle("Lead Engineer");
         employmentInformation2.setWorkStatus(getWorkStatus());
-        employmentInformation2.setMostRecentSeparationDate("01012017");
+        employmentInformation2.setPositionEndDate("01012017");
         lst.add(employmentInformation2);
 
         EmploymentInformation employmentInformation3 = new EmploymentInformation();
@@ -216,7 +216,7 @@ public class TestData {
         employmentInformation3.setPositionTenure("P11Y9M14D");
         employmentInformation3.setPositionTitle("Manager");
         employmentInformation3.setWorkStatus(getWorkStatus());
-        employmentInformation3.setMostRecentSeparationDate("01012017");
+        employmentInformation3.setPositionEndDate("01012017");
         lst.add(employmentInformation3);
 
         return lst;
