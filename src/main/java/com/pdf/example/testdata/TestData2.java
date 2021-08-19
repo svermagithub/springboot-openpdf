@@ -183,7 +183,7 @@ public class TestData2 {
         employmentInformation2.setOriginalHireDate("12022016");
         employmentInformation2.setMostRecentSeparationDate(null);
         employmentInformation2.setPositionTitle("Sr Sales Consultant");
-        employmentInformation2.setPositionTenure("P4Y8M15D");
+        employmentInformation2.setPositionTenure("P2Y6M15D");
         employmentInformation2.setWorkStatus(getWorkStatus());
         employmentInformation2.setEmploymentStatus(getEmploymentStatus());
         employmentInformation2.setMostRecentSeparationDate(null);

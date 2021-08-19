@@ -170,6 +170,8 @@ public class ItextPdfCreator {
         List<EmploymentHistory> employmentHistoryLst1;
         employmentHistoryLst1 = employmentHistory;
 
+        String totalTenure = "P0Y0M0D";
+
         int index = 0;
         while (true) {
             EmploymentHistory maxEmpHistory = getMaxMostRecentHireDate(employmentHistoryLst1);
@@ -187,9 +189,13 @@ public class ItextPdfCreator {
                 employmentInformation = esh1.getEmploymentInformation().get(0);
 
             for (EmploymentHistory employmentHistory1 : employmentHistoryLst1) {
+                totalTenure = "P0Y0M0D"; //..1
                 if (employmentHistory1 instanceof EmploymentHistoryEmploymentScreening) {
                     EmploymentHistoryEmploymentScreening esh = (EmploymentHistoryEmploymentScreening) employmentHistory1;
-                    if (esh1 != null && esh.getEmploymentInformation() != null && esh.getEmploymentInformation().size() > 0) {
+                    if (esh1 != null && esh.getEmploymentInformation() != null
+                            && esh.getEmploymentInformation().size() > 0
+                            && esh1.getEmployerName().equalsIgnoreCase(esh.getEmployerName())) {
+
                         esh.getEmploymentInformation().remove(esh1.getEmploymentInformation().get(0));
 
                         for (EmploymentInformation employmentInformation1 : new ArrayList<>(esh.getEmploymentInformation())) {
@@ -197,6 +203,11 @@ public class ItextPdfCreator {
                                     employmentInformation.getOriginalHireDate().equalsIgnoreCase(employmentInformation1.getOriginalHireDate())) {
                                 esh1.getEmploymentInformation().add(employmentInformation1);
                                 esh.getEmploymentInformation().remove(employmentInformation1);
+
+                                totalTenure = CommonUtils.sumOfTenure(employmentInformation.getPositionTenure(), employmentInformation1.getPositionTenure() );
+                                employmentInformation.setPositionTenure(totalTenure);
+                                employmentInformation1.setPositionTenure(totalTenure);
+
                             }
                         }
                     }
