@@ -1,0 +1,606 @@
+{
+  "expVerifyReport": {
+    "reportId": "50e16dda-2a59-45a7-8b75-c16cb45d507b",
+    "reportType": "ExpVerify-Premium",
+    "reportGeneratedDate": "1631501518",
+    "requestor": {
+      "subscriberCode": "4999100",
+      "verifierName": "Example Lender"
+    },
+    "resellerInfo": {
+      "endUserName": "pidepipper LLC"
+    },
+    "consumerPii": {
+      "applicantInformation": {
+        "name": {
+          "lastName": "ROSS",
+          "firstName": "GEORGE",
+          "middleName": "G",
+          "generationCode": null
+        },
+        "ssn": {
+          "ssn": "XXX-XX-7420"
+        },
+        "phone": [
+          {
+            "number": "9893628344",
+            "type": null
+          }
+        ],
+        "currentAddress": {
+          "line1": "217 EVANS ST",
+          "line2": null,
+          "line3": null,
+          "city": "EAST TAWAS",
+          "state": "MI",
+          "zipCode": "48730-1512"
+        },
+        "dob": {
+          "dob": null
+        }
+      },
+      "employmentHistory": [
+        {
+          "asOfDate": "05282021",
+          "originReportId": "bb5c3dc2-9f8c-435a-8200-39c8d0b8d48f",
+          "originSourceId": "00A",
+          "employerIdentificationNumber": "510349408",
+          "employerName": "MMBS Inc",
+          "employerAddress": {
+            "lineOne": "52WMre t",
+            "lineTwo": null,
+            "lineThree": null,
+            "cityName": "Gogtw",
+            "state": "DE",
+            "countryCode": "US",
+            "postalCode": "99999"
+          },
+          "originalHireDate": "11282009",
+          "mostRecentHireDate": "07282016",
+          "employmentStatus": {
+            "code": "F",
+            "name": "Full Time"
+          },
+          "workStatus": {
+            "code": "A",
+            "name": "Active"
+          },
+          "paymentHistory": [
+            {
+              "payDate": "05282021",
+              "payCycle": "Bi-Weekly",
+              "payPeriod": {
+                "startDate": "05112021",
+                "endDate": "05242021"
+              },
+              "payDescription": "Hourly",
+              "payPeriodHours": 0.0,
+              "basePayRate": {
+                "amount": 2307.69,
+                "currencyCode": "USD"
+              },
+              "payAmount": {
+                "grossPay": {
+                  "amount": 17307.69,
+                  "currencyCode": "USD"
+                },
+                "basePay": {
+                  "amount": 2307.69,
+                  "currencyCode": "USD"
+                },
+                "overTimePay": {
+                  "amount": 0.0,
+                  "currencyCode": "USD"
+                },
+                "bonusPay": {
+                  "amount": 15000.0,
+                  "currencyCode": "USD"
+                },
+                "otherPay": {
+                  "amount": 0.0,
+                  "currencyCode": "USD"
+                }
+              },
+              "deductions": [
+                {
+                  "deductionCode": {
+                    "name": "Federal tax"
+                  },
+                  "deductionAmount": {
+                    "amount": 3696.15,
+                    "currencyCode": "USD"
+                  }
+                },
+                {
+                  "deductionCode": {
+                    "name": "State tax"
+                  },
+                  "deductionAmount": {
+                    "amount": 1037.21,
+                    "currencyCode": "USD"
+                  }
+                },
+                {
+                  "deductionCode": {
+                    "name": "Local tax"
+                  },
+                  "deductionAmount": {
+                    "amount": 0.0,
+                    "currencyCode": "USD"
+                  }
+                },
+                {
+                  "deductionCode": {
+                    "name": "Social security tax"
+                  },
+                  "deductionAmount": {
+                    "amount": 1073.08,
+                    "currencyCode": "USD"
+                  }
+                },
+                {
+                  "deductionCode": {
+                    "name": "Retirement deductions"
+                  },
+                  "deductionAmount": {
+                    "amount": 750.0,
+                    "currencyCode": "USD"
+                  }
+                },
+                {
+                  "deductionCode": {
+                    "name": "Garnishment deductions"
+                  },
+                  "deductionAmount": {
+                    "amount": 0.0,
+                    "currencyCode": "USD"
+                  }
+                },
+                {
+                  "deductionCode": {
+                    "name": "Benefit deductions"
+                  },
+                  "deductionAmount": {
+                    "amount": 250.96,
+                    "currencyCode": "USD"
+                  }
+                },
+                {
+                  "deductionCode": {
+                    "name": "Other deductions"
+                  },
+                  "deductionAmount": {
+                    "amount": 0.0,
+                    "currencyCode": "USD"
+                  }
+                }
+              ],
+              "payDistributions": [
+                {
+                  "depositAmount": {
+                    "amount": 10500.29,
+                    "currencyCode": "USD"
+                  },
+                  "depositAccount": {
+                    "routingTransitID": "000000000",
+                    "accountNumber": "XXX-XX-0000",
+                    "accountTypeCode": "Checking"
+                  }
+                }
+              ]
+            },
+            {
+              "payDate": "12302020",
+              "payCycle": "Bi-Weekly",
+              "payPeriod": {
+                "startDate": "12102020",
+                "endDate": "12232020"
+              },
+              "payDescription": "Hourly",
+              "payPeriodHours": 0.0,
+              "basePayRate": {
+                "amount": 2307.69,
+                "currencyCode": "USD"
+              },
+              "payAmount": {
+                "grossPay": {
+                  "amount": 2307.69,
+                  "currencyCode": "USD"
+                },
+                "basePay": {
+                  "amount": 2307.69,
+                  "currencyCode": "USD"
+                },
+                "overTimePay": {
+                  "amount": 0.0,
+                  "currencyCode": "USD"
+                },
+                "bonusPay": {
+                  "amount": 0.0,
+                  "currencyCode": "USD"
+                },
+                "otherPay": {
+                  "amount": 0.0,
+                  "currencyCode": "USD"
+                }
+              },
+              "deductions": null,
+              "payDistributions": [
+                {
+                  "depositAmount": {
+                    "amount": 1221.75,
+                    "currencyCode": "USD"
+                  },
+                  "depositAccount": {
+                    "routingTransitID": "000000000",
+                    "accountNumber": "XXX-XX-0000",
+                    "accountTypeCode": "Checking"
+                  }
+                }
+              ]
+            }
+          ],
+          "totalAnnualRemuneration": [
+            {
+              "year": 2021,
+              "payAmountYTD": {
+                "grossPayYTD": {
+                  "amount": 62884.59,
+                  "currencyCode": "USD"
+                },
+                "basePayYTD": {
+                  "amount": 25384.59,
+                  "currencyCode": "USD"
+                },
+                "overtimePayYTD": {
+                  "amount": 0.0,
+                  "currencyCode": "USD"
+                },
+                "bonusPayYTD": {
+                  "amount": 36000.0,
+                  "currencyCode": "USD"
+                },
+                "otherPayYTD": {
+                  "amount": 1500.0,
+                  "currencyCode": "USD"
+                }
+              }
+            },
+            {
+              "year": 2020,
+              "payAmountYTD": {
+                "grossPayYTD": {
+                  "amount": 153766.21,
+                  "currencyCode": "USD"
+                },
+                "basePayYTD": {
+                  "amount": 59999.94,
+                  "currencyCode": "USD"
+                },
+                "overtimePayYTD": {
+                  "amount": 0.0,
+                  "currencyCode": "USD"
+                },
+                "bonusPayYTD": {
+                  "amount": 90166.27,
+                  "currencyCode": "USD"
+                },
+                "otherPayYTD": {
+                  "amount": 3600.0,
+                  "currencyCode": "USD"
+                }
+              }
+            }
+          ],
+          "positionTenure": "P5Y1M16D",
+          "positionTitle": "Data Engineer",
+          "employerDisclaimers": null
+        },
+        {
+          "asOfDate": "08102021",
+          "originReportId": "bb5c3dc2-9f8c-435a-8200-39c8d0b8d48f",
+          "originSourceId": "00A",
+          "employerIdentificationNumber": "510349408",
+          "employerName": "Hara Inc",
+          "employerAddress": {
+            "lineOne": "52WMre t",
+            "lineTwo": null,
+            "lineThree": null,
+            "cityName": "Gogtw",
+            "state": "DE",
+            "countryCode": "US",
+            "postalCode": "99999"
+          },
+          "originalHireDate": "11282009",
+          "mostRecentHireDate": "11282009",
+          "employmentStatus": {
+            "code": "F",
+            "name": "Full Time"
+          },
+          "workStatus": {
+            "code": "A",
+            "name": "Active"
+          },
+          "paymentHistory": [
+            {
+              "payDate": "08102021",
+              "payCycle": "Bi-Weekly",
+              "payPeriod": {
+                "startDate": "07212021",
+                "endDate": "08032021"
+              },
+              "payDescription": "Hourly",
+              "payPeriodHours": 0.0,
+              "basePayRate": {
+                "amount": 2307.69,
+                "currencyCode": "USD"
+              },
+              "payAmount": {
+                "grossPay": {
+                  "amount": 2457.69,
+                  "currencyCode": "USD"
+                },
+                "basePay": {
+                  "amount": 2307.69,
+                  "currencyCode": "USD"
+                },
+                "overTimePay": {
+                  "amount": 0.0,
+                  "currencyCode": "USD"
+                },
+                "bonusPay": {
+                  "amount": 0.0,
+                  "currencyCode": "USD"
+                },
+                "otherPay": {
+                  "amount": 150.0,
+                  "currencyCode": "USD"
+                }
+              },
+              "deductions": [
+                {
+                  "deductionCode": {
+                    "name": "Federal tax"
+                  },
+                  "deductionAmount": {
+                    "amount": 134.81,
+                    "currencyCode": "USD"
+                  }
+                },
+                {
+                  "deductionCode": {
+                    "name": "State tax"
+                  },
+                  "deductionAmount": {
+                    "amount": 66.04,
+                    "currencyCode": "USD"
+                  }
+                },
+                {
+                  "deductionCode": {
+                    "name": "Local tax"
+                  },
+                  "deductionAmount": {
+                    "amount": 0.0,
+                    "currencyCode": "USD"
+                  }
+                },
+                {
+                  "deductionCode": {
+                    "name": "Social security tax"
+                  },
+                  "deductionAmount": {
+                    "amount": 143.07,
+                    "currencyCode": "USD"
+                  }
+                },
+                {
+                  "deductionCode": {
+                    "name": "Retirement deductions"
+                  },
+                  "deductionAmount": {
+                    "amount": 750.0,
+                    "currencyCode": "USD"
+                  }
+                },
+                {
+                  "deductionCode": {
+                    "name": "Garnishment deductions"
+                  },
+                  "deductionAmount": {
+                    "amount": 0.0,
+                    "currencyCode": "USD"
+                  }
+                },
+                {
+                  "deductionCode": {
+                    "name": "Benefit deductions"
+                  },
+                  "deductionAmount": {
+                    "amount": 33.46,
+                    "currencyCode": "USD"
+                  }
+                },
+                {
+                  "deductionCode": {
+                    "name": "Other deductions"
+                  },
+                  "deductionAmount": {
+                    "amount": 491.16,
+                    "currencyCode": "USD"
+                  }
+                }
+              ],
+              "payDistributions": [
+                {
+                  "depositAmount": {
+                    "amount": 839.15,
+                    "currencyCode": "USD"
+                  },
+                  "depositAccount": {
+                    "routingTransitID": "000000000",
+                    "accountNumber": "XXX-XX-0000",
+                    "accountTypeCode": "Checking"
+                  }
+                }
+              ]
+            },
+            {
+              "payDate": "07272021",
+              "payCycle": "Bi-Weekly",
+              "payPeriod": {
+                "startDate": "07072021",
+                "endDate": "07202021"
+              },
+              "payDescription": "Hourly",
+              "payPeriodHours": 0.0,
+              "basePayRate": {
+                "amount": 2307.69,
+                "currencyCode": "USD"
+              },
+              "payAmount": {
+                "grossPay": {
+                  "amount": 2457.69,
+                  "currencyCode": "USD"
+                },
+                "basePay": {
+                  "amount": 2307.69,
+                  "currencyCode": "USD"
+                },
+                "overTimePay": {
+                  "amount": 0.0,
+                  "currencyCode": "USD"
+                },
+                "bonusPay": {
+                  "amount": 0.0,
+                  "currencyCode": "USD"
+                },
+                "otherPay": {
+                  "amount": 150.0,
+                  "currencyCode": "USD"
+                }
+              },
+              "deductions": [
+                {
+                  "deductionCode": {
+                    "name": "Federal tax"
+                  },
+                  "deductionAmount": {
+                    "amount": 134.81,
+                    "currencyCode": "USD"
+                  }
+                },
+                {
+                  "deductionCode": {
+                    "name": "State tax"
+                  },
+                  "deductionAmount": {
+                    "amount": 66.04,
+                    "currencyCode": "USD"
+                  }
+                },
+                {
+                  "deductionCode": {
+                    "name": "Local tax"
+                  },
+                  "deductionAmount": {
+                    "amount": 0.0,
+                    "currencyCode": "USD"
+                  }
+                },
+                {
+                  "deductionCode": {
+                    "name": "Social security tax"
+                  },
+                  "deductionAmount": {
+                    "amount": 143.08,
+                    "currencyCode": "USD"
+                  }
+                },
+                {
+                  "deductionCode": {
+                    "name": "Retirement deductions"
+                  },
+                  "deductionAmount": {
+                    "amount": 750.0,
+                    "currencyCode": "USD"
+                  }
+                },
+                {
+                  "deductionCode": {
+                    "name": "Garnishment deductions"
+                  },
+                  "deductionAmount": {
+                    "amount": 0.0,
+                    "currencyCode": "USD"
+                  }
+                },
+                {
+                  "deductionCode": {
+                    "name": "Benefit deductions"
+                  },
+                  "deductionAmount": {
+                    "amount": 33.46,
+                    "currencyCode": "USD"
+                  }
+                },
+                {
+                  "deductionCode": {
+                    "name": "Other deductions"
+                  },
+                  "deductionAmount": {
+                    "amount": 491.16,
+                    "currencyCode": "USD"
+                  }
+                }
+              ],
+              "payDistributions": [
+                {
+                  "depositAmount": {
+                    "amount": 839.14,
+                    "currencyCode": "USD"
+                  },
+                  "depositAccount": {
+                    "routingTransitID": "000000000",
+                    "accountNumber": "XXX-XX-0000",
+                    "accountTypeCode": "Checking"
+                  }
+                }
+              ]
+            }
+          ],
+          "totalAnnualRemuneration": [
+            {
+              "year": 2021,
+              "payAmountYTD": {
+                "grossPayYTD": {
+                  "amount": 81511.52,
+                  "currencyCode": "USD"
+                },
+                "basePayYTD": {
+                  "amount": 18461.52,
+                  "currencyCode": "USD"
+                },
+                "overtimePayYTD": {
+                  "amount": 0.0,
+                  "currencyCode": "USD"
+                },
+                "bonusPayYTD": {
+                  "amount": 62000.0,
+                  "currencyCode": "USD"
+                },
+                "otherPayYTD": {
+                  "amount": 1050.0,
+                  "currencyCode": "USD"
+                }
+              }
+            }
+          ],
+          "positionTenure": "P11Y9M16D",
+          "positionTitle": "Data Engineer",
+          "employerDisclaimers": null
+        }
+      ]
+    }
+  }
+}

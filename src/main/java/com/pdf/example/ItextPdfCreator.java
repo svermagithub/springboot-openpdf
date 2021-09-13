@@ -837,6 +837,8 @@ public class ItextPdfCreator {
         if (paymentHistory == null) {
             return;
         }
+
+        boolean isYTDDisplay = true;
         for (PaymentHistory ph : paymentHistory) {
 
             PaymentHistoryEnhanced paymentHistoryEnhanced = (PaymentHistoryEnhanced) ph;
@@ -891,9 +893,14 @@ public class ItextPdfCreator {
             }
 
             // Fourth table
-            if (ph.getStepDone() < 3) {
-                getYTDInformation(employmentHistoryEnhanced, ph, x, w);
-                ph.setStepDone(3);
+            if (ph.getStepDone() < 3  ) {
+                if(isYTDDisplay) {
+                    getYTDInformation(employmentHistoryEnhanced, ph, x, w);
+                    ph.setStepDone(3);
+                    isYTDDisplay = false;
+                }else{
+                    ph.setStepDone(3);
+                }
             }
             // Payroll title
             if (ph.getStepDone() < 4) {

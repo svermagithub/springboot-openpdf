@@ -47,7 +47,7 @@ public class TestPdf {
 
         Rectangle pageSize = new Rectangle(PageSize.LETTER);
         Document document = new Document(pageSize);
-        String FILE = "F:/Test/PdfReport_"+new Date().getTime() +".pdf";
+        String FILE = "F:/Test/PdfReport_" + new Date().getTime() + ".pdf";
         PdfContentByte cb = null;
         try {
             FileOutputStream fos = new FileOutputStream(FILE);
@@ -56,7 +56,7 @@ public class TestPdf {
             document.open();
             cb = writer.getDirectContent();
             //IncomeAndEmploymentResponse incomeAndEmploymentResponse = createSampleTestData(); //TestData.getIncomeAndEmploymentResponse();
-            IncomeAndEmploymentResponse incomeAndEmploymentResponse = TestData2.getIncomeAndEmploymentResponse();
+            IncomeAndEmploymentResponse incomeAndEmploymentResponse = TestData3.getIncomeAndEmploymentResponse();
 
             new ItextPdfCreator().writePDF(incomeAndEmploymentResponse, document, cb);
             document.close();

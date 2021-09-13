@@ -205,6 +205,36 @@ public class TestData2 {
         employmentInformation.setPositionEndDate(null);
         lst.add(employmentInformation);
 
+        EmploymentInformation employmentInformation1 = new EmploymentInformation();
+        employmentInformation1.setEmploymentStatus(getEmploymentStatus());
+        employmentInformation1.setMostRecentHireDate("01022019");
+        employmentInformation1.setOriginalHireDate("12022012");
+        employmentInformation1.setPositionTenure("P1Y4M15D");
+        employmentInformation1.setPositionTitle("Sr. Vice President");
+        employmentInformation1.setWorkStatus(getWorkStatus());
+        employmentInformation1.setPositionEndDate(null);
+        lst.add(employmentInformation1);
+
+        EmploymentInformation employmentInformation2 = new EmploymentInformation();
+        employmentInformation2.setEmploymentStatus(getEmploymentStatus());
+        employmentInformation2.setMostRecentHireDate("01022019");
+        employmentInformation2.setOriginalHireDate("12022012");
+        employmentInformation2.setPositionTenure("P1Y4M15D");
+        employmentInformation2.setPositionTitle("VVP");
+        employmentInformation2.setWorkStatus(getWorkStatus());
+        employmentInformation2.setPositionEndDate(null);
+        lst.add(employmentInformation2);
+
+        EmploymentInformation employmentInformation3 = new EmploymentInformation();
+        employmentInformation3.setEmploymentStatus(getEmploymentStatus());
+        employmentInformation3.setMostRecentHireDate("01022019");
+        employmentInformation3.setOriginalHireDate("12022012");
+        employmentInformation3.setPositionTenure("P1Y4M15D");
+        employmentInformation3.setPositionTitle("VVP 2");
+        employmentInformation3.setWorkStatus(getWorkStatus());
+        employmentInformation3.setPositionEndDate(null);
+        lst.add(employmentInformation3);
+
         return lst;
 
     }
