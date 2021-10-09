@@ -135,8 +135,8 @@ public class TestData3 {
         employmentHistory2.setMostRecentHireDate("11282009");
         employmentHistory2.setWorkStatus(getWorkStatus());
         employmentHistory2.setEmploymentStatus(getEmploymentStatus());
-        employmentHistory2.setPaymentHistory(getPaymentHistory());
-        employmentHistory2.setTotalAnnualRemuneration(getTotalRenumeration());
+        employmentHistory2.setPaymentHistory(getPaymentHistory1());
+        employmentHistory2.setTotalAnnualRemuneration(getTotalRenumeration1());
         employmentHistory2.setEmployerAddress(getEmployeeAddress());
         employmentHistory2.setPositionTenure("P5Y1M16D");
         employmentHistory2.setPositionTitle("Data Engineer");
@@ -164,6 +164,16 @@ public class TestData3 {
         return totalAnnualRenumerations;
     }
 
+    private static List<TotalAnnualRenumeration> getTotalRenumeration1() {
+        List<TotalAnnualRenumeration> totalAnnualRenumerations = new ArrayList<>();
+        TotalAnnualRenumerationEnhanced totalAnnualRenumeration1 = new TotalAnnualRenumerationEnhanced();
+        totalAnnualRenumeration1.setYear(2021);
+        totalAnnualRenumeration1.setPayAmountYTD(getAmountYTD2());
+        totalAnnualRenumerations.add(totalAnnualRenumeration1);
+
+        return totalAnnualRenumerations;
+    }
+
     private static PayAmountYTD getAmountYTD() {
         PayAmountYTD payAmountYTD = new PayAmountYTD();
         payAmountYTD.setGrossPayYTD(getRespPayYTD(62884.59,"USD" ));
@@ -182,6 +192,17 @@ public class TestData3 {
         payAmountYTD.setOvertimePayYTD(getRespPayYTD(0.0,"USD" ));
         payAmountYTD.setBonusPayYTD(getRespPayYTD(90166.27,"USD" ));
         payAmountYTD.setOtherPayYTD(getRespPayYTD(3600.0,"USD" ));
+
+        return payAmountYTD;
+    }
+
+    private static PayAmountYTD getAmountYTD2() {
+        PayAmountYTD payAmountYTD = new PayAmountYTD();
+        payAmountYTD.setGrossPayYTD(getRespPayYTD(81511.52,"USD" ));
+        payAmountYTD.setBasePayYTD(getRespPayYTD(18461.52,"USD" ));
+        payAmountYTD.setOvertimePayYTD(getRespPayYTD(0.0,"USD" ));
+        payAmountYTD.setBonusPayYTD(getRespPayYTD(62000.0,"USD" ));
+        payAmountYTD.setOtherPayYTD(getRespPayYTD(1050.0,"USD" ));
 
         return payAmountYTD;
     }
@@ -208,14 +229,43 @@ public class TestData3 {
         paymentHistory.add(paymentHistory1);
 
         PaymentHistoryEnhanced paymentHistory2 = new PaymentHistoryEnhanced();
-        paymentHistory2.setPayDate("12302020");
+        paymentHistory2.setPayDate("12302021");
         paymentHistory2.setPayCycle("Bi-Weekly");
-        paymentHistory2.setPayPeriod(getPayPeriod("12102020", "12232020"));
+        paymentHistory2.setPayPeriod(getPayPeriod("12102021", "12232021"));
         paymentHistory2.setPayDescription("Hourly");
         paymentHistory2.setPayPeriodHours(0.0);
         paymentHistory2.setBasePayRate(getRespPayDetail(2307.69, "USD"));
         paymentHistory2.setPayAmount(getRespPayAmount1());
-        paymentHistory2.setDeductions(null);
+        paymentHistory2.setDeductions(getDeductions());
+        paymentHistory2.setPayDistributions(getPayDistributions1());
+        paymentHistory.add(paymentHistory2);
+
+        return paymentHistory;
+    }
+
+    private static List<PaymentHistory> getPaymentHistory1() {
+        List<PaymentHistory> paymentHistory = new ArrayList<>();
+        PaymentHistoryEnhanced paymentHistory1 = new PaymentHistoryEnhanced();
+        paymentHistory1.setPayDate("08102021");
+        paymentHistory1.setPayCycle("Bi-Weekly");
+        paymentHistory1.setPayPeriod(getPayPeriod("07212021", "08032021"));
+        paymentHistory1.setPayDescription("Hourly");
+        paymentHistory1.setPayPeriodHours(0.0);
+        paymentHistory1.setBasePayRate(getBasePayRate());
+        paymentHistory1.setPayAmount(getRespPayAmount());
+        paymentHistory1.setDeductions(getDeductions());
+        paymentHistory1.setPayDistributions(getPayDistributions());
+        paymentHistory.add(paymentHistory1);
+
+        PaymentHistoryEnhanced paymentHistory2 = new PaymentHistoryEnhanced();
+        paymentHistory2.setPayDate("12302021");
+        paymentHistory2.setPayCycle("Bi-Weekly");
+        paymentHistory2.setPayPeriod(getPayPeriod("12102021", "12232021"));
+        paymentHistory2.setPayDescription("Hourly");
+        paymentHistory2.setPayPeriodHours(0.0);
+        paymentHistory2.setBasePayRate(getRespPayDetail(2307.69, "USD"));
+        paymentHistory2.setPayAmount(getRespPayAmount1());
+        paymentHistory2.setDeductions(getDeductions());
         paymentHistory2.setPayDistributions(getPayDistributions1());
         paymentHistory.add(paymentHistory2);
 

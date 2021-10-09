@@ -1,0 +1,298 @@
+{
+  "expVerifyReport": {
+    "reportId": "24d77653-1c13-4c3b-9054-266d2ae9fa9e",
+    "reportType": "ExpVerify-Employment",
+    "reportGeneratedDate": "1633430632",
+    "requestor": {
+      "subscriberCode": "4999100",
+      "verifierName": "Example Lender"
+    },
+    "resellerInfo": {
+      "endUserName": "pidepipper LLC"
+    },
+    "consumerPii": {
+      "applicantInformation": {
+        "name": {
+          "lastName": "DENNIS",
+          "firstName": "MORAN",
+          "middleName": "",
+          "generationCode": null
+        },
+        "ssn": {
+          "ssn": "XXX-XX-1323"
+        },
+        "phone": null,
+        "currentAddress": {
+          "line1": "30 MOREHOUSE LN",
+          "line2": null,
+          "line3": null,
+          "city": "NORWALK",
+          "state": "CT",
+          "zipCode": "068504420"
+        }
+      },
+      "employmentHistory": [
+        {
+          "asOfDate": "10022021",
+          "originReportId": "1abe710e-1052-477c-8ee1-3d53c8e439a9",
+          "originSourceId": "00C",
+          "employerIdentificationNumber": "860265030",
+          "employerName": "SWIFT TRANSPORTATION CO., OF ARIZONA LLC",
+          "employerAddress": {
+            "lineOne": "464 Maple Court",
+            "lineTwo": "",
+            "lineThree": null,
+            "cityName": "PHOENIX",
+            "state": "AZ",
+            "countryCode": null,
+            "postalCode": "85043"
+          },
+          "employmentInformation": [
+            {
+              "originalHireDate": "02102019",
+              "mostRecentHireDate": "02102019",
+              "positionEndDate": "02242018",
+              "positionTenure": "32",
+              "positionTitle": "ATLGA-CASUAL DRV VAN",
+              "employmentStatus": {
+                "code": "P",
+                "name": "Part Time"
+              },
+              "workStatus": {
+                "code": "I",
+                "name": "Inactive"
+              }
+            }
+          ],
+          "employerDisclaimers": "This is disclaimer text that may be specified by the employer."
+        },
+        {
+          "asOfDate": "10012021",
+          "originReportId": "fdffd191-8a1c-4d95-ba50-da4f23fe746e",
+          "originSourceId": "00C",
+          "employerIdentificationNumber": "9945678123",
+          "employerName": "Practi-Plan",
+          "employerAddress": {
+            "lineOne": "2550 HICKORY ST",
+            "lineTwo": "Sprenger",
+            "lineThree": null,
+            "cityName": "NORWALK",
+            "state": "CT",
+            "countryCode": null,
+            "postalCode": "068504420"
+          },
+          "employmentInformation": [
+            {
+              "originalHireDate": "03012021",
+              "mostRecentHireDate": "03012021",
+              "positionEndDate": null,
+              "positionTenure": "7",
+              "positionTitle": "POULTRY SCIENTIST",
+              "employmentStatus": {
+                "code": "P",
+                "name": "Part Time"
+              },
+              "workStatus": {
+                "code": "A",
+                "name": "Active"
+              }
+            }
+          ],
+          "employerDisclaimers": "This is disclaimer text that may be specified by the employer."
+        },
+        {
+          "asOfDate": "09222021",
+          "originReportId": "0d900819-e14c-4650-aba5-4cb910d019b6",
+          "originSourceId": "00C",
+          "employerIdentificationNumber": "860262030",
+          "employerName": "Roads West Transportation",
+          "employerAddress": {
+            "lineOne": "2601 E Magnolia St, Phoenix",
+            "lineTwo": "",
+            "lineThree": null,
+            "cityName": "PHOENIX",
+            "state": "AZ",
+            "countryCode": null,
+            "postalCode": "85034"
+          },
+          "employmentInformation": [
+            {
+              "originalHireDate": "02102017",
+              "mostRecentHireDate": "02102017",
+              "positionEndDate": "02242017",
+              "positionTenure": null,
+              "positionTitle": "Associate",
+              "employmentStatus": {
+                "code": "P",
+                "name": "Part Time"
+              },
+              "workStatus": {
+                "code": "I",
+                "name": "Inactive"
+              }
+            }
+          ],
+          "employerDisclaimers": "This is disclaimer text that may be specified by the employer."
+        },
+        {
+          "asOfDate": "09212021",
+          "originReportId": "c38b1550-cfaa-4a6d-912d-3ea183e16969",
+          "originSourceId": "00C",
+          "employerIdentificationNumber": "9945612323",
+          "employerName": "Olson's Market",
+          "employerAddress": {
+            "lineOne": "674 Broad Street",
+            "lineTwo": "EMMONS",
+            "lineThree": null,
+            "cityName": "NORWALK",
+            "state": "CT",
+            "countryCode": null,
+            "postalCode": "068504420"
+          },
+          "employmentInformation": [
+            {
+              "originalHireDate": "02102020",
+              "mostRecentHireDate": "02102020",
+              "positionEndDate": "02242020",
+              "positionTenure": null,
+              "positionTitle": "ASSOCIATE",
+              "employmentStatus": {
+                "code": "P",
+                "name": "Part Time"
+              },
+              "workStatus": {
+                "code": "I",
+                "name": "Inactive"
+              }
+            }
+          ],
+          "employerDisclaimers": "This is disclaimer text that may be specified by the employer."
+        },
+        {
+          "asOfDate": "09212021",
+          "originReportId": "95181c98-4f3c-4287-8e94-fad349fb7107",
+          "originSourceId": "00C",
+          "employerIdentificationNumber": "994500023",
+          "employerName": "Electronic Hatchery",
+          "employerAddress": {
+            "lineOne": "464 Maple Court",
+            "lineTwo": "ROLLA",
+            "lineThree": null,
+            "cityName": "NORWALK",
+            "state": "CT",
+            "countryCode": null,
+            "postalCode": "068504420"
+          },
+          "employmentInformation": [
+            {
+              "originalHireDate": "02102019",
+              "mostRecentHireDate": "02102019",
+              "positionEndDate": "02242019",
+              "positionTenure": null,
+              "positionTitle": "POULTRY SCIENTIST",
+              "employmentStatus": {
+                "code": "P",
+                "name": "Part Time"
+              },
+              "workStatus": {
+                "code": "I",
+                "name": "Inactive"
+              }
+            }
+          ],
+          "employerDisclaimers": "This is disclaimer text that may be specified by the employer."
+        },
+        {
+          "asOfDate": "09212021",
+          "originReportId": "43870757-c345-40f6-a9fe-b0fdc9fdfc3e",
+          "originSourceId": "00C",
+          "employerIdentificationNumber": "860262035",
+          "employerName": "Knight Transportation",
+          "employerAddress": {
+            "lineOne": "5698 W Mohave St",
+            "lineTwo": "",
+            "lineThree": null,
+            "cityName": "PHOENIX",
+            "state": "AZ",
+            "countryCode": null,
+            "postalCode": "85043"
+          },
+          "employmentInformation": [
+            {
+              "originalHireDate": "02102017",
+              "mostRecentHireDate": "02102017",
+              "positionEndDate": "02242016",
+              "positionTenure": "56",
+              "positionTitle": "Sr Associate",
+              "employmentStatus": {
+                "code": "P",
+                "name": "Part Time"
+              },
+              "workStatus": {
+                "code": "I",
+                "name": "Inactive"
+              }
+            }
+          ],
+          "employerDisclaimers": "This is disclaimer text that may be specified by the employer."
+        },
+        {
+          "asOfDate": "09212021",
+          "originReportId": "be906665-db9c-4370-9a95-ff82f18dc5a8",
+          "originSourceId": "00C",
+          "employerIdentificationNumber": "860262040",
+          "employerName": "Auto Safety House",
+          "employerAddress": {
+            "lineOne": "2630 W Buckeye Rd",
+            "lineTwo": "",
+            "lineThree": null,
+            "cityName": "PHOENIX",
+            "state": "AZ",
+            "countryCode": null,
+            "postalCode": "85043"
+          },
+          "employmentInformation": [
+            {
+              "originalHireDate": "02102015",
+              "mostRecentHireDate": "02102015",
+              "positionEndDate": "02242015",
+              "positionTenure": null,
+              "positionTitle": "Manager",
+              "employmentStatus": {
+                "code": "P",
+                "name": "Part Time"
+              },
+              "workStatus": {
+                "code": "I",
+                "name": "Inactive"
+              }
+            }
+          ],
+          "employerDisclaimers": "This is disclaimer text that may be specified by the employer."
+        }
+      ]
+    },
+    "reportCustomLabels": {
+      "label1": {
+        "name": "Name1",
+        "value": "Value1"
+      },
+      "label2": {
+        "name": "Name2",
+        "value": "Value2"
+      },
+      "label3": {
+        "name": "Name3",
+        "value": "Value3"
+      },
+      "label4": {
+        "name": "Name4",
+        "value": "Value4"
+      },
+      "label5": {
+        "name": "Name5",
+        "value": "Value5"
+      }
+    }
+  }
+}

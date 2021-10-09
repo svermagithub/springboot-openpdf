@@ -719,7 +719,6 @@ public class ItextPdfCreator {
     private void writePremiumEmployerTable1(EmploymentHistory eh) throws DocumentException, NotFitException {
 
         String[] header1 = null;
-        String[] header2 = null;
         List<String[]> values = new ArrayList<>();
         List<String[]> values1 = new ArrayList<>();
         String[] row1 = null;
@@ -764,9 +763,6 @@ public class ItextPdfCreator {
                     Optional.ofNullable(CommonUtils.formatTenure(employmentInformation.getPositionTenure())).orElse(NOT_AVAILABLE)
             };
 
-            header2 = new String[]{"Employment Status", "Work Status", "Title"};
-
-
         } else if (isPlus) {
             EmploymentHistoryPlus employmentHistoryPlus = (EmploymentHistoryPlus) eh;
             PaymentHistoryStandard paymentHistoryStandard = null;
@@ -793,8 +789,18 @@ public class ItextPdfCreator {
         float w = document.getPageSize().getWidth() - 2 * x;
         writeTable(x, w, header1, weight, values);
 
-        if (header2 != null && isHR) {
+    }
 
+    private void writeHRPositionDetails(EmploymentHistory eh) throws DocumentException, NotFitException{
+        float x = MARGIN_OUTSIDE_L_R + MARGIN_INSIDE_L_R + FIELD_SEPARATOR;
+        float w = document.getPageSize().getWidth() - 2 * x;
+        String[] header2 = new String[]{"Employment Status", "Work Status", "Title"};
+        List<String[]> values1 = new ArrayList<>();
+        float[] weight = null;
+        if (header2 != null && isHR) {
+            EmploymentHistoryEmploymentScreening employmentHistoryEmploymentScreening = (EmploymentHistoryEmploymentScreening) eh;
+            List<EmploymentInformation> employmentInformationList = employmentHistoryEmploymentScreening.getEmploymentInformation();
+            getEmploymentInformation(employmentInformationList, values1);
             weight = new float[]{0.20f, 0.20f, 0.17f};
             writeTable(x, w, header2, weight, values1);
         }
@@ -838,7 +844,6 @@ public class ItextPdfCreator {
             return;
         }
 
-        boolean isYTDDisplay = true;
         for (PaymentHistory ph : paymentHistory) {
 
             PaymentHistoryEnhanced paymentHistoryEnhanced = (PaymentHistoryEnhanced) ph;
@@ -893,14 +898,9 @@ public class ItextPdfCreator {
             }
 
             // Fourth table
-            if (ph.getStepDone() < 3  ) {
-                if(isYTDDisplay) {
-                    getYTDInformation(employmentHistoryEnhanced, ph, x, w);
-                    ph.setStepDone(3);
-                    isYTDDisplay = false;
-                }else{
-                    ph.setStepDone(3);
-                }
+            if (ph.getStepDone() < 3) {
+                getYTDInformation(employmentHistoryEnhanced, ph, x, w);
+                ph.setStepDone(3);
             }
             // Payroll title
             if (ph.getStepDone() < 4) {
@@ -934,8 +934,7 @@ public class ItextPdfCreator {
         List<String[]> values = new ArrayList<>();
 
         if (CollectionUtils.isEmpty(employmentHistoryEnhanced.getTotalAnnualRemuneration())) {
-            header = new String[]{"YTD Gross Pay", "YTD Base Pay", "YTD Overtime", "YTD Bonus", "YTD Other",
-                    ""};
+            header = new String[]{"YTD Gross Pay", "YTD Base Pay", "YTD Overtime", "YTD Bonus", "YTD Other", ""};
             values.add(new String[]{JsonUtil.NULL_VALUE, JsonUtil.NULL_VALUE, JsonUtil.NULL_VALUE,
                     JsonUtil.NULL_VALUE, JsonUtil.NULL_VALUE});
             writeTable(x, w, header, values);
@@ -949,8 +948,7 @@ public class ItextPdfCreator {
             }
 
             if (!executedYear.contains(year)) {
-                header = new String[]{"YTD Gross Pay", "YTD Base Pay", "YTD Overtime", "YTD Bonus", "YTD Other",
-                        ""};
+                header = new String[]{"YTD Gross Pay", "YTD Base Pay", "YTD Overtime", "YTD Bonus", "YTD Other", ""};
 
                 for (TotalAnnualRenumeration totalAnnualRenumeration : employmentHistoryEnhanced.getTotalAnnualRemuneration()) {
                     TotalAnnualRenumerationEnhanced totalAnnualRenumerationEnhanced = (TotalAnnualRenumerationEnhanced) totalAnnualRenumeration;
@@ -960,8 +958,8 @@ public class ItextPdfCreator {
 
                         values.add(new String[]{payAmountYTD.getGrossPayYTD() != null ? "$" + getRoundOffValue(payAmountYTD.getGrossPayYTD().getAmount()) : NOT_AVAILABLE, payAmountYTD.getGrossPayYTD() != null ? "$" + getRoundOffValue(payAmountYTD.getBasePayYTD().getAmount()) : NOT_AVAILABLE, payAmountYTD.getOvertimePayYTD() != null ? "$" + getRoundOffValue(payAmountYTD.getOvertimePayYTD().getAmount()) : NOT_AVAILABLE,
                                 payAmountYTD.getBonusPayYTD() != null ? "$" + getRoundOffValue(payAmountYTD.getBonusPayYTD().getAmount()) : NOT_AVAILABLE, payAmountYTD.getOtherPayYTD() != null ? "$" + getRoundOffValue(payAmountYTD.getOtherPayYTD().getAmount()) : NOT_AVAILABLE});
-                        executedYear.add(year);
                         writeTable(x, w, header, values);
+                        executedYear.add(year);
                     }
                 }
             }
@@ -987,7 +985,7 @@ public class ItextPdfCreator {
      */
     private void writePremuimEmployer(EmploymentHistory eh, int i, int total)
             throws DocumentException, NotFitException {
-        if (eh.getStepDone() < 2) {
+        if (eh.getStepDone() < 3) {
             // write subtitle if the employer is not done
             writeEmployerSubTitle(i, total);
         }
@@ -1003,6 +1001,13 @@ public class ItextPdfCreator {
             writePremiumEmployerTable2(eh, i);
             eh.setStepDone(2);
         }
+        if(isHR && eh.getStepDone() < 3){
+            writeHRPositionDetails(eh);
+            eh.setStepDone(3);
+        }else{
+            eh.setStepDone(3);
+        }
+
     }
 
     /**
@@ -1399,10 +1404,6 @@ public class ItextPdfCreator {
         float bw = document.getPageSize().getWidth() - 2 * MARGIN_OUTSIDE_L_R;
         float h = 20 + 15 * (values.size() + 1);
         if ((y - h) < PAGE_CUT) {
-            if (!CollectionUtils.isEmpty(executedYear)) {
-                int i = executedYear.size() - 1;
-                executedYear.remove(i);
-            }
             throw new NotFitException();
         }
         // Gray
