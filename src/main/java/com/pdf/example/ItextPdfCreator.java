@@ -255,14 +255,16 @@ public class ItextPdfCreator {
 
                     for (EmploymentInformation employmentInformation : esh.getEmploymentInformation()) {
                         if (!employmentInformation.isCopied()) {
-                            Date mrhd = CommonUtils.getFormattedDateObject(employmentInformation.getMostRecentHireDate());
-                            if (mrhd.compareTo(maxhireDate) > 0) {
-                                maxhireDate = mrhd;
-                                new EmploymentHistoryEmploymentScreeningMapper().mapper(newEmploymentHistory, esh);
-                                newEmploymentInformationsLst = new ArrayList<>();
-                                newEmploymentInformationsLst.add(employmentInformation);
-                                newEmploymentHistory.setEmploymentInformation(newEmploymentInformationsLst);
-                                isAdded = true;
+                            if(!StringUtils.isEmpty(employmentInformation.getMostRecentHireDate())) {
+                                Date mrhd = CommonUtils.getFormattedDateObject(employmentInformation.getMostRecentHireDate());
+                                if (mrhd.compareTo(maxhireDate) > 0) {
+                                    maxhireDate = mrhd;
+                                    new EmploymentHistoryEmploymentScreeningMapper().mapper(newEmploymentHistory, esh);
+                                    newEmploymentInformationsLst = new ArrayList<>();
+                                    newEmploymentInformationsLst.add(employmentInformation);
+                                    newEmploymentHistory.setEmploymentInformation(newEmploymentInformationsLst);
+                                    isAdded = true;
+                                }
                             }
                         }
                     }
@@ -841,8 +843,8 @@ public class ItextPdfCreator {
         for (EmploymentInformation employmentInformation : employmentInformationList) {
             distinctEmploymentInformation = employmentInformation;
             row2 = new String[]{
-                    employmentInformation.getEmploymentStatus()==null ? NOT_AVAILABLE :  Optional.ofNullable(employmentInformation.getEmploymentStatus().getName()).orElse(NOT_AVAILABLE),
-                    employmentInformation.getWorkStatus() ==null ? NOT_AVAILABLE : Optional.ofNullable(employmentInformation.getWorkStatus().getName()).orElse(NOT_AVAILABLE),
+                    count ==0 ? employmentInformation.getEmploymentStatus()==null ? NOT_AVAILABLE :  Optional.ofNullable(employmentInformation.getEmploymentStatus().getName()).orElse(NOT_AVAILABLE) : "",
+                    count ==0 ? employmentInformation.getWorkStatus() ==null ? NOT_AVAILABLE : Optional.ofNullable(employmentInformation.getWorkStatus().getName()).orElse(NOT_AVAILABLE) : "",
                     Optional.ofNullable(employmentInformation.getPositionTitle()).orElse(NOT_AVAILABLE)
             };
             values1.add(row2);
