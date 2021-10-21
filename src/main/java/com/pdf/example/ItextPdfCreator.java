@@ -64,6 +64,19 @@ public class ItextPdfCreator {
     private List<String> executedYear = new ArrayList<>();
     List<EmploymentHistory> employmentHistoryHRList = new ArrayList<>();
 
+    private List<EmploymentHistory> getDeepCopyOfEmploymentHistory(List<EmploymentHistory> employmentHistories){
+        Gson gson = new Gson();
+        List<EmploymentHistory> newEHList = new ArrayList<>();
+
+        for(EmploymentHistory employmentHistory : employmentHistories){
+            EmploymentHistoryEmploymentScreening employmentHistoryEmploymentScreening = (EmploymentHistoryEmploymentScreening) employmentHistory;
+            EmploymentHistoryEmploymentScreening deepCopy = gson.fromJson(gson.toJson(employmentHistoryEmploymentScreening), EmploymentHistoryEmploymentScreening.class);
+            newEHList.add(deepCopy);
+        }
+        return newEHList;
+    }
+
+
     /**
      * Creates the Experian Verify Premium report.
      *
@@ -79,9 +92,10 @@ public class ItextPdfCreator {
         if (expVerifyReport.getConsumerPii() != null && expVerifyReport.getConsumerPii().getEmploymentHistory() != null) {
             List<EmploymentHistory> employmentHistory = expVerifyReport.getConsumerPii().getEmploymentHistory();
 
-            List<EmploymentHistory> employmentHistory1 = new ArrayList<>(employmentHistory);
-            if (isHR)
+            if (isHR) {
+                List<EmploymentHistory> employmentHistory1 = getDeepCopyOfEmploymentHistory(employmentHistory);
                 mapToEmploymentHistoryHR(employmentHistory1);
+            }
 
             total = employmentHistory.size();
         }
@@ -109,7 +123,7 @@ public class ItextPdfCreator {
                     }
                 }
 
-                if (isHR) {
+                if (isHR && !CollectionUtils.isEmpty(employmentHistoryHRList)) {
                     total = employmentHistoryHRList.size();
                     for (int i = current; i < total; i++) {
                         EmploymentHistory eh = employmentHistoryHRList.get(i);
@@ -118,9 +132,11 @@ public class ItextPdfCreator {
                     }
                 } else {
                     for (int i = current; i < total; i++) {
-                        EmploymentHistory eh = expVerifyReport.getConsumerPii().getEmploymentHistory().get(i);
-                        writePremuimEmployer(eh, (i + 1), total);
-                        executedYear = new ArrayList<>();
+                        if(expVerifyReport.getConsumerPii().getEmploymentHistory() !=null) {
+                            EmploymentHistory eh = expVerifyReport.getConsumerPii().getEmploymentHistory().get(i);
+                            writePremuimEmployer(eh, (i + 1), total);
+                            executedYear = new ArrayList<>();
+                        }
                     }
                 }
                 hasData = false;
@@ -205,14 +221,13 @@ public class ItextPdfCreator {
 
 
                         for (EmploymentInformation employmentInformation1 : new ArrayList<>(esh.getEmploymentInformation())) {
-                            if (!employmentInformation1.isCopied() && employmentInformation.getMostRecentHireDate().equalsIgnoreCase(employmentInformation1.getMostRecentHireDate()) &&
+                            if (employmentInformation1 !=null && !employmentInformation1.isCopied() && employmentInformation.getMostRecentHireDate().equalsIgnoreCase(employmentInformation1.getMostRecentHireDate()) &&
                                     employmentInformation.getOriginalHireDate().equalsIgnoreCase(employmentInformation1.getOriginalHireDate())) {
                                 esh1.getEmploymentInformation().add(employmentInformation1);
                                 employmentInformation1.setCopied(true);
-                                // esh.getEmploymentInformation().remove(employmentInformation1);
+                              //   esh.getEmploymentInformation().remove(employmentInformation1);
                                 totalTenure = CommonUtils.sumOfTenure(employmentInformation.getPositionTenure(), employmentInformation1.getPositionTenure());
-                                employmentInformation.setPositionTenure(totalTenure);
-                                employmentInformation1.setPositionTenure(totalTenure);
+                                 employmentInformation1.setPositionTenure(totalTenure);
 
                             }
                         }
@@ -233,20 +248,22 @@ public class ItextPdfCreator {
 
         Date maxhireDate = new Date(Long.MIN_VALUE);
         boolean isAdded = false;
-        for (EmploymentHistory employmentHistory1 : new ArrayList<>(employmentHistory)) {
-            if (employmentHistory1 instanceof EmploymentHistoryEmploymentScreening) {
-                EmploymentHistoryEmploymentScreening esh = (EmploymentHistoryEmploymentScreening) employmentHistory1;
+        if(!CollectionUtils.isEmpty(employmentHistory)) {
+            for (EmploymentHistory employmentHistory1 : new ArrayList<>(employmentHistory)) {
+                if (employmentHistory1 instanceof EmploymentHistoryEmploymentScreening) {
+                    EmploymentHistoryEmploymentScreening esh = (EmploymentHistoryEmploymentScreening) employmentHistory1;
 
-                for (EmploymentInformation employmentInformation : esh.getEmploymentInformation()) {
-                    if (!employmentInformation.isCopied()) {
-                        Date mrhd = CommonUtils.getFormattedDateObject(employmentInformation.getMostRecentHireDate());
-                        if (mrhd.compareTo(maxhireDate) > 0) {
-                            maxhireDate = mrhd;
-                            new EmploymentHistoryEmploymentScreeningMapper().mapper(newEmploymentHistory, esh);
-                            newEmploymentInformationsLst = new ArrayList<>();
-                            newEmploymentInformationsLst.add(employmentInformation);
-                            newEmploymentHistory.setEmploymentInformation(newEmploymentInformationsLst);
-                            isAdded = true;
+                    for (EmploymentInformation employmentInformation : esh.getEmploymentInformation()) {
+                        if (!employmentInformation.isCopied()) {
+                            Date mrhd = CommonUtils.getFormattedDateObject(employmentInformation.getMostRecentHireDate());
+                            if (mrhd.compareTo(maxhireDate) > 0) {
+                                maxhireDate = mrhd;
+                                new EmploymentHistoryEmploymentScreeningMapper().mapper(newEmploymentHistory, esh);
+                                newEmploymentInformationsLst = new ArrayList<>();
+                                newEmploymentInformationsLst.add(employmentInformation);
+                                newEmploymentHistory.setEmploymentInformation(newEmploymentInformationsLst);
+                                isAdded = true;
+                            }
                         }
                     }
                 }
@@ -263,27 +280,29 @@ public class ItextPdfCreator {
      * @return Address as string
      */
     private String getFullAddress(RespCurrentAddress address) {
-        String fa = address.getLine1();
-        if (address.getLine2() != null) {
-            fa += ", " + address.getLine2();
-        }
-        if (address.getLine3() != null) {
-            fa += " " + address.getLine3();
-        }
-        if (address.getLine3() != null) {
-            fa += " " + address.getLine3();
-        }
-        if (address.getCity() != null) {
-            fa += ", " + address.getCity();
-        }
-        if (address.getState() != null) {
-            fa += ", " + address.getState();
-        }
-        if (address.getZipCode() != null) {
-            fa += " " + address.getZipCode();
-        }
+        if(address!=null) {
+            String fa = "";
+            if (!StringUtils.isEmpty(address.getLine1())) {
+                fa += address.getLine1();
+            }
+            if (!StringUtils.isEmpty(address.getLine2())) {
+                fa += ", " + address.getLine2();
+            }
+            if (!StringUtils.isEmpty(address.getLine3())) {
+                fa += " " + address.getLine3();
+            }
+            if (!StringUtils.isEmpty(address.getCity())) {
+                fa += ", " + address.getCity();
+            }
+            if (!StringUtils.isEmpty(address.getState())) {
+                fa += ", " + address.getState();
+            }
+            if (!StringUtils.isEmpty(address.getZipCode())) {
+                fa += " " + address.getZipCode();
+            }
 
-        return fa;
+            return fa;
+        } else return JsonUtil.NULL_VALUE;
     }
 
     /**
@@ -327,14 +346,20 @@ public class ItextPdfCreator {
 
 
     private String getFullAddress(EmployerAddress address) {
-        String fa = address.getLineOne();
-        if (address.getLineTwo() != null) {
-            fa += ", " + address.getLineTwo();
+        if(address!=null) {
+            String fa = "";
+            if (!StringUtils.isEmpty(address.getLineOne())) {
+                fa += address.getLineOne();
+            }
+            if (!StringUtils.isEmpty(address.getLineTwo())) {
+                fa += ", " + address.getLineTwo();
+            }
+            if (!StringUtils.isEmpty(address.getLineThree())) {
+                fa += " " + address.getLineThree();
+            }
+            return fa;
         }
-        if (address.getLineThree() != null) {
-            fa += " " + address.getLineThree();
-        }
-        return fa;
+        else return JsonUtil.NULL_VALUE;
     }
 
     /**
@@ -691,14 +716,16 @@ public class ItextPdfCreator {
         w = writeText(FONT_10_NORMAL, returnValueOrNA(eh.getEmployerName()), x, y + 5, x + 500, y + 20);
         x += w + FIELD_SEPARATOR;
         String fa = getFullAddress(eh.getEmployerAddress());
-        if (eh.getEmployerAddress().getCityName() != null) {
-            fa += ", " + eh.getEmployerAddress().getCityName();
-        }
-        if (eh.getEmployerAddress().getState() != null) {
-            fa += ", " + eh.getEmployerAddress().getState();
-        }
-        if (eh.getEmployerAddress().getPostalCode() != null) {
-            fa += " " + eh.getEmployerAddress().getPostalCode();
+        if(eh.getEmployerAddress() != null) {
+            if (!StringUtils.isEmpty(eh.getEmployerAddress().getCityName())) {
+                fa += ", " + eh.getEmployerAddress().getCityName();
+            }
+            if (!StringUtils.isEmpty(eh.getEmployerAddress().getState())) {
+                fa += ", " + eh.getEmployerAddress().getState();
+            }
+            if (!StringUtils.isEmpty(eh.getEmployerAddress().getPostalCode())) {
+                fa += " " + eh.getEmployerAddress().getPostalCode();
+            }
         }
         writeText(FONT_10_NORMAL, fa, x, y + 5, x + 500, y + 20);
         y -= 12;
@@ -719,6 +746,7 @@ public class ItextPdfCreator {
     private void writePremiumEmployerTable1(EmploymentHistory eh) throws DocumentException, NotFitException {
 
         String[] header1 = null;
+        String[] header2 = null;
         List<String[]> values = new ArrayList<>();
         List<String[]> values1 = new ArrayList<>();
         String[] row1 = null;
@@ -737,7 +765,7 @@ public class ItextPdfCreator {
                     Optional.ofNullable(CommonUtils.getFormattedDate(employmentHistoryVOE.getMostRecentHireDate())).orElse(NOT_AVAILABLE),
                     employmentHistoryVOE.getEmploymentStatus() != null ? Optional.ofNullable(employmentHistoryVOE.getEmploymentStatus().getName()).orElse(NOT_AVAILABLE) : NOT_AVAILABLE,
                     employmentHistoryVOE.getWorkStatus() != null ? Optional.ofNullable(employmentHistoryVOE.getWorkStatus().getName()).orElse(NOT_AVAILABLE) : NOT_AVAILABLE,
-                    Optional.ofNullable(CommonUtils.formatTenure(employmentHistoryVOE.getPositionTenure())).orElse(NOT_AVAILABLE)};
+                    CommonUtils.formatTenure(employmentHistoryVOE.getPositionTenure())};
         } else if (isPremium) {
             EmploymentHistoryEnhanced employmentHistoryEnhanced = (EmploymentHistoryEnhanced) eh;
 
@@ -748,7 +776,7 @@ public class ItextPdfCreator {
                     Optional.ofNullable(CommonUtils.getFormattedDate(employmentHistoryEnhanced.getMostRecentHireDate())).orElse(NOT_AVAILABLE),
                     employmentHistoryEnhanced.getEmploymentStatus() != null ? Optional.ofNullable(employmentHistoryEnhanced.getEmploymentStatus().getName()).orElse(NOT_AVAILABLE) : NOT_AVAILABLE,
                     employmentHistoryEnhanced.getWorkStatus() != null ? Optional.ofNullable(employmentHistoryEnhanced.getWorkStatus().getName()).orElse(NOT_AVAILABLE) : NOT_AVAILABLE,
-                    Optional.ofNullable(CommonUtils.formatTenure(employmentHistoryEnhanced.getPositionTenure())).orElse(NOT_AVAILABLE)};
+                    CommonUtils.formatTenure(employmentHistoryEnhanced.getPositionTenure())};
         } else if (isHR) {
 
             EmploymentHistoryEmploymentScreening employmentHistoryEmploymentScreening = (EmploymentHistoryEmploymentScreening) eh;
@@ -760,7 +788,7 @@ public class ItextPdfCreator {
                     Optional.ofNullable(CommonUtils.getFormattedDate(employmentInformation.getOriginalHireDate())).orElse(NOT_AVAILABLE),
                     Optional.ofNullable(CommonUtils.getFormattedDate(employmentInformation.getMostRecentHireDate())).orElse(NOT_AVAILABLE),
                     Optional.ofNullable(CommonUtils.getFormattedDate(employmentInformation.getPositionEndDate())).orElse(NOT_AVAILABLE),
-                    Optional.ofNullable(CommonUtils.formatTenure(employmentInformation.getPositionTenure())).orElse(NOT_AVAILABLE)
+                    CommonUtils.formatTenure(employmentInformation.getPositionTenure())
             };
 
         } else if (isPlus) {
@@ -788,10 +816,9 @@ public class ItextPdfCreator {
         float x = MARGIN_OUTSIDE_L_R + MARGIN_INSIDE_L_R + FIELD_SEPARATOR;
         float w = document.getPageSize().getWidth() - 2 * x;
         writeTable(x, w, header1, weight, values);
-
     }
 
-    private void writeHRPositionDetails(EmploymentHistory eh) throws DocumentException, NotFitException{
+    private void writeHRPositionDetails(EmploymentHistory eh) throws DocumentException, NotFitException {
         float x = MARGIN_OUTSIDE_L_R + MARGIN_INSIDE_L_R + FIELD_SEPARATOR;
         float w = document.getPageSize().getWidth() - 2 * x;
         String[] header2 = new String[]{"Employment Status", "Work Status", "Title"};
@@ -814,8 +841,8 @@ public class ItextPdfCreator {
         for (EmploymentInformation employmentInformation : employmentInformationList) {
             distinctEmploymentInformation = employmentInformation;
             row2 = new String[]{
-                    Optional.ofNullable(count == 0 ? employmentInformation.getEmploymentStatus().getName() : "").orElse(NOT_AVAILABLE),
-                    Optional.ofNullable(count == 0 ? employmentInformationList.get(0).getWorkStatus().getName() : "").orElse(NOT_AVAILABLE),
+                    employmentInformation.getEmploymentStatus()==null ? NOT_AVAILABLE :  Optional.ofNullable(employmentInformation.getEmploymentStatus().getName()).orElse(NOT_AVAILABLE),
+                    employmentInformation.getWorkStatus() ==null ? NOT_AVAILABLE : Optional.ofNullable(employmentInformation.getWorkStatus().getName()).orElse(NOT_AVAILABLE),
                     Optional.ofNullable(employmentInformation.getPositionTitle()).orElse(NOT_AVAILABLE)
             };
             values1.add(row2);
@@ -843,7 +870,6 @@ public class ItextPdfCreator {
         if (paymentHistory == null) {
             return;
         }
-
         for (PaymentHistory ph : paymentHistory) {
 
             PaymentHistoryEnhanced paymentHistoryEnhanced = (PaymentHistoryEnhanced) ph;
@@ -914,8 +940,21 @@ public class ItextPdfCreator {
                 List<RespPayDistributions> payDistributions = paymentHistoryEnhanced.getPayDistributions();
                 if (!CollectionUtils.isEmpty(payDistributions)) {
                     for (RespPayDistributions payDistribution : payDistributions) {
-                        values.add(new String[]{payDistribution.getDepositAccount() != null ? Optional.ofNullable(payDistribution.getDepositAccount().getAccountTypeCode()).orElse(NOT_AVAILABLE) : JsonUtil.NULL_VALUE, payDistribution.getDepositAccount() != null ? Optional.ofNullable(payDistribution.getDepositAccount().getAccountNumber().toUpperCase(Locale.ROOT)).orElse(NOT_AVAILABLE) : JsonUtil.NULL_VALUE, payDistribution.getDepositAccount() != null ? Optional.ofNullable(payDistribution.getDepositAccount().getRoutingTransitID()).orElse(NOT_AVAILABLE) : JsonUtil.NULL_VALUE,
-                                payDistribution.getDepositAmount() != null ? "$" + getRoundOffValue(payDistribution.getDepositAmount().getAmount()) : JsonUtil.NULL_VALUE});
+                        if(payDistribution !=null) {
+                            RespDepositAccount depositAccount = payDistribution.getDepositAccount();
+                            RespDepositAmount depositAmount = payDistribution.getDepositAmount();
+
+                            String accountTypeCode = Optional.ofNullable(depositAccount)
+                                    .map(RespDepositAccount::getAccountTypeCode).orElse(JsonUtil.NULL_VALUE);
+                            String accountNumber = Optional.ofNullable(depositAccount)
+                                    .map(RespDepositAccount::getAccountNumber).orElse(JsonUtil.NULL_VALUE);
+                            String routingTransitID = Optional.ofNullable(depositAccount)
+                                    .map(RespDepositAccount::getRoutingTransitID).orElse(JsonUtil.NULL_VALUE);
+                            String dollarAmount = Optional.ofNullable(depositAmount)
+                                    .map(RespDepositAmount::getAmount).map(amount -> "$" + getRoundOffValue(amount)).orElse(JsonUtil.NULL_VALUE);
+
+                            values.add(new String[]{accountTypeCode, accountNumber, routingTransitID, dollarAmount});
+                        }
                     }
                 } else {
                     values.add(new String[]{JsonUtil.NULL_VALUE, JsonUtil.NULL_VALUE, JsonUtil.NULL_VALUE, JsonUtil.NULL_VALUE});
@@ -934,7 +973,8 @@ public class ItextPdfCreator {
         List<String[]> values = new ArrayList<>();
 
         if (CollectionUtils.isEmpty(employmentHistoryEnhanced.getTotalAnnualRemuneration())) {
-            header = new String[]{"YTD Gross Pay", "YTD Base Pay", "YTD Overtime", "YTD Bonus", "YTD Other", ""};
+            header = new String[]{"YTD Gross Pay", "YTD Base Pay", "YTD Overtime", "YTD Bonus", "YTD Other",
+                    ""};
             values.add(new String[]{JsonUtil.NULL_VALUE, JsonUtil.NULL_VALUE, JsonUtil.NULL_VALUE,
                     JsonUtil.NULL_VALUE, JsonUtil.NULL_VALUE});
             writeTable(x, w, header, values);
@@ -948,16 +988,42 @@ public class ItextPdfCreator {
             }
 
             if (!executedYear.contains(year)) {
-                header = new String[]{"YTD Gross Pay", "YTD Base Pay", "YTD Overtime", "YTD Bonus", "YTD Other", ""};
+                header = new String[]{"YTD Gross Pay", "YTD Base Pay", "YTD Overtime", "YTD Bonus", "YTD Other",
+                        ""};
 
                 for (TotalAnnualRenumeration totalAnnualRenumeration : employmentHistoryEnhanced.getTotalAnnualRemuneration()) {
                     TotalAnnualRenumerationEnhanced totalAnnualRenumerationEnhanced = (TotalAnnualRenumerationEnhanced) totalAnnualRenumeration;
 
-                    if (year.equals(String.valueOf(totalAnnualRenumeration.getYear()))) {
+                    if (totalAnnualRenumerationEnhanced!=null && year.equals(String.valueOf(totalAnnualRenumeration.getYear()))) {
                         PayAmountYTD payAmountYTD = totalAnnualRenumerationEnhanced.getPayAmountYTD();
+                        String grossPayAmount = Optional.ofNullable(payAmountYTD)
+                                .map(PayAmountYTD::getGrossPayYTD)
+                                .map(RespPayYTD::getAmount)
+                                .map(amount -> "$"+getRoundOffValue(amount)).orElse(JsonUtil.NULL_VALUE);
 
-                        values.add(new String[]{payAmountYTD.getGrossPayYTD() != null ? "$" + getRoundOffValue(payAmountYTD.getGrossPayYTD().getAmount()) : NOT_AVAILABLE, payAmountYTD.getGrossPayYTD() != null ? "$" + getRoundOffValue(payAmountYTD.getBasePayYTD().getAmount()) : NOT_AVAILABLE, payAmountYTD.getOvertimePayYTD() != null ? "$" + getRoundOffValue(payAmountYTD.getOvertimePayYTD().getAmount()) : NOT_AVAILABLE,
-                                payAmountYTD.getBonusPayYTD() != null ? "$" + getRoundOffValue(payAmountYTD.getBonusPayYTD().getAmount()) : NOT_AVAILABLE, payAmountYTD.getOtherPayYTD() != null ? "$" + getRoundOffValue(payAmountYTD.getOtherPayYTD().getAmount()) : NOT_AVAILABLE});
+                        String basePayAmount = Optional.ofNullable(payAmountYTD)
+                                .map(PayAmountYTD::getBasePayYTD)
+                                .map(RespPayYTD::getAmount)
+                                .map(amount -> "$"+getRoundOffValue(amount)).orElse(JsonUtil.NULL_VALUE);
+
+                        String overtimePayAmount = Optional.ofNullable(payAmountYTD)
+                                .map(PayAmountYTD::getOvertimePayYTD)
+                                .map(RespPayYTD::getAmount)
+                                .map(amount -> "$"+getRoundOffValue(amount)).orElse(JsonUtil.NULL_VALUE);
+
+                        String bonusPayAmount = Optional.ofNullable(payAmountYTD)
+                                .map(PayAmountYTD::getBonusPayYTD)
+                                .map(RespPayYTD::getAmount)
+                                .map(amount -> "$"+getRoundOffValue(amount)).orElse(JsonUtil.NULL_VALUE);
+
+                        String otherPayAmount = Optional.ofNullable(payAmountYTD)
+                                .map(PayAmountYTD::getOtherPayYTD)
+                                .map(RespPayYTD::getAmount)
+                                .map(amount -> "$"+getRoundOffValue(amount)).orElse(JsonUtil.NULL_VALUE);
+
+
+                        values.add(new String[]{grossPayAmount, basePayAmount, overtimePayAmount,
+                                bonusPayAmount, otherPayAmount});
                         writeTable(x, w, header, values);
                         executedYear.add(year);
                     }
@@ -1070,7 +1136,7 @@ public class ItextPdfCreator {
                     // Remove paragraph from text
                     String oldText = employmentHistoryEnhanced.getEmployerDisclaimers();
                     String newText = null;
-                    if (oldText.length() > p.length()) {
+                    if (StringUtils.isNotEmpty(oldText) && oldText.length() > p.length()) {
                         newText = oldText.substring(p.length() + 1);
                     } else {
                         newText = null;
@@ -1161,13 +1227,22 @@ public class ItextPdfCreator {
                 if (applicantInformation != null) {
 
                     RespName name = applicantInformation.getName();
-                    String firstName = StringUtils.capitalize(applicantInformation.getName().getFirstName());
-                    String middleName = !StringUtils.isEmpty(name.getMiddleName()) ? " " + name.getMiddleName() + "." : "";
-                    String lastName = name.getLastName() != null ? " " + name.getLastName() : "";
-                    String generationCodeFormat = name.getGenerationCode() != null ? " " + name.getGenerationCode() : "";
+                    if(name !=null) {
+                        String firstName = StringUtils.capitalize(name.getFirstName());
 
-                    w = writeText(FONT_15_NORMAL, firstName + middleName + lastName + generationCodeFormat
-                            , x, y, x + 300, y + 23);
+                        String middleName = !StringUtils.isEmpty(name.getMiddleName()) ? " " + name.getMiddleName() : "";
+
+                        String lastName = !StringUtils.isEmpty(name.getLastName()) ? " " + name.getLastName() : "";
+
+                        String generationCodeFormat = name.getGenerationCode() != null ? " " + name.getGenerationCode() : "";
+
+                        w = writeText(FONT_15_NORMAL, firstName + middleName + lastName + generationCodeFormat
+                                , x, y, x + 300, y + 23);
+                    } else {
+                        w = writeText(FONT_15_NORMAL, ""
+                                , x, y, x + 300, y + 23);
+
+                    }
                     if (applicantInformation.getDob() != null) {
                         dob = applicantInformation.getDob().getDob();
                     } else {
@@ -1177,10 +1252,13 @@ public class ItextPdfCreator {
                 x += w + FIELD_SEPARATOR;
                 w = writeText(FONT_8_BOLD, "Address:", x, y, x + 50, y + 12);
                 x += w + FIELD_SPACE;
-                if (expVerifyReport.getConsumerPii().getApplicantInformation().getCurrentAddress() == null) {
+                if (applicantInformation1.getCurrentAddress() == null) {
                     w = writeText(FONT_8_NORMAL, JsonUtil.NULL_VALUE, x, y, x + 200, y + 12);
                 } else {
-                    w = writeText(FONT_8_NORMAL, getFullAddress(expVerifyReport.getConsumerPii().getApplicantInformation().getCurrentAddress()), x, y, x + 250,
+                    String fullAddress = Optional.ofNullable(applicantInformation1).map(ApplicantInformation::getCurrentAddress).
+                            map(currentAddress -> getFullAddress(currentAddress)).orElse(JsonUtil.NULL_VALUE);
+
+                    w = writeText(FONT_8_NORMAL, fullAddress, x, y, x + 250,
                             y + 12);
                 }
                 // Second line
@@ -1188,11 +1266,11 @@ public class ItextPdfCreator {
                 x = MARGIN_OUTSIDE_L_R + FIELD_SEPARATOR;
                 w = writeText(FONT_8_BOLD, "Phone:", x, y, x + 50, y + 12);
                 x += w + FIELD_SPACE;
-                if (expVerifyReport.getConsumerPii().getApplicantInformation().getPhone() == null) {
+                if (applicantInformation1.getPhone() == null) {
                     w = writeText(FONT_8_NORMAL, JsonUtil.NULL_VALUE, x, y, x + 100, y + 12);
                 } else {
-                    if (!CollectionUtils.isEmpty(expVerifyReport.getConsumerPii().getApplicantInformation().getPhone())) {
-                        String phoneNumber = expVerifyReport.getConsumerPii().getApplicantInformation().getPhone().get(0).getNumber();
+                    if (!CollectionUtils.isEmpty(applicantInformation1.getPhone()) && applicantInformation1.getPhone().get(0) !=null) {
+                        String phoneNumber = applicantInformation1.getPhone().get(0).getNumber();
                         String phoneFormattedString = !StringUtils.isEmpty(phoneNumber) ? phoneNumber.substring(0, 3) + '-' + phoneNumber.substring(3, 6) + '-' + phoneNumber.substring(6, 10) : JsonUtil.NULL_VALUE;
                         w = writeText(FONT_8_NORMAL, phoneFormattedString, x,
                                 y, x + 100, y + 12);
@@ -1204,13 +1282,15 @@ public class ItextPdfCreator {
                 x += w + FIELD_SEPARATOR;
                 w = writeText(FONT_8_BOLD, "Social Security Number:", x, y, x + 100, y + 12);
                 x += w + FIELD_SPACE;
-                if (expVerifyReport.getConsumerPii().getApplicantInformation().getSsn() == null) {
+                if (applicantInformation1.getSsn() == null) {
                     w = writeText(FONT_8_NORMAL, JsonUtil.NULL_VALUE, x, y, x + 100, y + 12);
                 } else {
-                    RespSsn ssn = expVerifyReport.getConsumerPii().getApplicantInformation().getSsn();
-                    String ssnFormatted = expVerifyReport.getConsumerPii().getApplicantInformation().getSsn().getSsn();
-                    w = writeText(FONT_8_NORMAL, ssnFormatted, x, y, x + 100,
-                            y + 12);
+                    RespSsn ssn = applicantInformation1.getSsn();
+                    if(ssn !=null) {
+                        String ssnFormatted = ssn.getSsn();
+                        w = writeText(FONT_8_NORMAL, ssnFormatted, x, y, x + 100,
+                                y + 12);
+                    }
                 }
                 x += w + FIELD_SEPARATOR;
                 if (!isHR) {
@@ -1239,6 +1319,7 @@ public class ItextPdfCreator {
             cb.restoreState();
             // General info
             if (expVerifyReport != null) {
+                IncomeRequestor requestor = expVerifyReport.getRequestor();
                 // First line
                 h = 30;
                 cb.saveState();
@@ -1251,11 +1332,12 @@ public class ItextPdfCreator {
                 y -= 15;
                 w = writeText(FONT_8_BOLD, "Requestor:", x, y, x + 100, y + 12);
                 x += w + FIELD_SPACE;
-                w = writeText(FONT_8_NORMAL, expVerifyReport.getRequestor() != null ? returnValueOrNA(expVerifyReport.getRequestor().getVerifierName()) : JsonUtil.NULL_VALUE, x, y, x + 200, y + 12);
+
+                w = writeText(FONT_8_NORMAL, requestor != null ? returnValueOrNA(requestor.getVerifierName()) : JsonUtil.NULL_VALUE, x, y, x + 200, y + 12);
                 x += w + FIELD_SEPARATOR;
                 w = writeText(FONT_8_BOLD, "Requestor ID:", x, y, x + 100, y + 12);
                 x += w + FIELD_SPACE;
-                w = writeText(FONT_8_NORMAL, expVerifyReport.getRequestor() != null ? returnValueOrNA(expVerifyReport.getRequestor().getSubscriberCode()) : JsonUtil.NULL_VALUE, x, y, x + 100, y + 12);
+                w = writeText(FONT_8_NORMAL, requestor != null ? returnValueOrNA(requestor.getSubscriberCode()) : JsonUtil.NULL_VALUE, x, y, x + 100, y + 12);
                 x += w + FIELD_SEPARATOR;
                 w = writeText(FONT_8_BOLD, "Report ID:", x, y, x + 100, y + 12);
                 x += w + FIELD_SPACE;
@@ -1277,7 +1359,7 @@ public class ItextPdfCreator {
                 } else {
                     String reportGenerationDate = expVerifyReport.getReportGeneratedDate();
                     if (reportGenerationDate != null) {
-                        java.util.Date date = new java.util.Date(Long.parseLong(expVerifyReport.getReportGeneratedDate()) * 1000);
+                        java.util.Date date = new java.util.Date(Long.parseLong(reportGenerationDate) * 1000);
                         SimpleDateFormat df2 = new SimpleDateFormat("MM/dd/YYYY");
                         reportGenerationDate = df2.format(date);
                     } else {
@@ -1357,12 +1439,14 @@ public class ItextPdfCreator {
 
     private ApplicantInformationEnhanced mapToApplicationInformationEnhanced(ApplicantInformation applicantInformation1) {
         ApplicantInformationEnhanced applicantInformationEnhanced = new ApplicantInformationEnhanced();
-        applicantInformationEnhanced.setDob(null);
-        applicantInformationEnhanced.setName(applicantInformation1.getName());
-        applicantInformationEnhanced.setCurrentAddress(applicantInformation1.getCurrentAddress());
-        applicantInformationEnhanced.setCurrentAddress(applicantInformation1.getCurrentAddress());
-        applicantInformationEnhanced.setPhone(applicantInformation1.getPhone());
-        applicantInformationEnhanced.setSsn(applicantInformation1.getSsn());
+        if(applicantInformation1 !=null) {
+            applicantInformationEnhanced.setDob(null);
+            applicantInformationEnhanced.setName(applicantInformation1.getName());
+            applicantInformationEnhanced.setCurrentAddress(applicantInformation1.getCurrentAddress());
+            applicantInformationEnhanced.setCurrentAddress(applicantInformation1.getCurrentAddress());
+            applicantInformationEnhanced.setPhone(applicantInformation1.getPhone());
+            applicantInformationEnhanced.setSsn(applicantInformation1.getSsn());
+        }
 
         return applicantInformationEnhanced;
     }
@@ -1404,6 +1488,10 @@ public class ItextPdfCreator {
         float bw = document.getPageSize().getWidth() - 2 * MARGIN_OUTSIDE_L_R;
         float h = 20 + 15 * (values.size() + 1);
         if ((y - h) < PAGE_CUT) {
+            /*if (!CollectionUtils.isEmpty(executedYear)) {
+                int i = executedYear.size() - 1;
+                executedYear.remove(i);
+            }*/
             throw new NotFitException();
         }
         // Gray
