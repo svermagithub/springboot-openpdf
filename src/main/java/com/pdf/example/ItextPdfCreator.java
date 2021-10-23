@@ -932,41 +932,60 @@ public class ItextPdfCreator {
             }
             // Payroll title
             if (ph.getStepDone() < 4) {
-                writeEmployerPayrollSubTitle();
+                if (isAsOfDateFallsInCurrentYear(employmentHistoryEnhanced.getAsOfDate()))
+                    writeEmployerPayrollSubTitle();
                 ph.setStepDone(4);
             }
             // Fifth table
             if (ph.getStepDone() < 5) {
-                header = new String[]{"Account Type", "Account Number", "Routing Number", "Amount", "", ""};
-                values = new ArrayList<>();
-                List<RespPayDistributions> payDistributions = paymentHistoryEnhanced.getPayDistributions();
-                if (!CollectionUtils.isEmpty(payDistributions)) {
-                    for (RespPayDistributions payDistribution : payDistributions) {
-                        if(payDistribution !=null) {
-                            RespDepositAccount depositAccount = payDistribution.getDepositAccount();
-                            RespDepositAmount depositAmount = payDistribution.getDepositAmount();
-
-                            String accountTypeCode = Optional.ofNullable(depositAccount)
-                                    .map(RespDepositAccount::getAccountTypeCode).orElse(JsonUtil.NULL_VALUE);
-                            String accountNumber = Optional.ofNullable(depositAccount)
-                                    .map(RespDepositAccount::getAccountNumber).orElse(JsonUtil.NULL_VALUE);
-                            String routingTransitID = Optional.ofNullable(depositAccount)
-                                    .map(RespDepositAccount::getRoutingTransitID).orElse(JsonUtil.NULL_VALUE);
-                            String dollarAmount = Optional.ofNullable(depositAmount)
-                                    .map(RespDepositAmount::getAmount).map(amount -> "$" + getRoundOffValue(amount)).orElse(JsonUtil.NULL_VALUE);
-
-                            values.add(new String[]{accountTypeCode, accountNumber, routingTransitID, dollarAmount});
-                        }
-                    }
-                } else {
-                    values.add(new String[]{JsonUtil.NULL_VALUE, JsonUtil.NULL_VALUE, JsonUtil.NULL_VALUE, JsonUtil.NULL_VALUE});
-
-                }
-
-                writeTable(x, w, header, values);
+                if (isAsOfDateFallsInCurrentYear(employmentHistoryEnhanced.getAsOfDate()))
+                    writePremiumPayoutAccountDetails(paymentHistoryEnhanced, x, w);
                 ph.setStepDone(5);
             }
         }
+    }
+
+    private void writePremiumPayoutAccountDetails(PaymentHistoryEnhanced paymentHistoryEnhanced, float x, float w) throws DocumentException, NotFitException {
+        List<String[]> values;
+        String[] header;
+        header = new String[]{"Account Type", "Account Number", "Routing Number", "Amount", "", ""};
+        values = new ArrayList<>();
+        List<RespPayDistributions> payDistributions = paymentHistoryEnhanced.getPayDistributions();
+        if (!CollectionUtils.isEmpty(payDistributions)) {
+            for (RespPayDistributions payDistribution : payDistributions) {
+                if (payDistribution != null) {
+                    RespDepositAccount depositAccount = payDistribution.getDepositAccount();
+                    RespDepositAmount depositAmount = payDistribution.getDepositAmount();
+
+                    String accountTypeCode = Optional.ofNullable(depositAccount)
+                            .map(RespDepositAccount::getAccountTypeCode).orElse(JsonUtil.NULL_VALUE);
+                    String accountNumber = Optional.ofNullable(depositAccount)
+                            .map(RespDepositAccount::getAccountNumber).orElse(JsonUtil.NULL_VALUE);
+                    String routingTransitID = Optional.ofNullable(depositAccount)
+                            .map(RespDepositAccount::getRoutingTransitID).orElse(JsonUtil.NULL_VALUE);
+                    String dollarAmount = Optional.ofNullable(depositAmount)
+                            .map(RespDepositAmount::getAmount).map(amount -> "$" + getRoundOffValue(amount)).orElse(JsonUtil.NULL_VALUE);
+
+                    values.add(new String[]{accountTypeCode, accountNumber, routingTransitID, dollarAmount});
+                }
+            }
+        } else {
+            values.add(new String[]{JsonUtil.NULL_VALUE, JsonUtil.NULL_VALUE, JsonUtil.NULL_VALUE, JsonUtil.NULL_VALUE});
+
+        }
+
+        writeTable(x, w, header, values);
+    }
+
+    private boolean isAsOfDateFallsInCurrentYear(String asOfDate) {
+        asOfDate = asOfDate != null ? CommonUtils.getFormattedDate(asOfDate) : null;
+        if (asOfDate != null) {
+            String[] date = asOfDate.split("/");
+            String currentYear = "" + Calendar.getInstance().get(Calendar.YEAR);
+            if (date[2] != null && date[2].equalsIgnoreCase(currentYear))
+                return true;
+        }
+        return false;
     }
 
     private void getYTDInformation(EmploymentHistoryEnhanced employmentHistoryEnhanced, PaymentHistory ph, float x, float w) throws DocumentException, NotFitException {
